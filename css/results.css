@@ -1,0 +1,78 @@
+:root{
+    --buttonColor: #FF6600;
+    --hoverColor: rgb(147, 14, 14);
+    --fontFamily: sans-serif;
+    --fontColor: white;
+}
+
+#searchForm {
+    display: flex;
+    align-items: center;
+    /* margin-top: 50px; */
+    margin: 50px;
+  }
+  
+  #searchBox {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  #searchBtn {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color:var(--buttonColor);
+    color: var(--fontColor);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--fontFamily); 
+  }
+  
+  #searchBtn:hover {
+    background-color: var(--hoverColor);
+  }
+
+
+#eventTxt{
+    font-family: var(--fontFamily);
+    font-weight: 700;
+    font-size: 20px;
+  }
+  #calender-icon{
+    width: 10%;
+  }
+  #location-icon{
+    width: 10%;
+  }
+  .date-text{
+    color: var(--buttonColor);
+  }
+  .btn{
+    background-color: var(--buttonColor);
+  }
+  .btn:hover{
+    background-color: var(--hoverColor);
+  }
+  .concertCards{
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    z-index: -100;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Use ease-in-out */
+  }
+  .card-img-top{
+    height: 300px;
+  }
+a{
+    color: var(--buttonColor);
+    font-family: var(--fontFamily);
+    display: flex;
+    justify-content: center;
+}

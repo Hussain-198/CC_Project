@@ -1,0 +1,208 @@
+:root{
+  --buttonColor: #FF6600;
+  --hoverColor: rgb(147, 14, 14);
+  --fontFamily: sans-serif;
+  --fontColor: white;
+}
+*{
+  box-sizing: border-box;
+}
+body{
+  background-color: #F5F5F5;
+}
+.header{
+  background-color: var(--fontColor);
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  z-index: 10000;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+#logo{
+    position: fixed; 
+  top: 10px; 
+  left: 34px; 
+  width: 43px; 
+  height: 38px; 
+  border-radius: 0px;
+}
+#webName{
+    position:fixed; 
+  top: 15px; 
+  left: 83px; 
+  font-family: var(--fontFamily); 
+  font-size: 18px; 
+  line-height: 28px; 
+  font-weight: 700; 
+  color: black; /* neutral-700 */
+
+}
+#logBtn{
+    position: fixed; 
+  top: 10px; 
+  right: 100px; 
+  width: 76px; 
+  height: 36px; 
+  padding: 0 12px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-family: var(--fontFamily); 
+  font-size: 14px; 
+  color: var(--buttonColor); /* primary-500 */
+  background: #FEF1F6FF; /* primary-100 */
+  opacity: 1; 
+  border: none; 
+  border-radius: 6px; /* border-m */
+}
+#logBtn:hover{
+  background-color: var(--buttonColor);
+  color: var(--fontColor);
+}
+#signBtn{
+  position: fixed; 
+  top: 10px; 
+  right: 20px;
+  height: 36px; 
+  padding: 0 12px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-family: var(--fontFamily); 
+  font-size: 14px; 
+  color: var(--fontColor); /* white */
+  background-color: var(--buttonColor); /* primary-500 */
+  opacity: 1; 
+  border: none; 
+  border-radius: 6px; /* border-m */
+}
+#signBtn:hover{
+  background-color: var(--hoverColor)
+}
+.concertbg_container {
+  background-image: url(../assets/images/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; /* or use contain if you want to see the entire image */
+  height:500px;
+  /* width: 100%; */
+  display: flex;
+  justify-content: center;
+   align-items: center; /* Center items vertically */
+}
+
+#first_word{
+  margin-left: 8%;
+}
+#second_word{
+  color: var(--buttonColor);
+  font-family: var(--fontFamily);
+}
+#searchForm {
+  display: flex;
+  align-items: center;
+  /* margin-top: 50px; */
+  margin: 50px;
+}
+
+#searchBox {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+#searchBtn {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color:var(--buttonColor);
+  color: var(--fontColor);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--fontFamily); 
+}
+
+#searchBtn:hover {
+  background-color: var(--hoverColor);
+}
+.poster {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center items horizontally */
+  color: var(--fontColor); /* Ensure this variable is defined */
+  height: auto; /* Ensure the height is managed based on content or set explicitly */
+}
+h1{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+}
+#poster_text{
+  display: flex;
+  justify-content: center;
+  font-family: var(--fontFamily); 
+}
+.viewCon{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 90px;
+}
+#viewBtn{
+  background-color: var(--buttonColor);
+  color: var(--fontColor);
+  border: none;
+  border-radius: 4px;
+  font-family: var(--fontFamily);
+}
+#viewBtn:hover{
+  background-color: var(--hoverColor);
+}
+#eventTxt{
+  font-family: var(--fontFamily);
+  font-weight: 700;
+  font-size: 20px;
+}
+#calender-icon{
+  width: 10%;
+}
+#location-icon{
+  width: 10%;
+}
+.date-text{
+  color: var(--buttonColor);
+}
+.btn{
+  background-color: var(--buttonColor);
+}
+.btn:hover{
+  background-color: var(--hoverColor);
+}
+.concertCards{
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  z-index: -100;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Use ease-in-out */
+}
+.card-img-top{
+  height: 300px;
+}
+
+.card{
+  transition: 300ms all ease;
+}
+.card:hover{
+  transform: scale(1.05); /* Slightly scale up on hover */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+
+}
+#titleText {
+  display: flex;
+  justify-content: space-between; /* Adjusts spacing between artist name and ticket price */
+  align-items: center; /* Vertically centers items */
+}
