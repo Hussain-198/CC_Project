@@ -206,3 +206,27 @@ h1{
   justify-content: space-between; /* Adjusts spacing between artist name and ticket price */
   align-items: center; /* Vertically centers items */
 }
+
+#userGreeting{
+  position: fixed; 
+  top: 12px; 
+  right: 30px;
+}
+#usernameDisplay{
+  font-family: var(--fontFamily);
+}
+#logoutButton{
+  background-color: var(--buttonColor);
+  color: var(--fontColor);
+  opacity: 1; 
+  border: none; 
+  border-radius: 6px; /* border-m */
+  height: 36px; 
+  padding: 0 12px; 
+  /* display: flex;  */
+  align-items: center; 
+  justify-content: center;
+}
+#logoutButton:hover{
+  background-color: var(--hoverColor);
+}

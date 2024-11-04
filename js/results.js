@@ -1,4 +1,5 @@
-document.getElementById('searchForm').addEventListener('submit', function() {
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
     const query = document.getElementById('searchBox').value.toLowerCase();
     const resultsContainer = document.getElementById('resultsContainer');
 
@@ -24,6 +25,7 @@ document.getElementById('searchForm').addEventListener('submit', function() {
             if (filteredResults.length === 0) {
                 resultsContainer.innerHTML = '<p>No results found.</p>';
             } else {
+                const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check if user is logged in
                 filteredResults.forEach(item => {
                     const resultItem = document.createElement('div');
                     resultItem.classList.add('result-item', 'card', 'mb-3'); // Bootstrap classes for styling
@@ -39,7 +41,7 @@ document.getElementById('searchForm').addEventListener('submit', function() {
                                     <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
                                     <p class="card-text"><strong>Ticket Price:</strong> ₹${item.ticket_price}</p>
                                     <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
-                                    <a href="login.html" class="btn btn-primary">Book tickets</a>
+                                    <a class="btn btn-primary" href="${loggedin ? 'index.html' : 'login.html'}">Book tickets</a>
                                 </div>
                             </div>
                         </div>

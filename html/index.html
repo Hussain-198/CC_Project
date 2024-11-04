@@ -14,8 +14,14 @@
     <header class="header">
         <img id="logo" src="../assets/images/a385b999-0249-48cc-9cee-bc88ff1b961a.jpg" alt="Eventlogo" width="5%">
         <div id="webName"><span>Concert</span><span id="second_word">Craze</span></div>
-        <a href="login.html"><button id="logBtn" type="button">Log In</button></a>
-        <a href="signup.html"><button id="signBtn">Sign Up</button></a>
+        <div id="userGreeting" style="display: none;">
+            <span id="usernameDisplay"></span>
+            <button id="logoutButton">Log Out</button>
+        </div>
+        <div id="authButtons" style="display: block;">
+            <a href="login.html"><button id="logBtn" type="button">Log In</button></a>
+            <a href="signup.html"><button id="signBtn">Sign Up</button></a>
+        </div>
     </header>
     <main>
         <div class="concertbg_container">
@@ -23,19 +29,20 @@
                 <div id="poster_text">
                     <h1><span id="first_word">Feel the Beat</span> <span id="second_word"><br>Grab your Seat</h1></span>
                 </div>
-                <div class="search-container">
+                <div id="search-container">
                     <form id="searchForm" action="results.html" method="GET">
-                      <input type="text" id="searchBox" name="query" placeholder="Search by artist or venue" required />
-                      <button type="submit" id="searchBtn">Search</button>
+                        <input type="text" id="searchBox" name="query" placeholder="Search by artist or venue"
+                            required />
+                        <button type="submit" id="searchBtn">Search</button>
                     </form>
-                  </div>
+                </div>
             </div>
         </div>
         <div class="viewCon">
-        <p id="eventTxt">New upcoming <span id="second_word">Events</span></p>
-        <button id="viewBtn">View More</button>
-    </div>
-    <div class="concertCards"></div>
+            <p id="eventTxt">New upcoming <span id="second_word">Events</span></p>
+            <button id="viewBtn">View More</button>
+        </div>
+        <div class="concertCards"></div>
     </main>
     <script type="module" src="../js/script.js"></script>
 </body>

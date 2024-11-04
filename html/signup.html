@@ -113,6 +113,8 @@
                     setTimeout(() => {
                         window.location.href = "index.html"; // Redirect after a brief moment
                     }, 1000); // 1 second delay for modal
+                    localStorage.setItem(email,username);
+                    localStorage.setItem("email",email);
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
