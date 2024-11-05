@@ -53,10 +53,11 @@
     color: var(--buttonColor);
   }
   .btn{
-    background-color: var(--buttonColor);
+    background-color: var(--buttonColor) !important;
   }
   .btn:hover{
-    background-color: var(--hoverColor);
+    background-color: var(--hoverColor)  !important;
+
   }
   .concertCards{
     margin-top: 1rem;
@@ -75,4 +76,5 @@ a{
     font-family: var(--fontFamily);
     display: flex;
     justify-content: center;
+    text-decoration: none;
 }

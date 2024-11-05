@@ -175,10 +175,10 @@ h1{
   color: var(--buttonColor);
 }
 .btn{
-  background-color: var(--buttonColor);
+  background-color: var(--buttonColor) !important;
 }
 .btn:hover{
-  background-color: var(--hoverColor);
+  background-color: var(--hoverColor) !important;
 }
 .concertCards{
   margin-top: 1rem;
@@ -229,4 +229,11 @@ h1{
 }
 #logoutButton:hover{
   background-color: var(--hoverColor);
+}
+
+.footer{
+  background-color: black;
+  width: 100%;
+  height: fit-content;
+  margin-top: 10%;
 }

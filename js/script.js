@@ -99,12 +99,12 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
-    authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
-    projectId: "sample-firebase-ai-app-b83c0",
-    storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
-    messagingSenderId: "144531331956",
-    appId: "1:144531331956:web:eac7601b172cf9fcadea21"
+  apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
+  authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
+  projectId: "sample-firebase-ai-app-b83c0",
+  storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
+  messagingSenderId: "144531331956",
+  appId: "1:144531331956:web:eac7601b172cf9fcadea21"
 };
 
 // Initialize Firebase
@@ -148,6 +148,7 @@ fetch("../assets/json/details.json")
   });
 // Function to create a concert card
 function createConcertCard(concert, index) {
+  const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check if user is logged in
   let div = document.createElement("div");
   div.className = "concert-card"; // Optional: add a class for styling
 
@@ -170,7 +171,7 @@ function createConcertCard(concert, index) {
         <p class="card-text">
           <img id="location-icon" src="../assets/images/352521_location_on_icon.png" alt=""> ${concert.city}
         </p>
-        <a href="login.html" class="btn btn-primary">Book tickets</a>
+        <a class="btn btn-primary" href="${loggedin ? 'index.html' : 'login.html'}">Book tickets</a>
       </div>
     </div>`;
 
@@ -187,37 +188,37 @@ document.getElementById("searchForm").addEventListener("submit", function (event
 
 let searchBox = document.getElementById("search-container");
 searchBox.addEventListener("click", () => {
-  window.location.href= "results.html"
+  window.location.href = "results.html"
 })
 
 // Check user authentication state
 onAuthStateChanged(auth, (user) => {
-    const userGreeting = document.getElementById("userGreeting");
-    const authButtons = document.getElementById("authButtons");
-    const usernameDisplay = document.getElementById("usernameDisplay");
+  const userGreeting = document.getElementById("userGreeting");
+  const authButtons = document.getElementById("authButtons");
+  const usernameDisplay = document.getElementById("usernameDisplay");
 
-    if (user) {
-        // User is signed in
+  if (user) {
+    // User is signed in
 
-      const email=localStorage.getItem("email");
-      const username=localStorage.getItem(email);
-        usernameDisplay.textContent = `Welcome, ${username}!`;
-        userGreeting.style.display = "block"; // Show greeting
-        authButtons.style.display = "none"; // Hide auth buttons
+    const email = localStorage.getItem("email");
+    const username = localStorage.getItem(email);
+    usernameDisplay.textContent = `Welcome, ${username}!`;
+    userGreeting.style.display = "block"; // Show greeting
+    authButtons.style.display = "none"; // Hide auth buttons
 
-        // Logout functionality
-        document.getElementById("logoutButton").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                // Sign-out successful.
-                localStorage.removeItem("isLoggedin");
-                window.location.href = "index.html"; // Redirect to login after logout
-            }).catch((error) => {
-                console.error("Error signing out: ", error);
-            });
-        });
-    } else {
-        // No user is signed in
-        userGreeting.style.display = "none"; // Hide greeting
-        authButtons.style.display = "block"; // Show auth buttons
-    }
+    // Logout functionality
+    document.getElementById("logoutButton").addEventListener("click", () => {
+      signOut(auth).then(() => {
+        // Sign-out successful.
+        localStorage.removeItem("isLoggedin");
+        window.location.href = "index.html"; // Redirect to login after logout
+      }).catch((error) => {
+        console.error("Error signing out: ", error);
+      });
+    });
+  } else {
+    // No user is signed in
+    userGreeting.style.display = "none"; // Hide greeting
+    authButtons.style.display = "block"; // Show auth buttons
+  }
 });
