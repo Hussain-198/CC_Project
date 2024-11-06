@@ -41,7 +41,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                                     <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
                                     <p class="card-text"><strong>Ticket Price:</strong> ₹${item.ticket_price}</p>
                                     <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
-                                    <a class="btn btn-primary" href="${loggedin ? 'index.html' : 'login.html'}">Book tickets</a>
+                                    <a class="btn btn-primary" href="${loggedin ? '/index.html' : '../html/login.html'}">Book tickets</a>
                                 </div>
                             </div>
                         </div>
