@@ -92,8 +92,11 @@
                 valid = false;
             }
             
-            if(password === ""){
+            if (password === "") {
                 passwordError.textContent = "Password is required!";
+                valid = false;
+            } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(password)) {
+                passwordError.textContent = "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.";
                 valid = false;
             }
             if (password !== confirmPassword) {
