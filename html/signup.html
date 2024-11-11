@@ -62,6 +62,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+          // Modal functionality (unchanged from your code)
+          const modal = document.getElementById("myModal");
+        const modalMessage = document.getElementById("modalMessage");
+        const span = document.getElementsByClassName("close")[0];
+
         document.getElementById("signup-form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent form submission at the start
 
@@ -155,10 +160,7 @@
             }
         }
 
-        // Modal functionality (unchanged from your code)
-        const modal = document.getElementById("myModal");
-        const modalMessage = document.getElementById("modalMessage");
-        const span = document.getElementsByClassName("close")[0];
+      
 
         function showModal(message) {
             modal.style.display = 'block'; // Make modal visible

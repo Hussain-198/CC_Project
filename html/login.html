@@ -97,7 +97,8 @@
                         window.location.href = "/index.html"; // Redirect after a brief moment
                     }, 1000); // 1 second delay for modal
 
-                })                .catch((error) => {
+                })                
+                .catch((error) => {
                     const errorMessage = error.message;
                     if (errorMessage.includes("email")) {
                         emailError.textContent = errorMessage; // Show error in email span
@@ -107,16 +108,16 @@
                 });
         });
 
-        // Toggle password visibility
-        document.getElementById("togglePassword").addEventListener("click", function () {
+         // Toggle password visibility
+         document.getElementById("togglePassword").addEventListener("click", function () {
             const passwordField = document.getElementById("password");
             togglePasswordVisibility(passwordField, this);
         });
 
-        document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
-            const confirmPasswordField = document.getElementById("confirm-password");
-            togglePasswordVisibility(confirmPasswordField, this);
-        });
+        // document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+        //     const confirmPasswordField = document.getElementById("confirm-password");
+        //     togglePasswordVisibility(confirmPasswordField, this);
+        // });
 
         function togglePasswordVisibility(field, icon) {
             if (field.type === "password") {
@@ -127,6 +128,7 @@
                 icon.textContent = "👁️"; // Change back to eye icon when hidden
             }
         }
+
 
         // Modal functionality
         const modal = document.getElementById("myModal");
