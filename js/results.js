@@ -1,13 +1,15 @@
 document.getElementById('searchForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
     const query = document.getElementById('searchBox').value.toLowerCase();
+    const filter = document.getElementById('filterSelect').value;
+    const genreFilter = document.getElementById('genreFilter').value.toLowerCase(); // Genre filter
     const resultsContainer = document.getElementById('resultsContainer');
 
     // Clear previous results
     resultsContainer.innerHTML = '';
 
-    // Fetching data from the JSON file
-    fetch('../assets/json/details.json') // Ensure the path is correct
+    // Fetch data from JSON
+    fetch('../assets/json/details.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -15,20 +17,25 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             return response.json();
         })
         .then(data => {
-            // Filtering results based on the search query
-            const filteredResults = data.filter(item =>
-                item.artist.toLowerCase().includes(query) ||
-                item.venue.toLowerCase().includes(query)
-            );
+            // Apply filters based on selected criteria and search query
+            const filteredResults = data.filter(item => {
+                const matchesSearch = (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
+                                      (filter === 'venue' && item.venue.toLowerCase().includes(query)) ||
+                                      (filter === 'genre' && item.genre.toLowerCase().includes(query));
+                
+                const matchesGenre = genreFilter === 'all' || item.genre.toLowerCase() === genreFilter;
 
-            // Displaying results
+                return matchesSearch && matchesGenre;
+            });
+
+            // Display results
             if (filteredResults.length === 0) {
                 resultsContainer.innerHTML = '<p>No results found.</p>';
             } else {
-                const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check if user is logged in
+                const loggedin = localStorage.getItem("isLoggedin") === "true";
                 filteredResults.forEach(item => {
                     const resultItem = document.createElement('div');
-                    resultItem.classList.add('result-item', 'card', 'mb-3'); // Bootstrap classes for styling
+                    resultItem.classList.add('result-item', 'card', 'mb-3');
                     resultItem.innerHTML = `
                         <div class="row g-0">
                             <div class="col-md-4">
@@ -41,7 +48,7 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                                     <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
                                     <p class="card-text"><strong>Ticket Price:</strong> ₹${item.ticket_price}</p>
                                     <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
-                                    <a class="btn btn-primary" href="${loggedin ? '/index.html' : '../html/login.html'}">Book tickets</a>
+                                    <a class="btn btn-primary" href="${loggedin ? '../html/eventdetails.html' : '../html/login.html'}">Book tickets</a>
                                 </div>
                             </div>
                         </div>
@@ -55,3 +62,8 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             resultsContainer.innerHTML = '<p>Error fetching results.</p>';
         });
 });
+
+// Function to dynamically filter by genre
+function filterByGenre() {
+    document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+}

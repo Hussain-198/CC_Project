@@ -5,7 +5,7 @@
       "venue": "Mumbai's MMRDA Grounds",
       "city": "Mumbai",
       "ticket_price": 8000,
-      "genre": "Bollywood",
+      "genre": "Hollywood",
       "image":"../assets/images/dualipa.jpeg"
     },
     {
@@ -14,7 +14,7 @@
       "venue": "Singapore Indoor Stadium",
       "city": "Singapore",
       "ticket_price": 2500,
-      "genre": "Film Music",
+      "genre": "Kollywood",
       "image":"../assets/images/Anirudh.jpeg"
      
     },
@@ -28,13 +28,13 @@
       "image":"../assets/images/SonuNigam.jpeg"
     },
     {
-      "artist": "Arijit Singh",
-      "date": "To be announced",
+      "artist": "Vijay Antony",
+      "date": "2024-12-28",
       "venue": "To be announced",
-      "city": "To be announced",
-      "ticket_price": 1800,
-      "genre": "Bollywood",
-      "image":"../assets/images/ArijitSingh.jpeg"
+      "city": "Chennai",
+      "ticket_price": 749,
+      "genre": "Kollywood",
+      "image":"../assets/images/vijayantony.jpeg"
     },
     {
       "artist": "Jonita Gandhi",
@@ -69,7 +69,7 @@
       "venue": "Wings Convention Centre St Georges",
       "city": "Chennai",
       "ticket_price": 499,
-      "genre": "Bollywood",
+      "genre": "Kollywood",
       "image":"../assets/images/paaldabba.jpeg"
     }
 ]

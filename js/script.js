@@ -77,7 +77,7 @@ function createConcertCard(concert, index) {
         <p class="card-text">
           <img id="location-icon" src="../assets/images/352521_location_on_icon.png" alt=""> ${concert.city}
         </p>
-        <a class="btn btn-primary" href="${loggedin ? '/index.html' : '../html/login.html'}">Book tickets</a>
+        <a class="btn btn-primary" href="${loggedin ? '../html/eventdetails.html' : '../html/login.html'}">Book tickets</a>
       </div>
     </div>`;
 

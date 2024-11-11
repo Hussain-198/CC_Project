@@ -1,0 +1,67 @@
+:root{
+    --buttonColor: #FF6600;
+    --hoverColor: rgb(147, 14, 14);
+    --fontFamily: sans-serif;
+    --fontColor: white;
+  }
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .header, .footer {
+    background-color: #212529;
+    color: #ffffff;
+    text-align: center;
+  }
+  
+  .event-banner {
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
+  }
+  
+  .event-banner h2 {
+    font-size: 2.5rem;
+  }
+  
+  .event-banner p {
+    font-size: 1.2rem;
+  }
+  
+  .container h3, .container h4 {
+    margin-top: 20px;
+  }
+  
+  .container p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .map {
+    height: 300px;
+    margin-top: 20px;
+    background-color: #e0e0e0; /* Placeholder background */
+  }
+  
+  .price {
+    font-size: 3rem;
+    color: #dc3545;
+  }
+  
+  .btn {
+    margin-top: 10px;
+  }
+  
+  .social-icons img {
+    width: 24px;
+    margin: 0 10px;
+  }
+  

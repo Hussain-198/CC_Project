@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="/css/signup.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Welcome.</h1>
@@ -20,24 +22,24 @@
             <span id="emailError" style="color: red;"></span>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <div class="password-container">
+                <input type="password" id="password" name="password" maxlength="30" required>
+                <span id="togglePassword" class="eye-icon">👁️</span>
+            </div>
             <span id="passwordError" style="color: red;"></span>
 
             <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
+            <div class="password-container">
+                <input type="password" id="confirm-password" name="confirm-password" maxlength="30" required>
+                <span id="toggleConfirmPassword" class="eye-icon">👁️</span>
+            </div>
             <span id="confirmPasswordError" style="color: red;"></span>
 
             <button type="submit">Sign Up</button>
         </form>
         <p>Already have an account? <a href="/html/login.html">Log in</a></p>
     </div>
-    <!-- Background Video
-    <video autoplay muted loop id="background-video">
-        <source src="../assets/videos/uhd_30fps.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video> -->
 
-    <!-- The Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -47,7 +49,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    
+
         const firebaseConfig = {
             apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
             authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
@@ -56,68 +58,71 @@
             messagingSenderId: "144531331956",
             appId: "1:144531331956:web:eac7601b172cf9fcadea21"
         };
-    
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-    
+
         document.getElementById("signup-form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent form submission at the start
-    
-            const username = document.getElementById("username").value;
+
+            const username = document.getElementById("username").value.trim();
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirm-password").value;
-    
+
             const emailError = document.getElementById("emailError");
             const passwordError = document.getElementById("passwordError");
             const confirmPasswordError = document.getElementById("confirmPasswordError");
             const usernameError = document.getElementById("usernameError");
-            
+
             // Clear previous error messages
             emailError.textContent = "";
             passwordError.textContent = "";
             confirmPasswordError.textContent = "";
             usernameError.textContent = "";
-    
+
             // Validate input fields
             let valid = true; // Flag for validation
-    
+
             if (username === "") {
                 usernameError.textContent = "Username is required!";
                 valid = false;
+            } else if (/\s/.test(username)) { // Check for spaces in the username
+                usernameError.textContent = "Username cannot contain spaces!";
+                valid = false;
             }
-    
+
             if (!/\S+@\S+\.\S+/.test(email)) {
                 emailError.textContent = "Please enter a valid email address.";
                 valid = false;
             }
-            
+
             if (password === "") {
                 passwordError.textContent = "Password is required!";
                 valid = false;
-            } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(password)) {
-                passwordError.textContent = "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.";
+            } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*\s]{8,}$/.test(password)) {
+                passwordError.textContent = "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, a special character, and can include spaces.";
                 valid = false;
             }
             if (password !== confirmPassword) {
                 confirmPasswordError.textContent = "Passwords do not match!";
                 valid = false;
             }
-    
+
             // If not valid, return early
             if (!valid) {
                 return;
             }
-    
+
             // Create user in Firebase
             createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+                .then((userCredential) => {
                     showModal("Registration Successful!");
                     setTimeout(() => {
                         window.location.href = "/index.html"; // Redirect after a brief moment
                     }, 1000); // 1 second delay for modal
-                    localStorage.setItem(email,username);
-                    localStorage.setItem("email",email);
+                    localStorage.setItem(email, username);
+                    localStorage.setItem("email", email);
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -129,7 +134,28 @@
                 });
         });
 
-        // Modal functionality
+        // Toggle password visibility
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordField = document.getElementById("password");
+            togglePasswordVisibility(passwordField, this);
+        });
+
+        document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+            const confirmPasswordField = document.getElementById("confirm-password");
+            togglePasswordVisibility(confirmPasswordField, this);
+        });
+
+        function togglePasswordVisibility(field, icon) {
+            if (field.type === "password") {
+                field.type = "text";
+                icon.textContent = "🙈"; // Change to a different icon when visible
+            } else {
+                field.type = "password";
+                icon.textContent = "👁️"; // Change back to eye icon when hidden
+            }
+        }
+
+        // Modal functionality (unchanged from your code)
         const modal = document.getElementById("myModal");
         const modalMessage = document.getElementById("modalMessage");
         const span = document.getElementsByClassName("close")[0];
@@ -138,17 +164,16 @@
             modal.style.display = 'block'; // Make modal visible
             modalMessage.textContent = message;
 
-            // Set a timeout to allow CSS to apply before moving the modal
             setTimeout(() => {
-                modal.querySelector('.modal-content').style.transform = 'translateX(0)'; // Move to center
+                modal.querySelector('.modal-content').style.transform = 'translateX(0)';
             }, 10); // Small delay to trigger the CSS transition
         }
 
-        span.onclick = function() {
+        span.onclick = function () {
             hideModal();
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target === modal) {
                 hideModal();
             }
@@ -156,12 +181,12 @@
 
         function hideModal() {
             const modalContent = modal.querySelector('.modal-content');
-            modalContent.style.transform = 'translateX(-100%)'; // Move back to the left
+            modalContent.style.transform = 'translateX(-100%)';
             setTimeout(() => {
-                modal.style.display = 'none'; // Hide modal after animation
-            }, 500); // Match this duration with the CSS transition duration
+                modal.style.display = 'none';
+            }, 500);
         }
     </script>
-    
 </body>
+
 </html>

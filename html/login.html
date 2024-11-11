@@ -16,8 +16,11 @@
             <span id="emailError" style="color: red;"></span>
 
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <span id="passwordError" style="color: red;"></span> <!-- Changed to passwordError -->
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <span id="togglePassword" class="eye-icon">👁️</span>
+            </div>
+            <span id="passwordError" style="color: red;"></span>
 
             <button type="submit">Log In</button>
         </form>
@@ -103,6 +106,27 @@
                     }
                 });
         });
+
+        // Toggle password visibility
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordField = document.getElementById("password");
+            togglePasswordVisibility(passwordField, this);
+        });
+
+        document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+            const confirmPasswordField = document.getElementById("confirm-password");
+            togglePasswordVisibility(confirmPasswordField, this);
+        });
+
+        function togglePasswordVisibility(field, icon) {
+            if (field.type === "password") {
+                field.type = "text";
+                icon.textContent = "🙈"; // Change to a different icon when visible
+            } else {
+                field.type = "password";
+                icon.textContent = "👁️"; // Change back to eye icon when hidden
+            }
+        }
 
         // Modal functionality
         const modal = document.getElementById("myModal");

@@ -82,6 +82,32 @@ a {
     color: var(--buttonColor);
 }
 
+/* Flex container for input and icon */
+.password-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+/* Style the password input field */
+.password-container input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    outline: none;
+}
+
+/* Style the eye icon */
+.eye-icon {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #555;
+    font-size: 1.2em;
+}
+
 /* Basic styling for the modal */
 .modal {
     display: none; /* Hidden by default */
