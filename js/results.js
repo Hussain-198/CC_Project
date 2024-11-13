@@ -1,3 +1,4 @@
+// Event listener for search form submission
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const query = document.getElementById('searchBox').value.toLowerCase();
@@ -32,7 +33,6 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             if (filteredResults.length === 0) {
                 resultsContainer.innerHTML = '<p>No results found.</p>';
             } else {
-                const loggedin = localStorage.getItem("isLoggedin") === "true";
                 filteredResults.forEach(item => {
                     const resultItem = document.createElement('div');
                     resultItem.classList.add('result-item', 'card', 'mb-3');
@@ -48,13 +48,16 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
                                     <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
                                     <p class="card-text"><strong>Ticket Price:</strong> ₹${item.ticket_price}</p>
                                     <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
-                                    <a class="btn btn-primary" href="${loggedin ? '../html/eventdetails.html' : '../html/login.html'}">Book tickets</a>
+                                    <a class="btn btn-primary book-ticket">Book tickets</a>
                                 </div>
                             </div>
                         </div>
                     `;
                     resultsContainer.appendChild(resultItem);
                 });
+
+                // Attach click event to each "Book tickets" button
+                attachBookTicketEvents();
             }
         })
         .catch(error => {
@@ -67,3 +70,18 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
 function filterByGenre() {
     document.getElementById('searchForm').dispatchEvent(new Event('submit'));
 }
+
+// Function to attach click event to each "Book tickets" button
+function attachBookTicketEvents() {
+    const allBookButtons = document.querySelectorAll('.book-ticket');
+    allBookButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const artistName = event.target.closest('.card-body').querySelector('h5').textContent.split(" ")[0];
+            localStorage.setItem("artistName", artistName);
+
+            const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check login status
+            window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
+        });
+    });
+}
+    

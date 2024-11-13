@@ -236,7 +236,7 @@ h1{
   width: 100%;
   height: fit-content;
   margin-top: 10%;
-  display: flex;
+  /* display: flex; */
   justify-content: space-around;
 }
 .footerLogo{
@@ -262,7 +262,7 @@ h1{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
 }
 #footerSubBtn{
   width: 100px;
@@ -294,4 +294,6 @@ h1{
 #footerLine {
   border-top: 2px solid white;  /* Change the color and thickness as needed */
   margin-top: 20px;             /* Adjust space above the footer line */
+  margin-left: 20px;
+  margin-right: 20px;
 }

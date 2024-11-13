@@ -3,158 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Event Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/eventdetails.css">
+    <link rel="stylesheet" href="../css/eventdetails.css">
 </head>
 <body>
-    
-
-<body>
   <!-- Header -->
-  <header class="bg-dark text-white text-center p-3">
-    <h1>ConcertCraze</h1>
+  <header class="text-center p-3">
+    <h1><div id="webName"><span>Concert</span><span id="second_word">Craze</span></div></h1>
     <nav>
-      <a href="#explore" class="text-white mx-2">Explore</a>
-      <a href="#upcoming" class="text-white mx-2">Upcoming Events</a>
-      <a href="#tickets" class="text-white mx-2">My Tickets</a>
+      <a href="../index.html" class=" mx-2"  id="exploreLink">Explore</a>
+
+      <a href="#upcoming" class=" mx-2" id="exploreLink">Upcoming Events</a>
+      <a href="#tickets" class=" mx-2" id="exploreLink">My Tickets</a>
     </nav>
   </header>
 
   <!-- Event Banner -->
-  <section class="event-banner text-center text-white py-5">
-    <h2>Rock Revolt: A Fusion of Power and Passion</h2>
-    <p>Experience a night of electrifying rock music with renowned bands and artists.</p>
-    <button class="btn btn-danger">345 Likes</button>
-    <button class="btn btn-outline-light">124 Shares</button>
+  <section class="event-banner text-center text-white py-5" id="event-banner">
+    <!-- Data will be dynamically added here -->
   </section>
 
   <!-- Event Details -->
-  <section class="container my-5">
-    <div class="row">
-      <div class="col-md-8">
-        <h3>Timing and Location</h3>
-        <div class="d-flex my-3">
-          <div class="me-5">
-            <h5>Date and Time</h5>
-            <p>Saturday, February 20<br>08:00 PM</p>
-          </div>
-          <div>
-            <h5>Place</h5>
-            <p>Central Park, New York, NY 10022<br>United States</p>
-          </div>
-        </div>
-        <div id="map" class="my-3" style="height: 300px;">
-          <!-- Insert Google Maps Embed API or static map here -->
-        </div>
-        <h4>About Event</h4>
-        <p>Rock Revolt: A Fusion of Power and Passion is an electrifying rock music event that brings together a diverse
-          lineup of talented rock bands and artists. The event aims to showcase the raw energy, intense passion, and
-          unique styles of each performer. Come experience the power of live rock music in an unforgettable setting.</p>
-      </div>
-      <div class="col-md-4 text-center">
-        <div class="p-4 bg-light rounded">
-          <h3>Price</h3>
-          <p class="display-4">$90</p>
-          <p class="text-success">10% OFF</p>
-          <button class="btn btn-primary">Purchase Ticket</button>
-        </div>
-      </div>
-    </div>
+  <section class="container my-5" id="event-details">
+    <!-- Event details will be added dynamically here -->
   </section>
 
   <!-- Footer -->
   <footer class="bg-dark text-white text-center py-4">
     <div class="container">
-      <p>&copy; 2022 ConcertCraze</p>
-      <!-- <div class="social-icons">
-        <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
-        <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-        <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
-      </div> -->
+      <p>&copy; 2024 ConcertCraze</p>
     </div>
   </footer>
 
   <!-- Bootstrap JS -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w75kycc6hFQ4A3LqPeH5dDqKsfj8lwfnGnFlt4iv5B0WqEm9jkVFIPwAFpmXKYZl" crossorigin="anonymous">
-  </script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <script type="module">
-    // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch the JSON data
+      fetch('../assets/json/details.json')  // Update with the actual path to your JSON file
+        .then(response => response.json())
+        .then(events => {
+          // Select containers for the event banner and details
+          const eventBanner = document.getElementById('event-banner');
+          const eventDetails = document.getElementById('event-details');
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
-  authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
-  projectId: "sample-firebase-ai-app-b83c0",
-  storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
-  messagingSenderId: "144531331956",
-  appId: "1:144531331956:web:eac7601b172cf9fcadea21"
-};
+          let artistName=localStorage.getItem("artistName");
+          
+          let artistNameToDisplay;
+          // Display the first event as an example (you can loop or choose how to display multiple events)
+          console.log(events);
+          events.forEach((event,x) => {
+                if(event["artist"].includes(artistName)){
+                    artistNameToDisplay=x;
+                }
+          });
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+          // console.log(artistNameToDisplay);
+          let event=events[artistNameToDisplay]
+          
+          
 
-// Add event listeners for like and share buttons
-document.addEventListener("DOMContentLoaded", function () {
-    const likeButton = document.querySelector(".btn-danger");
-    const shareButton = document.querySelector(".btn-outline-light");
-    const purchaseButton = document.querySelector(".btn-primary");
-    let likeCount = 345; // Initial like count (use real data if available)
-    let shareCount = 124; // Initial share count (use real data if available)
+          // Update Event Banner Section
+          const bannerContent = `
+          <div class="eventHeading">
+          <img id="eventImg" src="${event.image}" alt="${event.name}" class="img-fluid">
+            <h2 id="eventName">${event.artist} Live</h2>
+            <p id="eventName">${event.genre} concert at ${event.venue}, ${event.city}</p>
+            <div>
+            <button class="btn btn-danger" style="display: none;>Likes</button>
+            <button class="btn btn-outline-light" style="display: none;>Shares</button>
+          `;
+          eventBanner.innerHTML = bannerContent;
 
-    // Like button functionality
-    likeButton.addEventListener("click", function () {
-        likeCount += 1;
-        likeButton.textContent = `${likeCount} Likes`;
+          // Update Event Details Section
+          const detailsContent = `
+            <div class="row">
+              <div class="col-md-8">
+                <h3>Event Details</h3>
+                <div class="d-flex my-3">
+                  <div class="me-5">
+                    <h5>Date and Time</h5>
+                    <p>${event.date}<br>08:00 PM</p>
+                  </div>
+                  <div>
+                    <h5>Venue</h5>
+                    <p>${event.venue}<br>${event.city}</p>
+                  </div>
+                </div>
+                <h4>About Event</h4>
+                <p>Join us for a memorable night featuring ${event.artist} performing live. Enjoy the best of ${event.genre} music in an amazing venue.</p>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="p-4 bg-light rounded">
+                  <h3>Ticket Price</h3>
+                  <p class="display-4">&#8377;${event.ticket_price}</p>
+                  <button class="btn btn-primary purchaseBtn">Purchase Ticket</button>
+                </div>
+              </div>
+            </div>
+          `;
+          eventDetails.innerHTML = detailsContent;
+        })
+        .catch(error => console.error('Error fetching event data:', error));
     });
-
-    // Share button functionality
-    shareButton.addEventListener("click", function () {
-        shareCount += 1;
-        shareButton.textContent = `${shareCount} Shares`;
-        alert("Thanks for sharing!");
-    });
-
-    // Ticket purchase button functionality with Firebase Authentication check
-    purchaseButton.addEventListener("click", function () {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                alert("Thank you for purchasing the ticket!");
-                // Redirect to payment or confirmation page
-                window.location.href = "/payment.html";
-            } else {
-                alert("Please log in to purchase a ticket.");
-                window.location.href = "/login.html";
-            }
-        });
-    });
-
-    // Initialize Google Map (if you have an API key)
-    initMap();
-});
-
-// Google Maps Initialization (requires a valid Google Maps API key)
-function initMap() {
-    const eventLocation = { lat: 40.785091, lng: -73.968285 }; // Replace with actual coordinates
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: eventLocation,
-    });
-    const marker = new google.maps.Marker({
-        position: eventLocation,
-        map: map,
-    });
-}
-
   </script>
-</body>
-
-</html>
-
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -17,47 +16,41 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-// Fetching the data
+// Fetch and display concerts
 fetch("../assets/json/details.json")
   .then(response => {
-    // Check if the response is ok
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }
-    return response.json(); // Parse JSON data
+    return response.json();
   })
   .then(data => {
-    let displayedConcerts = 0; // Track how many concerts are displayed
-
-    // Function to create concert cards
+    let displayedConcerts = 0;
     const displayConcerts = (startIndex, count) => {
       for (let i = startIndex; i < Math.min(startIndex + count, data.length); i++) {
         createConcertCard(data[i], i);
       }
-      displayedConcerts += count; // Update the count of displayed concerts
+      displayedConcerts += count;
+      getAs();
     };
-
-    // Display the first 4 concerts initially
     displayConcerts(displayedConcerts, 4);
 
-    // Set up the button to load more concerts
     let viewBtn = document.getElementById("viewBtn");
     viewBtn.addEventListener("click", () => {
-      displayConcerts(displayedConcerts, 4); // Load the next 4 concerts
+      displayConcerts(displayedConcerts, 4);
       if (displayedConcerts >= data.length) {
-        viewBtn.style.display = 'none'; // Hide the button if there are no more concerts
+        viewBtn.style.display = 'none';
       }
     });
   })
   .catch(error => {
     console.error('Error fetching data:', error);
   });
+
 // Function to create a concert card
 function createConcertCard(concert, index) {
-  const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check if user is logged in
   let div = document.createElement("div");
-  div.className = "concert-card"; // Optional: add a class for styling
-
+  div.className = "concert-card";
   div.innerHTML = `
     <div class="card" style="width: 18rem;">
       <img class="card-img-top img-fluid" src="../assets/images/${concert.artist.split(" ").join("")}.jpeg" alt="${concert.artist} photo not found">
@@ -77,55 +70,54 @@ function createConcertCard(concert, index) {
         <p class="card-text">
           <img id="location-icon" src="../assets/images/352521_location_on_icon.png" alt=""> ${concert.city}
         </p>
-        <a class="btn btn-primary" href="${loggedin ? '../html/eventdetails.html' : '../html/login.html'}">Book tickets</a>
+        <a class="btn btn-primary">Book tickets</a>
       </div>
     </div>`;
-
   document.querySelector(".concertCards").appendChild(div);
 }
 
-document.getElementById("searchForm").addEventListener("submit", function (event) {
-  const searchTerm = document.getElementById("searchBox").value;
-  if (!searchTerm) {
-    event.preventDefault(); // Prevent submission if the input is empty
-    alert("Please enter a search term.");
-  }
-});
-// search box functionality
-
-let searchBox = document.getElementById("search-container");
-searchBox.addEventListener("click", () => {
-  window.location.href = "./html/results.html"
-})
-
-// Check user authentication state
+// User Authentication and Conditional Navigation
 onAuthStateChanged(auth, (user) => {
   const userGreeting = document.getElementById("userGreeting");
   const authButtons = document.getElementById("authButtons");
   const usernameDisplay = document.getElementById("usernameDisplay");
 
   if (user) {
-    // User is signed in
-
+    localStorage.setItem("isLoggedin", "true");
     const email = localStorage.getItem("email");
     const username = localStorage.getItem(email);
     usernameDisplay.textContent = `Welcome, ${username}!`;
-    userGreeting.style.display = "block"; // Show greeting
-    authButtons.style.display = "none"; // Hide auth buttons
+    userGreeting.style.display = "block";
+    authButtons.style.display = "none";
 
     // Logout functionality
     document.getElementById("logoutButton").addEventListener("click", () => {
       signOut(auth).then(() => {
-        // Sign-out successful.
         localStorage.removeItem("isLoggedin");
-        window.location.href = "index.html"; // Redirect to home after logout
+        window.location.href = "index.html";
       }).catch((error) => {
         console.error("Error signing out: ", error);
       });
     });
   } else {
-    // No user is signed in
-    userGreeting.style.display = "none"; // Hide greeting
-    authButtons.style.display = "block"; // Show auth buttons
+    localStorage.removeItem("isLoggedin");
+    userGreeting.style.display = "none";
+    authButtons.style.display = "block";
   }
+  getAs(); // Re-run getAs to ensure correct links are set
 });
+
+function getAs() {
+  let allAnchors = document.querySelectorAll(".card-body a");
+  allAnchors.forEach(anchor => {
+    anchor.addEventListener("click", () => {
+      localStorage.setItem("artistName", anchor.parentElement.querySelector("h5").textContent.split(" ")[0]);
+      const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check updated login status
+      window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
+    });
+  });
+}
+
+document.getElementById("search-container").addEventListener("click", () => {
+  window.location.href = "../html/results.html";
+})

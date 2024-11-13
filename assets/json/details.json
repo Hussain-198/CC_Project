@@ -37,13 +37,13 @@
       "image":"../assets/images/vijayantony.jpeg"
     },
     {
-      "artist": "Jonita Gandhi",
-      "date": "2024-11-30",
-      "venue": "MMRDA Ground, Mumbai",
+      "artist": "Martin Garrix",
+      "date": "2025-03-12",
+      "venue": "D.Y. Patil Stadium,  Navi Mumbai",
       "city": "Mumbai",
-      "ticket_price": 1200,
-      "genre": "Bollywood",
-      "image":"../assets/images/jonitagandhi.jpeg"
+      "ticket_price": 500,
+      "genre": "Hollywood",
+      "image":"../assets/images/martingarrix.jpeg"
     },
     {
       "artist": "A R Rahman",
