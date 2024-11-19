@@ -6,7 +6,7 @@
   }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: var(--fontFamily);
     line-height: 1.5;
     background-color: #f8f9fa;
 }
@@ -15,9 +15,9 @@ header h1 span {
     font-size: 2rem;
 }
 
-#eventTitle{
-    color: var(--buttonColor);
-}
+    #eventTitle{
+        color: var(--buttonColor);
+    }
 
 
 #eventName{
