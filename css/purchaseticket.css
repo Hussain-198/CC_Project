@@ -1,0 +1,104 @@
+:root{
+    --buttonColor: #FF6600;
+    --hoverColor: rgb(147, 14, 14);
+    --fontFamily: sans-serif;
+    --fontColor: white;
+  }
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    background-color: #f8f9fa;
+}
+
+header h1 span {
+    font-size: 2rem;
+}
+
+#eventTitle{
+    color: var(--buttonColor);
+}
+
+
+#eventName{
+    color: black;
+  }
+
+  #exploreLink{
+    color: black;
+  }
+  
+  #second_word{
+    color: var(--buttonColor);
+    font-family: var(--fontFamily);
+  }
+
+
+header nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+header {
+    background-color: white !important;
+    /* color: #ffffff; */
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  }
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.bg-light {
+    border: 1px solid #ddd;
+}
+
+#addTicket{
+    background-color: var(--buttonColor);
+    border-color: var(--buttonColor);
+}
+
+#addTicket:hover{
+    background-color: var(--hoverColor);
+    border-color: var(--hoverColor);
+}
+
+button#payNow {
+    background-color:var(--buttonColor);
+    border: none;
+    border-color: var(--buttonColor);
+}
+
+button#payNow:hover {
+    background-color: var(--hoverColor);
+    border-color: var(--hoverColor);
+}
+
+.img_container{
+    width: 40%;
+    display: flex ;
+    justify-content: center ;
+    align-items: center ;
+}
+
+#eventImage{
+    display: flex ;
+    justify-content: center ;
+    align-items: center;
+}
+
+.container{
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#footerLine {
+    border-top: 2px solid white ;  /* Change the color and thickness as needed */
+    margin-top: 20px;             /* Adjust space above the footer line */
+    margin-left: 20px;
+    margin-right: 20px;
+    
+  }

@@ -13,7 +13,7 @@
   }
   
   body {
-    font-family: Arial, sans-serif;
+    font-family: var(--fontFamily);
   }
   
   header, footer {
@@ -91,5 +91,12 @@
   .social-icons img {
     width: 24px;
     margin: 0 10px;
+  }
+  #footerLine {
+    border-top: 2px solid white ;  /* Change the color and thickness as needed */
+    margin-top: 20px;             /* Adjust space above the footer line */
+    margin-left: 20px;
+    margin-right: 20px;
+    
   }
   
