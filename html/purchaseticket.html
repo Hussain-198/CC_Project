@@ -40,7 +40,7 @@
                 <button id="addTicket" class="btn btn-success">Add Ticket</button>
             </div>
 
-            <div class="col-md-4 ">
+            <div class="col-md-4">
                 <div class="p-4 bg-light rounded">
                     <h4>Summary</h4>
                     <div class="d-flex justify-content-between">
@@ -68,8 +68,9 @@
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4">
         <div id="footerLine"></div>
-            <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
-      </footer>
+        <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
+    </footer>
+
     <!-- JavaScript -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -117,27 +118,31 @@
                     const ticketForm = document.createElement("div");
                     ticketForm.className = "mb-3 ticket-form";
                     ticketForm.innerHTML = `
-            <h5>Ticket ${ticketCount}</h5>
-            <div class="row">
-              <div class="col-md-6">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" required>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" required>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" placeholder="Email" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Phone</label>
-              <input type="tel" class="form-control" placeholder="Phone Number" required>
-            </div>
-            <button class="btn btn-danger btn-sm remove-ticket">Remove</button>
-          `;
+                        <h5>Ticket ${ticketCount}</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" required>
+                                <span class="text-danger small" id="firstNameError"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" required>
+                                <span class="text-danger small" id="lastNameError"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="Email" required>
+                            <span class="text-danger small" id="emailError"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" placeholder="Phone Number" required>
+                            <span class="text-danger small" id="numberError"></span>
+                        </div>
+                        <button class="btn btn-danger btn-sm remove-ticket">Remove</button>
+                    `;
 
                     ticketsContainer.appendChild(ticketForm);
                     calculateTotals();
@@ -155,14 +160,97 @@
 
                 // Pay Now button click handler
                 payNowButton.addEventListener("click", () => {
-                    if (ticketCount === 0) {
-                        alert("Please add at least one ticket!");
-                        return;
-                    }
+    if (ticketCount === 0) {
+        alert("Please add at least one ticket!");
+        return;
+    }
 
-                    const total = totalElement.textContent;
-                    alert(`Payment of ${total} processed successfully!`);
-                });
+    let allValid = true;
+
+    // Validate all ticket forms
+    const tickets = Array.from(document.querySelectorAll(".ticket-form")).map((form, index) => {
+        const firstNameInput = form.querySelector('input[placeholder="First Name"]');
+        const lastNameInput = form.querySelector('input[placeholder="Last Name"]');
+        const emailInput = form.querySelector('input[placeholder="Email"]');
+        const phoneInput = form.querySelector('input[placeholder="Phone Number"]');
+
+        const firstNameError = form.querySelector("#firstNameError");
+        const lastNameError = form.querySelector("#lastNameError");
+        const emailError = form.querySelector("#emailError");
+        const phoneError = form.querySelector("#numberError");
+
+        // Reset error messages
+        firstNameError.textContent = "";
+        lastNameError.textContent = "";
+        emailError.textContent = "";
+        phoneError.textContent = "";
+
+        // Validate first name
+        if (!firstNameInput.value.trim()) {
+            firstNameError.textContent = "Please enter your first name";
+            allValid = false;
+        } else{
+            firstNameError.textContent = "";
+        }
+
+        // Validate last name
+        if (!lastNameInput.value.trim()) {
+            lastNameError.textContent = "Please enter your last name";
+            allValid = false;
+        }  else{
+            lastNameError.textContent = "";
+            }
+
+
+        // Validate email
+        if (!emailInput.value.trim() || !validateEmail(emailInput.value)) {
+            emailError.textContent = "Please enter a valid email";
+            allValid = false;
+        } else{
+            emailError.textContent = "";
+        }
+
+        // Validate phone number
+        if (!phoneInput.value.trim() || !validatePhoneNumber(phoneInput.value)) {
+            phoneError.textContent = "Please enter a valid phone number";
+            allValid = false;
+        } else{
+            phoneError.textContent = "";
+        }
+
+        return {
+            ticketNo: index + 1,
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            email: emailInput.value,
+            phone: phoneInput.value,
+        };
+    });
+
+    if (!allValid) {
+        return; // Stop if validation fails
+    }
+
+    // Prepare payment details
+    const totalAmount = parseFloat(totalElement.textContent.replace(/[^\d.-]/g, ""));
+    localStorage.setItem("paymentDetails", JSON.stringify({ totalAmount, tickets }));
+
+    // Redirect to payment page
+    window.location.href = "confirmation.html";
+});
+
+
+                // Email validation helper
+                function validateEmail(email) {
+                    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return re.test(String(email).toLowerCase());
+                }
+
+                // Phone number validation helper
+                function validatePhoneNumber(phone) {
+                    const re = /^[0-9]{10}$/;
+                    return re.test(phone);
+                }
             }
         });
     </script>
