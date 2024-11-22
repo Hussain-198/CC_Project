@@ -1,0 +1,65 @@
+:root{
+    --buttonColor: #FF6600;
+    --hoverColor: rgb(147, 14, 14);
+    --fontFamily: sans-serif;
+    --fontColor: white;
+  }
+
+body {
+    background-color: #f8f9fa;
+    font-family: var(--fontFamily);
+}
+
+h1, h2, h4 {
+    color: #343a40;
+}
+
+.header{
+    background-color: white !important;
+    /* color: #ffffff; */
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#second_word{
+    color: var(--buttonColor);
+    font-family: var(--fontFamily);
+  }
+
+  header nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+#ticketDetails div {
+    background: #fdfdfd;
+    border-left: 4px solid #007bff;
+}
+
+#eventTitle{
+    font-family: var(--fontFamily);
+    color: var(--buttonColor);
+}
+#eventImage{
+    width: 40%;
+    height: 40%;
+}
+
+#confirmPayment{
+    background-color: var(--buttonColor);
+    border-color: var(--buttonColor);
+}
+
+#confirmPayment:hover{
+    background-color: var(--hoverColor);
+    border-color: var(--hoverColor);
+}

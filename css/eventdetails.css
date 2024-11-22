@@ -51,10 +51,9 @@
   .purchaseBtn:hover{
     background-color: var(--hoverColor) !important;
   }
-  /* .eventHeading{
-    display: flex;
-
-  } */
+  .eventHeading{
+    color: black;
+}
 
   #eventImg{
     width: 60%;
