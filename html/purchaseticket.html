@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/purchaseticket.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="text-center p-3">
+        <h1>
+            <div id="webName">
+                <span>Concert</span>
+                <span id="second_word">Craze</span>
+            </div>
+        </h1>
+        <nav>
+            <a href="../index.html" class="mx-2">Explore</a>
+            <a href="#" class="mx-2">Upcoming Events</a>
+            <a href="#" class="mx-2">My Tickets</a>
+        </nav>
+    </header>
+
+    <!-- Purchase Ticket Section -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4" id="eventTitle">Loading Event...</h2>
+        <div class="img_container text-center">
+            <img id="eventImage" class="d-block mx-auto mb-4 img-fluid" src="" alt="Event Image" style="width: 100%;">
+        </div>
+        <p class="text-center text-muted" id="eventDescription"></p>
+
+        <div class="row w-100">
+            <div class="col-md-8">
+                <h3>Ticket Information</h3>
+                <div id="ticketsContainer" class="mb-4"></div>
+                <button id="addTicket" class="btn btn-success">Add Ticket</button>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 bg-light rounded">
+                    <h4>Summary</h4>
+                    <div class="d-flex justify-content-between">
+                        <span>Price per Ticket:</span>
+                        <span id="ticketPrice">&#8377;0</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">&#8377;0</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Discount (10%):</span>
+                        <span id="discount">-&#8377;0</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Total:</span>
+                        <span id="total">&#8377;0</span>
+                    </div>
+                    <button id="payNow" class="btn btn-primary w-100 mt-3">Pay Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div id="footerLine"></div>
+        <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const eventData = JSON.parse(localStorage.getItem("selectedEvent"));
+
+            if (eventData) {
+                document.getElementById("eventTitle").textContent = eventData.title;
+                document.getElementById("eventDescription").textContent = eventData.description;
+                document.getElementById("ticketPrice").textContent = `₹${eventData.ticketPrice}`;
+                const eventImage = document.getElementById("eventImage");
+                eventImage.src = eventData.image;
+                eventImage.style.display = "block";
+
+                // Initialize the ticketing system
+                initTicketSystem(eventData.ticketPrice);
+            } else {
+                console.error("No event data found!");
+            }
+
+            function initTicketSystem(ticketPrice) {
+                let ticketCount = 0;
+
+                const ticketsContainer = document.getElementById("ticketsContainer");
+                const addTicketButton = document.getElementById("addTicket");
+                const payNowButton = document.getElementById("payNow");
+                const subtotalElement = document.getElementById("subtotal");
+                const discountElement = document.getElementById("discount");
+                const totalElement = document.getElementById("total");
+
+                // Function to calculate the totals
+                function calculateTotals() {
+                    const subtotal = ticketCount * ticketPrice;
+                    const discount = subtotal * 0.1; // 10% discount
+                    const total = subtotal - discount;
+
+                    subtotalElement.textContent = `₹${subtotal}`;
+                    discountElement.textContent = `-₹${discount.toFixed(2)}`;
+                    totalElement.textContent = `₹${total.toFixed(2)}`;
+                }
+
+                // Function to add a new ticket form
+                function addTicket() {
+                    ticketCount++;
+
+                    const ticketForm = document.createElement("div");
+                    ticketForm.className = "mb-3 ticket-form";
+                    ticketForm.innerHTML = `
+                        <h5>Ticket ${ticketCount}</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" required>
+                                <span class="text-danger small" id="firstNameError"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" required>
+                                <span class="text-danger small" id="lastNameError"></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" placeholder="Email" required>
+                            <span class="text-danger small" id="emailError"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" placeholder="Phone Number" required>
+                            <span class="text-danger small" id="numberError"></span>
+                        </div>
+                        <button class="btn btn-danger btn-sm remove-ticket">Remove</button>
+                    `;
+
+                    ticketsContainer.appendChild(ticketForm);
+                    calculateTotals();
+
+                    // Add functionality to remove the ticket
+                    ticketForm.querySelector(".remove-ticket").addEventListener("click", () => {
+                        ticketCount--;
+                        ticketForm.remove();
+                        calculateTotals();
+                    });
+                }
+
+                // Add ticket button click handler
+                addTicketButton.addEventListener("click", addTicket);
+
+                // Pay Now button click handler
+                payNowButton.addEventListener("click", () => {
+    if (ticketCount === 0) {
+        alert("Please add at least one ticket!");
+        return;
+    }
+
+    let allValid = true;
+
+    // Validate all ticket forms
+    const tickets = Array.from(document.querySelectorAll(".ticket-form")).map((form, index) => {
+        const firstNameInput = form.querySelector('input[placeholder="First Name"]');
+        const lastNameInput = form.querySelector('input[placeholder="Last Name"]');
+        const emailInput = form.querySelector('input[placeholder="Email"]');
+        const phoneInput = form.querySelector('input[placeholder="Phone Number"]');
+
+        const firstNameError = form.querySelector("#firstNameError");
+        const lastNameError = form.querySelector("#lastNameError");
+        const emailError = form.querySelector("#emailError");
+        const phoneError = form.querySelector("#numberError");
+
+        // Reset error messages
+        firstNameError.textContent = "";
+        lastNameError.textContent = "";
+        emailError.textContent = "";
+        phoneError.textContent = "";
+
+        // Validate first name
+        if (!firstNameInput.value.trim()) {
+            firstNameError.textContent = "Please enter your first name";
+            allValid = false;
+        } else{
+            firstNameError.textContent = "";
+        }
+
+        // Validate last name
+        if (!lastNameInput.value.trim()) {
+            lastNameError.textContent = "Please enter your last name";
+            allValid = false;
+        }  else{
+            lastNameError.textContent = "";
+            }
+
+
+        // Validate email
+        if (!emailInput.value.trim() || !validateEmail(emailInput.value)) {
+            emailError.textContent = "Please enter a valid email";
+            allValid = false;
+        } else{
+            emailError.textContent = "";
+        }
+
+        // Validate phone number
+        if (!phoneInput.value.trim() || !validatePhoneNumber(phoneInput.value)) {
+            phoneError.textContent = "Please enter a valid phone number";
+            allValid = false;
+        } else{
+            phoneError.textContent = "";
+        }
+
+        return {
+            ticketNo: index + 1,
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            email: emailInput.value,
+            phone: phoneInput.value,
+        };
+    });
+
+    if (!allValid) {
+        return; // Stop if validation fails
+    }
+
+    // Prepare payment details
+    const totalAmount = parseFloat(totalElement.textContent.replace(/[^\d.-]/g, ""));
+    localStorage.setItem("paymentDetails", JSON.stringify({ totalAmount, tickets }));
+
+    // Redirect to payment page
+    window.location.href = "confirmation.html";
+});
+
+
+                // Email validation helper
+                function validateEmail(email) {
+                    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return re.test(String(email).toLowerCase());
+                }
+
+                // Phone number validation helper
+                function validatePhoneNumber(phone) {
+                    const re = /^[0-9]{10}$/;
+                    return re.test(phone);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
