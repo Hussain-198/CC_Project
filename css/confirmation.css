@@ -14,10 +14,16 @@ h1, h2, h4 {
     color: #343a40;
 }
 
+.container{
+    margin-top: 150px !important;
+}
 .header{
     background-color: white !important;
     /* color: #ffffff; */
     text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
@@ -63,3 +69,11 @@ h1, h2, h4 {
     background-color: var(--hoverColor);
     border-color: var(--hoverColor);
 }
+
+#footerLine {
+    border-top: 2px solid white ; /* Change the color and thickness as needed */
+   margin-top: 20px;             /* Adjust space above the footer line */
+   margin-left: 20px;
+   margin-right: 20px;
+   
+ }

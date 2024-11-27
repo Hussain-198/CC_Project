@@ -26,10 +26,12 @@
     font-family: var(--fontFamily);
   }
   
-  header, footer {
+  header{
     background-color: white !important;
     /* color: #ffffff; */
     text-align: center;
+    position: fixed;
+    width: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   }
   
@@ -41,6 +43,10 @@
     color: black;
   }
   
+  #artistName{
+    margin-top: 20px;
+    color: var(--buttonColor);
+  }
   #second_word{
     color: var(--buttonColor);
     font-family: var(--fontFamily);
@@ -53,6 +59,7 @@
   }
   .eventHeading{
     color: black;
+    margin-top: 100px;
 }
 
   #eventImg{
