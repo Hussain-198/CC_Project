@@ -14,7 +14,7 @@
     <nav>
       <a href="../index.html" class="mx-2">Explore</a>
       <a href="#upcoming" class="mx-2">Upcoming Events</a>
-      <a href="#tickets" class="mx-2">My Tickets</a>
+      <a href="../html/mytickets.html" class="mx-2">My Tickets</a>
     </nav>
   </header>
 
@@ -100,6 +100,8 @@
             const eventData = {
               title: `${event.artist} Live`,
               description: `Join us for a memorable night featuring ${event.artist} performing live.`,
+              date:event.date,
+              venue: event.venue,
               ticketPrice: event.ticket_price,
               image: event.image,
             };
