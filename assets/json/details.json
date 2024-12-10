@@ -70,6 +70,6 @@
       "city": "Chennai",
       "ticket_price": 499,
       "genre": "Kollywood",
-      "image":"../assets/images/paaldabba.jpeg"
+      "image":"https://res.cloudinary.com/dwzmsvp7f/image/upload/f_auto,w_1280/c_crop%2Cg_custom%2Fv1729147234%2Fcm9p0yhepb9m9ykypngi.jpg"
     }
 ]

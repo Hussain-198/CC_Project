@@ -35,8 +35,11 @@
         <div class="row w-100">
             <div class="col-md-8">
                 <h3>Ticket Information</h3>
-                <div id="ticketsContainer" class="mb-4"></div>
+                <div id="ticketsContainer" class="mb-4">
+                    <p id="ticketCountText">Number of Tickets: 0</p>
+                </div>
                 <button id="addTicket" class="btn btn-success">Add Ticket</button>
+                <button id="removeTicket" class="btn btn-danger">Remove Ticket</button>
             </div>
 
             <div class="col-md-4">
@@ -92,14 +95,14 @@
             function initTicketSystem(ticketPrice) {
                 let ticketCount = 0;
 
-                const ticketsContainer = document.getElementById("ticketsContainer");
+                const ticketCountText = document.getElementById("ticketCountText");
                 const addTicketButton = document.getElementById("addTicket");
-                const payNowButton = document.getElementById("payNow");
+                const removeTicketButton = document.getElementById("removeTicket");
                 const subtotalElement = document.getElementById("subtotal");
                 const discountElement = document.getElementById("discount");
                 const totalElement = document.getElementById("total");
 
-                // Function to calculate the totals
+                // Function to calculate totals
                 function calculateTotals() {
                     const subtotal = ticketCount * ticketPrice;
                     const discount = subtotal * 0.1; // 10% discount
@@ -110,155 +113,45 @@
                     totalElement.textContent = `₹${total.toFixed(2)}`;
                 }
 
-                // Function to add a new ticket form
-                function addTicket() {
-                    ticketCount++;
-
-                    const ticketForm = document.createElement("div");
-                    ticketForm.className = "mb-3 ticket-form";
-                    ticketForm.innerHTML = `
-                        <h5>Ticket ${ticketCount}</h5>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="form-label">First Name</label>
-                                <input type="text" class="form-control" placeholder="First Name" required>
-                                <span class="text-danger small" id="firstNameError"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Last Name</label>
-                                <input type="text" class="form-control" placeholder="Last Name" required>
-                                <span class="text-danger small" id="lastNameError"></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="Email" required>
-                            <span class="text-danger small" id="emailError"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Phone</label>
-                            <input type="tel" class="form-control" placeholder="Phone Number" required>
-                            <span class="text-danger small" id="numberError"></span>
-                        </div>
-                        <button class="btn btn-danger btn-sm remove-ticket">Remove</button>
-                    `;
-
-                    ticketsContainer.appendChild(ticketForm);
+                // Function to update ticket count display
+                function updateTicketCount() {
+                    ticketCountText.textContent = `Number of Tickets: ${ticketCount}`;
                     calculateTotals();
-
-                    // Add functionality to remove the ticket
-                    ticketForm.querySelector(".remove-ticket").addEventListener("click", () => {
-                        ticketCount--;
-                        ticketForm.remove();
-                        calculateTotals();
-                    });
                 }
 
                 // Add ticket button click handler
-                addTicketButton.addEventListener("click", addTicket);
+                addTicketButton.addEventListener("click", () => {
+                    ticketCount++;
+                    updateTicketCount();
+                });
+
+                // Remove ticket button click handler
+                removeTicketButton.addEventListener("click", () => {
+                    if (ticketCount > 0) {
+                        ticketCount--;
+                        updateTicketCount();
+                    }
+                });
 
                 // Pay Now button click handler
-                payNowButton.addEventListener("click", () => {
-    if (ticketCount === 0) {
-        alert("Please add at least one ticket!");
-        return;
-    }
-    // else{
-        
-    //         const username = {
-    //          toname:username.name
-    //         };
+                document.getElementById("payNow").addEventListener("click", () => {
+                    if (ticketCount === 0) {
+                        alert("Please add at least one ticket!");
+                        return;
+                    }
 
-    //         // Save event details in localStorage
-    //         localStorage.setItem('username', JSON.stringify(eventData));
-    // }
+                    // Prepare payment details
+                    const totalAmount = parseFloat(totalElement.textContent.replace(/[^\d.-]/g, ""));
+                    const paymentDetails = {
+                        totalAmount,
+                        ticketCount,
+                    };
 
-    let allValid = true;
+                    localStorage.setItem("paymentDetails", JSON.stringify(paymentDetails));
 
-    // Validate all ticket forms
-    const tickets = Array.from(document.querySelectorAll(".ticket-form")).map((form, index) => {
-        const firstNameInput = form.querySelector('input[placeholder="First Name"]');
-        const lastNameInput = form.querySelector('input[placeholder="Last Name"]');
-        const emailInput = form.querySelector('input[placeholder="Email"]');
-        const phoneInput = form.querySelector('input[placeholder="Phone Number"]');
-
-        const firstNameError = form.querySelector("#firstNameError");
-        const lastNameError = form.querySelector("#lastNameError");
-        const emailError = form.querySelector("#emailError");
-        const phoneError = form.querySelector("#numberError");
-
-        // Reset error messages
-        firstNameError.textContent = "";
-        lastNameError.textContent = "";
-        emailError.textContent = "";
-        phoneError.textContent = "";
-
-        // Validate first name
-        if (!firstNameInput.value.trim()) {
-            firstNameError.textContent = "Please enter your first name";
-            allValid = false;
-        } else{
-            firstNameError.textContent = "";
-        }
-
-        // Validate last name
-        if (!lastNameInput.value.trim()) {
-            lastNameError.textContent = "Please enter your last name";
-            allValid = false;
-        }  else{
-            lastNameError.textContent = "";
-            }
-
-
-        // Validate email
-        if (!emailInput.value.trim() || !validateEmail(emailInput.value)) {
-            emailError.textContent = "Please enter a valid email";
-            allValid = false;
-        } else{
-            emailError.textContent = "";
-        }
-
-        // Validate phone number
-        if (!phoneInput.value.trim() || !validatePhoneNumber(phoneInput.value)) {
-            phoneError.textContent = "Please enter a valid phone number";
-            allValid = false;
-        } else{
-            phoneError.textContent = "";
-        }
-
-        return {
-            ticketNo: index + 1,
-            firstName: firstNameInput.value,
-            lastName: lastNameInput.value,
-            email: emailInput.value,
-            phone: phoneInput.value,
-        };
-    });
-
-    if (!allValid) {
-        return; // Stop if validation fails
-    }
-
-    // Prepare payment details
-    const totalAmount = parseFloat(totalElement.textContent.replace(/[^\d.-]/g, ""));
-    localStorage.setItem("paymentDetails", JSON.stringify({ totalAmount, tickets }));
-
-    // Redirect to payment page
-    window.location.href = "confirmation.html";
-});
-
-
-                // Email validation helper
-                function validateEmail(email) {
-                    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    return re.test(String(email).toLowerCase());
-                }
-
-                // Phone number validation helper
-                function validatePhoneNumber(phone) {
-                    const re = /^[0-9]{10}$/;
-                    return re.test(phone);
-                }
+                    // Redirect to confirmation or payment page
+                    window.location.href = "confirmation.html";
+                });
             }
         });
     </script>

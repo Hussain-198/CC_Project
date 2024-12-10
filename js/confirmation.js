@@ -2,95 +2,88 @@ document.addEventListener("DOMContentLoaded", function () {
     const paymentDetails = JSON.parse(localStorage.getItem("paymentDetails"));
     const eventDetails = JSON.parse(localStorage.getItem("selectedEvent"));
 
-    if (paymentDetails && eventDetails) {
-        // Load Event Details
-        document.getElementById("eventTitle").textContent = eventDetails.title;
-        document.getElementById("eventDescription").textContent = eventDetails.description;
-        const eventImage = document.getElementById("eventImage");
-        eventImage.src = eventDetails.image;
-        eventImage.style.display = "block";
-
-        // Load Payment Summary
-        document.getElementById("totalAmount").textContent = `₹${paymentDetails.totalAmount}`;
-
-        // Load Ticket Details
-        const ticketDetailsContainer = document.getElementById("ticketDetails");
-        paymentDetails.tickets.forEach(ticket => {
-            const ticketElement = document.createElement("div");
-            ticketElement.className = "mb-3 p-3 border rounded";
-            ticketElement.innerHTML = `
-                <p><strong>Ticket #${ticket.ticketNo}</strong></p>
-                <p>Name: ${ticket.firstName} ${ticket.lastName}</p>
-                <p>Email: ${ticket.email}</p>
-                <p>Phone: ${ticket.phone}</p>
-            `;
-            ticketDetailsContainer.appendChild(ticketElement);
-        });
-    } else {
+    // Validate payment and event details
+    if (!paymentDetails || !eventDetails) {
         console.error("No payment or event details found!");
+        alert("Payment or event details are missing. Please try again.");
+        window.location.href = "../index.html"; // Redirect to home page
+        return;
     }
 
-    emailjs.init("6Kg5M-hZ9O2Sxbau7");
+    // Load Event Details
+    document.getElementById("eventTitle").textContent = eventDetails.title;
+    document.getElementById("eventDescription").textContent = eventDetails.description;
+    const eventImage = document.getElementById("eventImage");
+    eventImage.src = eventDetails.image;
+    eventImage.style.display = "block";
 
+    // Load Payment Summary
+    document.getElementById("totalAmount").textContent = `₹${paymentDetails.totalAmount}`;
+
+    // Display Ticket Summary (Number of Tickets Booked)
+    const ticketSummaryContainer = document.getElementById("ticketDetails");
+    const ticketCount = paymentDetails.tickets?.length || paymentDetails.ticketCount || 0;
+
+    const ticketSummaryElement = document.createElement("div");
+    ticketSummaryElement.className = "mb-3 p-3 border rounded";
+    ticketSummaryElement.innerHTML = `
+        <p><strong>Total Tickets Booked:</strong> ${ticketCount}</p>
+    `;
+    ticketSummaryContainer.appendChild(ticketSummaryElement);
+
+    // Initialize EmailJS
+    emailjs.init("6Kg5M-hZ9O2Sxbau7");
+    
+    // console.log(recipientEmail);
+    
+    
+    // console.log(username);
+    
     // Confirm Payment Button
     document.getElementById("confirmPayment").addEventListener("click", async function () {
-        const paymentDetails = JSON.parse(localStorage.getItem("paymentDetails"));
-        const eventDetails = JSON.parse(localStorage.getItem("selectedEvent"));
+        // Validate recipient email
+        const recipientEmail =localStorage.getItem("email");
+        const currentUserEmail = localStorage.getItem("email");
+        const username = localStorage.getItem(currentUserEmail);
+        
+        
 
-        if (paymentDetails && eventDetails) {
-            // Prepare the email content
-            let ticketDetailsContent = '';
-            paymentDetails.tickets.forEach(ticket => {
-                ticketDetailsContent += `
-                    <p><strong>Ticket #${ticket.ticketNo}</strong></p>
-                    <p>Name: ${ticket.firstName} ${ticket.lastName}</p>
-                    <p>Email: ${ticket.email}</p>
-                    <p>Phone: ${ticket.phone}</p>
-                    <hr />
-                `;
-            });
+        if (!recipientEmail) {
+            alert("No email address found for the recipient.");
+            return;
+        }
 
-            // Get the recipient email and name
-            const recipientEmail = paymentDetails.tickets[0].email;
-            const recipientName = `${paymentDetails.tickets[0].firstName} ${paymentDetails.tickets[0].lastName}`;
+        // Prepare email content
+        const emailData = {
+            to_email: recipientEmail,
+            to_name: username,
+            eventTitle: eventDetails.title,
+            eventDescription: eventDetails.description,
+            eventDate: eventDetails.date || "TBD",
+            eventVenue: eventDetails.venue || "TBD",
+            totalAmount: paymentDetails.totalAmount,
+            ticketSummary: `Total Tickets Booked: ${ticketCount}`,
+        };
 
-            if (!recipientEmail) {
-                alert("No email address found for the recipient.");
-                return;
-            }
+        try {
+            // Send email using EmailJS
+            const response = await emailjs.send("service_zf7m9se", "template_upb839h", emailData);
+            console.log("Email sent successfully:", response);
 
-            // Prepare email data
-            const emailData = {
-                to_email: recipientEmail,
-                to_name: recipientName,
-                eventTitle: eventDetails.title,
-                eventDescription: eventDetails.description,
-                eventDate: eventDetails.date || "TBD",
-                eventVenue: eventDetails.venue || "TBD",
-                totalAmount: paymentDetails.totalAmount,
-                ticketDetails: ticketDetailsContent
-            };
+            // Display success message
+            alert("Payment Confirmed! Your ticket details have been sent to your email.");
 
-            try {
-                // Send email using EmailJS
-                const response = await emailjs.send('service_zf7m9se', 'template_upb839h', emailData);
-                console.log('Email sent successfully:', response);
-                alert("Payment Confirmed! Your ticket details have been sent to your email.");
+            // Save ticket details to 'myTickets' in localStorage
+            let myTickets = JSON.parse(localStorage.getItem("myTickets")) || [];
+            myTickets.push({ eventDetails, ticketsCount: ticketCount });
+            localStorage.setItem("myTickets", JSON.stringify(myTickets));
 
-                // Save ticket details to 'myTickets' in localStorage for My Tickets page
-                let myTickets = JSON.parse(localStorage.getItem("myTickets")) || [];
-                myTickets.push({ eventDetails, tickets: paymentDetails.tickets });
-                localStorage.setItem("myTickets", JSON.stringify(myTickets));
-
-                // Clear the payment details from localStorage and navigate to the home page
-                localStorage.removeItem("paymentDetails");
-                window.location.href = "../index.html";
-            } catch (error) {
-                console.error('Failed to send email:', error);
-                alert("There was an issue sending your ticket details. Please try again.");
-            }
-        } else {
-            alert("No payment or event details found!");
+            // Clear payment details and navigate to home page
+            localStorage.removeItem("paymentDetails");
+            window.location.href = "../index.html";
+        } catch (error) {
+            console.error("Failed to send email:", error);
+            alert("There was an issue sending your ticket details. Please try again later.");
         }
     });
 });
