@@ -85,6 +85,11 @@ main {
     border-top: 2px solid white ; /* Change the color and thickness as needed */
    margin-top: 20px;             /* Adjust space above the footer line */
    margin-left: 20px;
-   margin-right: 20px;
-   
+   margin-right: 20px;   
  }
+
+footer{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}

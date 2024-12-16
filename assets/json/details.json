@@ -1,12 +1,12 @@
 [
     {
-      "artist": "Dua Lipa",
-      "date": "2024-11-30",
-      "venue": "Mumbai's MMRDA Grounds",
-      "city": "Mumbai",
-      "ticket_price": 8000,
-      "genre": "Hollywood",
-      "image":"../assets/images/dualipa.jpeg"
+      "artist": "Asal Kolaar",
+      "date": "2024-12-31",
+      "venue": "YMCA, Royapettah",
+      "city": "Chennai",
+      "ticket_price": 199,
+      "genre": "Kollywood",
+      "image":"../assets/images/asalkolaar.jpeg"
     },
     {
       "artist": "Anirudh",

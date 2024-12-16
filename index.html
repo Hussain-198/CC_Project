@@ -14,15 +14,20 @@
     <header class="header">
         <img id="logo" src="/assets/images/a385b999-0249-48cc-9cee-bc88ff1b961a.jpg" alt="Eventlogo" width="5%">
         <div id="webName"><span>Concert</span><span id="second_word">Craze</span></div>
-        <div id="userGreeting" style="display: none;">
+
+        <button id="hamburger" class="hamburger" style="color: black;">
+            ☰
+        </button>
+        <!-- Popup Menu -->
+        <div id="popupMenu" class="popup-menu">
+            <a href="#">Explore</a>
+            <a href="#">Upcoming Events</a>
+            <a href="#" id="popupMyTickets">My Tickets</a>
             <span id="usernameDisplay"></span>
-            <button id="logoutButton">Log Out</button>
-        </div>
-        <div id="authButtons" style="display: block;">
-            <a href="/html/login.html"><button id="logBtn" type="button">Log In</button></a>
-            <a href="/html/signup.html"><button id="signBtn">Sign Up.</button></a>
+            <button id="popupLogoutButton" style="display: none;">Log Out</button>
         </div>
     </header>
+
     <main>
         <div class="concertbg_container">
             <div class="poster">
@@ -44,48 +49,38 @@
         </div>
         <div class="concertCards"></div>
     </main>
-    <footer >
+    <footer>
         <div class="footer bg-dark text-white py-2">
-        <div class="footerContent">
-            <img class="img-fluid footerLogo" src="/assets/images/a385b999-0249-48cc-9cee-bc88ff1b961a.jpg"
-                alt="Logo">
-            <div id="footerName"><span>Concert</span><span id="second_word">Craze</span></div>
-            
+            <div>
+                <div class="footerContent">
+                    <img class="img-fluid footerLogo" src="/assets/images/a385b999-0249-48cc-9cee-bc88ff1b961a.jpg"
+                        alt="Logo">
+                    <div id="footerName"><span>Concert</span><span id="second_word">Craze</span></div>
+                </div>
+                <form class="footerForm" action="https://api.web3forms.com/submit" method="POST">
+                    <h3 id="feedback">Feedback.</h3>
+                    <input type="hidden" name="access_key" value="e9e5e1dc-e9dc-436f-8644-e75e4be551bc">
+                    <div>
+                        <label id="footerFormText" for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Name" required>
+                    </div>
+                    <div>
+                        <label id="footerFormText" for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div>
+                        <label id="footerFormText" for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Your message..." required></textarea>
+                    </div>
+                    <input type="hidden" name="redirect" value="index.html">
+                    <button id="footerSubBtn" type="submit">Send</button>
+                </form>
+            </div>
+            <div>
+                <div id="footerLine"></div>
+                <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
+            </div>
         </div>
-        <form class="footerForm" action="https://api.web3forms.com/submit" method="POST">
-            <h3 id="feedback">Feedback.</h3>
-            <!-- Replace with your Access Key -->
-            <input type="hidden" name="access_key" value="e9e5e1dc-e9dc-436f-8644-e75e4be551bc">
-
-            <!-- Name Input with Label -->
-            <div>
-                <label id="footerFormText" for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Name" required>
-            </div>
-            <!-- Email Input with Label -->
-            <div>
-                <label id="footerFormText" for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-            </div>
-            <!-- Message Textarea with Label -->
-            <div>
-                <label id="footerFormText" for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Your message..." required></textarea>
-            </div>
-            <!-- Honeypot Spam Protection -->
-            <!-- <input type="checkbox" name="botcheck" class="hidden" style="display: none;"> -->
-
-            <!-- Custom Confirmation / Success Page -->
-            <input type="hidden" name="redirect" value="index.html">
-
-            <!-- Submit Button -->
-            <button id="footerSubBtn" type="submit">Send</button>
-
-        </form>
-        <div id="footerLine"></div>
-        <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
-    </div>
-    
     </footer>
     <script type="module" src="./js/script.js"></script>
 </body>

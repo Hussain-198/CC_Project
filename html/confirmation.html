@@ -57,7 +57,12 @@
 
     <!-- JavaScript -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="../js/confirmation.js"></script>
+   <!-- Load Supabase first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.js"></script>
+
+<!-- Then load your custom script -->
+<script type="module" src="../js/confirmation.js" defer></script>
+
     
 
 
