@@ -14,19 +14,25 @@
     <header class="header">
         <img id="logo" src="/assets/images/a385b999-0249-48cc-9cee-bc88ff1b961a.jpg" alt="Eventlogo" width="5%">
         <div id="webName"><span>Concert</span><span id="second_word">Craze</span></div>
-
+    
         <button id="hamburger" class="hamburger" style="color: black;">
             ☰
         </button>
+    
         <!-- Popup Menu -->
         <div id="popupMenu" class="popup-menu">
             <a href="#">Explore</a>
-            <a href="#">Upcoming Events</a>
-            <a href="#" id="popupMyTickets">My Tickets</a>
-            <span id="usernameDisplay"></span>
+            <!-- Login link -->
+            <a href="./html/login.html" id="loginLink">Log in</a>
+            <!-- My Tickets link -->
+            <a href="./html/mytickets.html" id="popupMyTickets" style="display: none;">My Tickets</a>
+            <!-- Display username when logged in -->
+            <span id="usernameDisplay" style="display: none;"></span>
+            <!-- Log out button -->
             <button id="popupLogoutButton" style="display: none;">Log Out</button>
         </div>
     </header>
+    
 
     <main>
         <div class="concertbg_container">
@@ -49,6 +55,7 @@
         </div>
         <div class="concertCards"></div>
     </main>
+
     <footer>
         <div class="footer bg-dark text-white py-2">
             <div>

@@ -81,7 +81,6 @@ const popupMenu = document.getElementById("popupMenu");
 const popupLogoutButton = document.getElementById("popupLogoutButton");
 const body = document.body;
 
-
 hamburger.addEventListener("click", () => {
     popupMenu.classList.toggle("active");
     body.classList.toggle("menu-open");
@@ -95,37 +94,55 @@ document.addEventListener("click", (event) => {
     }
 });
 
-
 // Update menu on authentication state change
 onAuthStateChanged(auth, (user) => {
+    const loginLink = document.getElementById("loginLink");
     const myTicketsNav = document.getElementById("popupMyTickets");
+    const usernameDisplay = document.getElementById("usernameDisplay");
     const isLoggedIn = user !== null;
     const currentUserEmail = localStorage.getItem("email");
     const username = localStorage.getItem(currentUserEmail);
-    
 
+    // When the user is logged in
     if (isLoggedIn) {
-        popupLogoutButton.style.display = "block";
-        myTicketsNav.textContent = "My Tickets";
+        // Hide login link, show "My Tickets" link and username
+        loginLink.style.display = "none";
+        myTicketsNav.style.display = "block";
+        usernameDisplay.style.display = "block";
         usernameDisplay.textContent = `Welcome, ${username}!`;
+
+        // Show log out button
+        popupLogoutButton.style.display = "block";
+
+        // Log out functionality
         popupLogoutButton.addEventListener("click", () => {
             signOut(auth).then(() => {
+                // Clear localStorage after sign out
                 localStorage.removeItem("isLoggedin");
-                window.location.href = "index.html";
+                localStorage.removeItem("email");      // Optionally remove email
+                localStorage.removeItem("username");   // Optionally remove username
+                
+                // Redirect to the login page
+                window.location.href = "../index.html";
             }).catch((error) => {
                 console.error("Error signing out: ", error);
             });
         });
     } else {
-        popupLogoutButton.style.display = "none";
+        // When the user is logged out
+        myTicketsNav.style.display = "none";
+        usernameDisplay.style.display = "none";
+        loginLink.style.display = "block";
+
+        // Handle login redirect
         myTicketsNav.textContent = "Log In";
         myTicketsNav.addEventListener("click", () => {
-            window.location.href = "/html/login.html";
+            window.location.href = "../html/login.html"; // Redirect to login page if not logged in
         });
     }
 });
 
-
+// Prevent accessing the ticket page without login
 function getAs() {
     let allAnchors = document.querySelectorAll(".card-body a");
     allAnchors.forEach(anchor => {
@@ -151,6 +168,7 @@ document.getElementById("search-container").addEventListener("click", () => {
     window.location.href = "../html/results.html";
 });
 
+// Handle Hamburger button color change when clicked
 document.getElementById("hamburger").addEventListener("click", () => {
-    hamburger.style.color="#333333";
-})
+    hamburger.style.color = "#333333";
+});
