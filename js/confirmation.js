@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     ticketSummaryContainer.appendChild(ticketSummaryElement);
 
-    // Initialize EmailJS
+    //EmailJS
     emailjs.init("6Kg5M-hZ9O2Sxbau7");
 
     // Initialize Supabase client
@@ -63,7 +63,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             eventDate: eventDetails.date || "TBD",
             eventVenue: eventDetails.venue || "TBD",
             totalAmount: paymentDetails.totalAmount,
-            ticketSummary: `Total Tickets Booked: ${ticketCount}`,
+            ticketSummary: ticketCount,
         };
 
         try {
@@ -79,14 +79,14 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
                 .from('tickets') // Insert into the 'tickets' table
                 .insert([
                     {
-                        user_email: recipientEmail, // Save recipient's email
-                        username: username,         // Save username
-                        event_title: eventDetails.title, // Event title
-                        event_description: eventDetails.description, // Event description
-                        event_date: eventDetails.date || null, // Event date
-                        event_venue: eventDetails.venue || null, // Event venue
-                        total_amount: paymentDetails.totalAmount, // Total amount
-                        ticket_count: ticketCount // Ticket count
+                        user_email: recipientEmail, 
+                        username: username,         
+                        event_title: eventDetails.title,
+                        event_description: eventDetails.description,
+                        event_date: eventDetails.date || null,
+                        event_venue: eventDetails.venue || null,
+                        total_amount: paymentDetails.totalAmount,
+                        ticket_count: ticketCount 
                     }
                 ]);
 
@@ -96,7 +96,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
             } else {
                 console.log("Ticket details saved successfully:", data);
             }
-
+``
             // Save ticket details to 'myTickets' in localStorage
             let myTickets = JSON.parse(localStorage.getItem("myTickets")) || [];
             myTickets.push({ eventDetails, ticketsCount: ticketCount });

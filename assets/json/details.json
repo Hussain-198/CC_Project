@@ -9,13 +9,13 @@
       "image":"../assets/images/asalkolaar.jpeg"
     },
     {
-      "artist": "Anirudh",
-      "date": "2024-11-30",
-      "venue": "Singapore Indoor Stadium",
-      "city": "Singapore",
-      "ticket_price": 2500,
-      "genre": "Kollywood",
-      "image":"../assets/images/Anirudh.jpeg"
+      "artist": "Ed Sheeran",
+      "date": "2025-02-05",
+      "venue": "YMCA, Nandhanam",
+      "city": "Chennai",
+      "ticket_price": 10785,
+      "genre": "Hollywood",
+      "image":"../assets/images/edsheeran.jpeg"
      
     },
     {

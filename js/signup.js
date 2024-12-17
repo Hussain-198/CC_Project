@@ -66,6 +66,9 @@ document.getElementById("signup-form").addEventListener("submit", function (even
     if (password === "") {
         passwordError.textContent = "Password is required!";
         valid = false;
+    } else if (password.length > 30) {
+        passwordError.textContent = "Password must not exceed 30 characters.";
+        valid = false;
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#?$%^&*])[A-Za-z\d!@#$?%^&*\s]{8,}$/.test(password)) {
         passwordError.textContent = "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, a special character, and can include spaces.";
         valid = false;

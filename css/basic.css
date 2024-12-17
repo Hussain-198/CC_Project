@@ -178,6 +178,7 @@ h1 {
   background-color: var(--buttonColor);
   color: var(--fontColor);
   border: none;
+  width: 90px;
   border-radius: 4px;
   font-family: var(--fontFamily);
 }
@@ -339,7 +340,7 @@ h1 {
 }
 .hamburger {
   position: fixed;
-  top: 15px;
+  top: 10px;
   right: 20px;
   font-size: 30px;
   background: none;
