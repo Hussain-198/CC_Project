@@ -95,6 +95,7 @@
             function initTicketSystem(ticketPrice) {
                 let ticketCount = 0;
 
+                const maxTickets = 10;
                 const ticketCountText = document.getElementById("ticketCountText");
                 const addTicketButton = document.getElementById("addTicket");
                 const removeTicketButton = document.getElementById("removeTicket");
@@ -121,8 +122,10 @@
 
                 // Add ticket button click handler
                 addTicketButton.addEventListener("click", () => {
-                    ticketCount++;
-                    updateTicketCount();
+                    if (ticketCount < maxTickets) {
+                        ticketCount++;
+                        updateTicketCount();
+                    }
                 });
 
                 // Remove ticket button click handler
