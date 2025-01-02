@@ -26,22 +26,37 @@ fetch("../assets/json/details.json")
     })
     .then(data => {
         let displayedConcerts = 0;
+        const upcomingConcerts = data.filter(concert => new Date(concert.date) >= new Date());
+
         const displayConcerts = (startIndex, count) => {
-            for (let i = startIndex; i < Math.min(startIndex + count, data.length); i++) {
-                createConcertCard(data[i], i);
+            for (let i = startIndex; i < Math.min(startIndex + count, upcomingConcerts.length); i++) {
+                const concert = upcomingConcerts[i];
+                createConcertCard(concert, i);
             }
             displayedConcerts += count;
             getAs();
         };
-        displayConcerts(displayedConcerts, 4);
 
-        let viewBtn = document.getElementById("viewBtn");
-        viewBtn.addEventListener("click", () => {
-            displayConcerts(displayedConcerts, 4);
-            if (displayedConcerts >= data.length) {
-                viewBtn.style.display = 'none';
-            }
-        });
+        // Display the first 4 concerts on page load
+        displayConcerts(0, 4);
+
+        const viewBtn = document.getElementById("viewBtn");
+        
+        if(upcomingConcerts.length>4){
+            viewBtn.style.display = "block";
+        }
+        else{
+            viewBtn.style.display = "none";
+        }
+
+        if (viewBtn) {
+            viewBtn.addEventListener("click", () => {
+                displayConcerts(displayedConcerts, 4);
+                if (displayedConcerts >= upcomingConcerts.length) {
+                    viewBtn.style.display = 'none';
+                }
+            });
+        }
     })
     .catch(error => {
         console.error('Error fetching data:', error);
@@ -49,7 +64,7 @@ fetch("../assets/json/details.json")
 
 // Function to create a concert card
 function createConcertCard(concert, index) {
-    let div = document.createElement("div");
+    const div = document.createElement("div");
     div.className = "concert-card";
     div.innerHTML = `
         <div class="card" style="width: 18rem;">
@@ -65,7 +80,7 @@ function createConcertCard(concert, index) {
                 </div>
                 <h6 id="concertName${index}">${concert.venue}</h6>
                 <p class="card-text date-text">
-                    <img id="calender-icon" src="../assets/images/1579797_calendar_calender_date_icon.png" alt="Calendar icon"> ${concert.venue} | ${concert.date}
+                    <img id="calender-icon" src="../assets/images/1579797_calendar_calender_date_icon.png" alt="Calendar icon"> ${concert.date}
                 </p>
                 <p class="card-text">
                     <img id="location-icon" src="../assets/images/352521_location_on_icon.png" alt=""> ${concert.city}
@@ -81,20 +96,20 @@ const popupMenu = document.getElementById("popupMenu");
 const popupLogoutButton = document.getElementById("popupLogoutButton");
 const body = document.body;
 
-hamburger.addEventListener("click", () => {
-    popupMenu.classList.toggle("active");
-    body.classList.toggle("menu-open");
-});
+if (hamburger) {
+    hamburger.addEventListener("click", () => {
+        popupMenu.classList.toggle("active");
+        body.classList.toggle("menu-open");
+    });
+}
 
-// Close menu on clicking outside
 document.addEventListener("click", (event) => {
-    if (!popupMenu.contains(event.target) && !hamburger.contains(event.target)) {
+    if (popupMenu && !popupMenu.contains(event.target) && !hamburger.contains(event.target)) {
         popupMenu.classList.remove("active");
         body.classList.remove("menu-open");
     }
 });
 
-// Update menu on authentication state change
 onAuthStateChanged(auth, (user) => {
     const loginLink = document.getElementById("loginLink");
     const myTicketsNav = document.getElementById("popupMyTickets");
@@ -103,72 +118,54 @@ onAuthStateChanged(auth, (user) => {
     const currentUserEmail = localStorage.getItem("email");
     const username = localStorage.getItem(currentUserEmail);
 
-    // When the user is logged in
     if (isLoggedIn) {
-        // Hide login link, show "My Tickets" link and username
         loginLink.style.display = "none";
         myTicketsNav.style.display = "block";
         usernameDisplay.style.display = "block";
         usernameDisplay.textContent = `Welcome, ${username}!`;
 
-        // Show log out button
         popupLogoutButton.style.display = "block";
 
-        // Log out functionality
         popupLogoutButton.addEventListener("click", () => {
             signOut(auth).then(() => {
-                // Clear localStorage after sign out
                 localStorage.removeItem("isLoggedin");
-                localStorage.removeItem("email");      // Optionally remove email
-                localStorage.removeItem("username");   // Optionally remove username
-                
-                // Redirect to the login page
+                localStorage.removeItem("email");
+                localStorage.removeItem("username");
                 window.location.href = "../index.html";
             }).catch((error) => {
                 console.error("Error signing out: ", error);
             });
         });
     } else {
-        // When the user is logged out
         myTicketsNav.style.display = "none";
         usernameDisplay.style.display = "none";
         loginLink.style.display = "block";
 
-        // Handle login redirect
         myTicketsNav.textContent = "Log In";
         myTicketsNav.addEventListener("click", () => {
-            window.location.href = "../html/login.html"; // Redirect to login page if not logged in
+            window.location.href = "../html/login.html";
         });
     }
 });
 
-// Prevent accessing the ticket page without login
 function getAs() {
-    let allAnchors = document.querySelectorAll(".card-body a");
+    const allAnchors = document.querySelectorAll(".card-body a");
     allAnchors.forEach(anchor => {
         anchor.addEventListener("click", () => {
-            localStorage.setItem("artistName", anchor.parentElement.querySelector("h5").textContent.split(" ")[0]);
-            const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check updated login status
+            const artistName = anchor.parentElement.querySelector("h5").textContent.split(" ")[0];
+            localStorage.setItem("artistName", artistName);
+            const loggedin = localStorage.getItem("isLoggedin") === "true";
             window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
         });
     });
 }
 
-// My Tickets Navigation Redirect
-function setupMyTicketsNavigation() {
-    const myTicketsNav = document.getElementById("myTicketsNav");
-    myTicketsNav.addEventListener("click", (event) => {
-        event.preventDefault();
-        const loggedin = localStorage.getItem("isLoggedin") === "true";
-        window.location.href = loggedin ? '../html/mytickets.html' : '../html/login.html';
-    });
-}
-
-document.getElementById("search-container").addEventListener("click", () => {
+document.getElementById("search-container")?.addEventListener("click", () => {
     window.location.href = "../html/results.html";
 });
 
-// Handle Hamburger button color change when clicked
-document.getElementById("hamburger").addEventListener("click", () => {
-    hamburger.style.color = "#333333";
-});
+if (hamburger) {
+    hamburger.addEventListener("click", () => {
+        hamburger.style.color = "#333333";
+    });
+}

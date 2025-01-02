@@ -1,6 +1,7 @@
 // Event listener for search form submission
-document.getElementById('searchForm').addEventListener('submit', function(event) {
+document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault();
+
     const query = document.getElementById('searchBox').value.toLowerCase();
     const filter = document.getElementById('filterSelect').value;
     const genreFilter = document.getElementById('genreFilter').value.toLowerCase(); // Genre filter
@@ -18,15 +19,22 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
             return response.json();
         })
         .then(data => {
-            // Apply filters based on selected criteria and search query
+            // Apply filters based on selected criteria, search query, genre, and date
             const filteredResults = data.filter(item => {
-                const matchesSearch = (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
-                                      (filter === 'venue' && item.venue.toLowerCase().includes(query)) ||
-                                      (filter === 'genre' && item.genre.toLowerCase().includes(query));
+                const eventDate = new Date(item.date); // Parse the event date
+                const currentDate = new Date(); // Current date
                 
+                // Ensure only upcoming events are included
+                const isUpcoming = eventDate.setHours(0, 0, 0, 0) >= currentDate.setHours(0, 0, 0, 0); 
+
+                const matchesSearch =
+                    (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
+                    (filter === 'venue' && item.venue.toLowerCase().includes(query)) ||
+                    (filter === 'genre' && item.genre.toLowerCase().includes(query));
+
                 const matchesGenre = genreFilter === 'all' || item.genre.toLowerCase() === genreFilter;
 
-                return matchesSearch && matchesGenre;
+                return matchesSearch && matchesGenre && isUpcoming;
             });
 
             // Display results
@@ -84,4 +92,3 @@ function attachBookTicketEvents() {
         });
     });
 }
-    
