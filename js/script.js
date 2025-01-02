@@ -34,7 +34,7 @@ fetch("../assets/json/details.json")
                 createConcertCard(concert, i);
             }
             displayedConcerts += count;
-            getAs();
+            // getAs();
         };
 
         // Display the first 4 concerts on page load
@@ -89,6 +89,13 @@ function createConcertCard(concert, index) {
             </div>
         </div>`;
     document.querySelector(".concertCards").appendChild(div);
+    div.addEventListener('click',()=>{
+        localStorage.setItem("artistName", concert.artist);
+        const loggedin = localStorage.getItem("isLoggedin") === "true";
+        window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
+    })
+
+
 }
 
 const hamburger = document.getElementById("hamburger");
@@ -148,17 +155,17 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-function getAs() {
-    const allAnchors = document.querySelectorAll(".card-body a");
-    allAnchors.forEach(anchor => {
-        anchor.addEventListener("click", () => {
-            const artistName = anchor.parentElement.querySelector("h5").textContent.split(" ")[0];
-            localStorage.setItem("artistName", artistName);
-            const loggedin = localStorage.getItem("isLoggedin") === "true";
-            window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
-        });
-    });
-}
+// function getAs() {
+//     const allAnchors = document.querySelectorAll(".card-body a");
+//     allAnchors.forEach(anchor => {
+//         anchor.addEventListener("click", () => {
+//             const artistName = anchor.parentElement.querySelector("h5").textContent.split(" ")[0];
+//             localStorage.setItem("artistName", artistName);
+//             const loggedin = localStorage.getItem("isLoggedin") === "true";
+//             window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
+//         });
+//     });
+// }
 
 document.getElementById("search-container")?.addEventListener("click", () => {
     window.location.href = "../html/results.html";
