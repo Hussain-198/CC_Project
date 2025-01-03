@@ -35,6 +35,11 @@
         <div class="row w-100">
             <div class="col-md-8">
                 <h3>Ticket Information</h3>
+
+                <!-- Ticket Categories -->
+                <select id="ticketCategory" class="form-select mb-3"></select>
+                <p>Selected Category Price: <span id="categoryPrice">&#8377;0</span></p>
+
                 <div id="ticketsContainer" class="mb-4">
                     <p id="ticketCountText">Number of Tickets: 0</p>
                 </div>
@@ -45,21 +50,21 @@
             <div class="col-md-4">
                 <div class="p-4 bg-light rounded">
                     <h4>Summary</h4>
+                    <!-- <div class="d-flex justify-content-between">
+                        <span>Price per Ticket:</span>
+                        <span id="categoryPrice">₹0</span>
+                    </div> -->
                     <div class="d-flex justify-content-between">
                         <span>Price per Ticket:</span>
-                        <span id="ticketPrice">&#8377;0</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Subtotal:</span>
-                        <span id="subtotal">&#8377;0</span>
+                        <span id="subtotal">₹0</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Discount (10%):</span>
-                        <span id="discount">-&#8377;0</span>
+                        <span id="discount">-₹0</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span>Total:</span>
-                        <span id="total">&#8377;0</span>
+                        <span id="total">₹0</span>
                     </div>
                     <button id="payNow" class="btn btn-primary w-100 mt-3">Pay Now</button>
                 </div>
@@ -81,21 +86,28 @@
             if (eventData) {
                 document.getElementById("eventTitle").textContent = eventData.title;
                 document.getElementById("eventDescription").textContent = eventData.description;
-                document.getElementById("ticketPrice").textContent = `₹${eventData.ticketPrice}`;
+
                 const eventImage = document.getElementById("eventImage");
                 eventImage.src = eventData.image;
                 eventImage.style.display = "block";
 
-                // Initialize the ticketing system
+                // Initialize the ticketing system with the ticket prices
                 initTicketSystem(eventData.ticketPrice);
             } else {
                 console.error("No event data found!");
             }
 
-            function initTicketSystem(ticketPrice) {
-                let ticketCount = 0;
+            function initTicketSystem(ticketPrices) {
+                if (!ticketPrices || typeof ticketPrices !== "object") {
+                    console.error("Invalid ticket prices data!", ticketPrices);
+                    return;
+                }
 
+                let ticketCount = 0;
                 const maxTickets = 10;
+
+                const ticketCategory = document.getElementById("ticketCategory");
+                const categoryPriceElement = document.getElementById("categoryPrice");
                 const ticketCountText = document.getElementById("ticketCountText");
                 const addTicketButton = document.getElementById("addTicket");
                 const removeTicketButton = document.getElementById("removeTicket");
@@ -103,9 +115,29 @@
                 const discountElement = document.getElementById("discount");
                 const totalElement = document.getElementById("total");
 
+                // Populate dropdown with ticket categories
+                ticketCategory.innerHTML = ""; // Clear any existing options
+                Object.keys(ticketPrices).forEach(category => {
+                    const option = document.createElement("option");
+                    option.value = category;
+                    option.textContent = category;
+                    ticketCategory.appendChild(option);
+                });
+
+                // Update price based on selected category
+                function updateCategoryPrice() {
+                    const selectedCategory = ticketCategory.value;
+                    const categoryPrice = ticketPrices[selectedCategory];
+                    categoryPriceElement.textContent = `₹${categoryPrice}`;
+                    calculateTotals();
+                    localStorage.setItem("category",selectedCategory);
+                }
+
                 // Function to calculate totals
                 function calculateTotals() {
-                    const subtotal = ticketCount * ticketPrice;
+                    const selectedCategory = ticketCategory.value;
+                    const categoryPrice = ticketPrices[selectedCategory];
+                    const subtotal = ticketCount * categoryPrice;
                     const discount = subtotal * 0.1; // 10% discount
                     const total = subtotal - discount;
 
@@ -119,6 +151,9 @@
                     ticketCountText.textContent = `Number of Tickets: ${ticketCount}`;
                     calculateTotals();
                 }
+
+                // Event listener for category change
+                ticketCategory.addEventListener("change", updateCategoryPrice);
 
                 // Add ticket button click handler
                 addTicketButton.addEventListener("click", () => {
@@ -143,18 +178,30 @@
                         return;
                     }
 
-                    // Prepare payment details
-                    const totalAmount = parseFloat(totalElement.textContent.replace(/[^\d.-]/g, ""));
+                    const selectedCategory = ticketCategory.value;
+                    const categoryPrice = ticketPrices[selectedCategory];
+                    const subtotal = ticketCount * categoryPrice;
+                    const discount = subtotal * 0.1;
+                    const totalAmount = subtotal - discount;
+
                     const paymentDetails = {
                         totalAmount,
                         ticketCount,
+                        selectedCategory,
+                        subtotal,
+                        discount,
                     };
+                    
+                    
 
                     localStorage.setItem("paymentDetails", JSON.stringify(paymentDetails));
-
+                    
                     // Redirect to confirmation or payment page
                     window.location.href = "confirmation.html";
                 });
+
+                // Initialize with default category price
+                updateCategoryPrice();
             }
         });
     </script>

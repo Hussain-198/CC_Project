@@ -47,6 +47,12 @@
     margin-top: 20px;
     color: var(--buttonColor);
   }
+
+  .content{
+    display: flex;
+    flex-direction: column;
+    
+  }
   #second_word{
     color: var(--buttonColor);
     font-family: var(--fontFamily);
@@ -88,10 +94,12 @@
     line-height: 1.6;
   }
   
-  .map {
+  #map {
     height: 300px;
     margin-top: 20px;
     background-color: #e0e0e0; /* Placeholder background */
+    margin-left: 50%;
+
   }
   
   .price {

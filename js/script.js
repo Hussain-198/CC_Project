@@ -74,9 +74,6 @@ function createConcertCard(concert, index) {
                     <div>
                         <h5 class="card-title" id="artistName${index}">${concert.artist}</h5>
                     </div>
-                    <div>
-                        <h5>₹${concert.ticket_price}</h5>
-                    </div>
                 </div>
                 <h6 id="concertName${index}">${concert.venue}</h6>
                 <p class="card-text date-text">
@@ -91,6 +88,7 @@ function createConcertCard(concert, index) {
     document.querySelector(".concertCards").appendChild(div);
     div.addEventListener('click',()=>{
         localStorage.setItem("artistName", concert.artist);
+        localStorage.setItem('id',concert.id);
         const loggedin = localStorage.getItem("isLoggedin") === "true";
         window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
     })

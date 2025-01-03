@@ -1,4 +1,21 @@
-// Event listener for search form submission
+// Firebase config and initialization
+const firebaseConfig = {
+    apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
+    authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
+    projectId: "sample-firebase-ai-app-b83c0",
+    storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
+    messagingSenderId: "144531331956",
+    appId: "1:144531331956:web:eac7601b172cf9fcadea21"
+};
+
+// Initialize Firebase
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+/// Event listener for search form submission
 document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -25,7 +42,7 @@ document.getElementById('searchForm').addEventListener('submit', function (event
                 const currentDate = new Date(); // Current date
                 
                 // Ensure only upcoming events are included
-                const isUpcoming = eventDate.setHours(0, 0, 0, 0) >= currentDate.setHours(0, 0, 0, 0); 
+                const isUpcoming = eventDate >= currentDate; 
 
                 const matchesSearch =
                     (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
@@ -41,6 +58,7 @@ document.getElementById('searchForm').addEventListener('submit', function (event
             if (filteredResults.length === 0) {
                 resultsContainer.innerHTML = '<p>No results found.</p>';
             } else {
+                // Display each filtered result
                 filteredResults.forEach(item => {
                     const resultItem = document.createElement('div');
                     resultItem.classList.add('result-item', 'card', 'mb-3');
@@ -54,9 +72,8 @@ document.getElementById('searchForm').addEventListener('submit', function (event
                                     <h5 class="card-title">${item.artist}</h5>
                                     <p class="card-text"><strong>Date:</strong> ${item.date}</p>
                                     <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
-                                    <p class="card-text"><strong>Ticket Price:</strong> ₹${item.ticket_price}</p>
                                     <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
-                                    <a class="btn btn-primary book-ticket">Book tickets</a>
+                                    <a href="#" class="btn btn-primary book-ticket" data-event-id="${item.id}">Book tickets</a>
                                 </div>
                             </div>
                         </div>
@@ -65,8 +82,9 @@ document.getElementById('searchForm').addEventListener('submit', function (event
                 });
 
                 // Attach click event to each "Book tickets" button
-                attachBookTicketEvents();
+                attachBookTicketEvents(filteredResults);  // Pass filteredResults to the function
             }
+            
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -74,21 +92,29 @@ document.getElementById('searchForm').addEventListener('submit', function (event
         });
 });
 
-// Function to dynamically filter by genre
-function filterByGenre() {
-    document.getElementById('searchForm').dispatchEvent(new Event('submit'));
-}
-
 // Function to attach click event to each "Book tickets" button
-function attachBookTicketEvents() {
+function attachBookTicketEvents(filteredResults) {
     const allBookButtons = document.querySelectorAll('.book-ticket');
     allBookButtons.forEach(button => {
         button.addEventListener('click', (event) => {
-            const artistName = event.target.closest('.card-body').querySelector('h5').textContent.split(" ")[0];
-            localStorage.setItem("artistName", artistName);
+            // Store the ID of the clicked event
+            const eventId = event.target.getAttribute('data-event-id');  // Retrieve event ID
+            console.log('Stored event ID:', eventId); // Log the event ID for debugging
 
-            const loggedin = localStorage.getItem("isLoggedin") === "true"; // Check login status
-            window.location.href = loggedin ? '../html/eventdetails.html' : '../html/login.html';
+            // Store the event ID in localStorage
+            localStorage.setItem('id', eventId);
+
+            // Check the user's authentication state before redirecting
+            const auth = getAuth();
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // If the user is logged in, redirect to event details page
+                    window.location.href = '../html/eventdetails.html';
+                } else {
+                    // If the user is not logged in, redirect to login page
+                    window.location.href = '../html/login.html';
+                }
+            });
         });
     });
 }

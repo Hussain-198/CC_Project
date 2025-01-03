@@ -57,130 +57,114 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Fetch the JSON data for events
-      fetch('../assets/json/details.json')
-        .then(response => response.json())
-        .then(events => {
-          const eventBanner = document.getElementById('event-banner');
-          const eventDetails = document.getElementById('event-details');
+   document.addEventListener("DOMContentLoaded", function () {
+  fetch('../assets/json/details.json')
+    .then(response => response.json())
+    .then(events => {
+      const eventBanner = document.getElementById('event-banner');
+      const eventDetails = document.getElementById('event-details');
 
-          // Get the artist name from localStorage
-          const artistName = localStorage.getItem("artistName");
-          // console.log(artistName);
+      // Get the artist name from localStorage
+      const artistNameFromLocalStorage =parseFloat (localStorage.getItem("id"));
+    
+      // console.log(artistNameFromLocalStorage);
+      
 
-          if (!artistName) {
-            console.error("Artist name not found in localStorage!");
-            return;
-          }
+      if (!artistNameFromLocalStorage) {
+        console.error("Artist name not found in localStorage!");
+        return;
+      }
 
-          // Find the event based on the artist name
-          const event = events.find(e => e.artist.includes(artistName));
-          if (!event) {
-            console.error("Event not found for artist:", artistName);
-            return;
-          }
+      // Find the event based on the artist name
+      const event = events.find(concert => concert.id === artistNameFromLocalStorage);
 
-          // Venue coordinates mapping
-          const venueCoordinates = {
-            "YMCA, Royapettah": [13.0549, 80.2635],
-            "YMCA, Nandhanam": [13.0266, 80.2362],
-            "D.Y.Patil Stadium, Navi Mumbai": [19.0425, 73.0238],
-            "Jio World Garden": [19.0603, 72.8697],
-            "Radisson Blu Resort Visakhapatnam": [17.7827, 83.3756],
-            "Wings Convention Centre St Georges": [13.0767, 80.2319],
-            "A M Jain College": [12.9849, 80.1794],
-            "To be announced": null
-          };
+      if (!event) {
+        console.error("Event not found for artist:", artistNameFromLocalStorage);
+        return;
+      }
 
-          let venue = event.venue.trim();
-          const coordinates =venueCoordinates[venue] ;
-          
-          
+      // Venue coordinates mapping
+      const venueCoordinates = {
+        "YMCA, Royapettah": [13.0549, 80.2635],
+        "YMCA, Nandhanam": [13.0266, 80.2362],
+        "D.Y.Patil Stadium, Navi Mumbai": [19.0425, 73.0238],
+        "Jio World Garden": [19.0603, 72.8697],
+        "Radisson Blu Resort Visakhapatnam": [17.7827, 83.3756],
+        "Wings Convention Centre St Georges": [13.0767, 80.2319],
+        "A M Jain College": [12.9849, 80.1794],
+        "Leisure Valley Park": [28.47005, 77.06476],
+        "Narendra Modi Stadium": [23.0917, 72.5975],
+        "Nehru Indoor Stadium":[13.0857, 80.2717],
+        "Annamalai nagar": [8.6649, 77.7553],
+        "To be announced": null
+      };
 
+      const coordinates = venueCoordinates[event.venue.trim()] || null;
 
-          // Populate the banner and details section
-          eventBanner.innerHTML = `
-            <div class="eventHeading">
-              <img id="eventImg" src="${event.image}" alt="${event.name}" class="img-fluid">
-              <h2 id="artistName">${event.artist} Live</h2>
-              
-              <p>${event.genre} concert at ${event.venue}, ${event.city}</p>
-            </div>
-          `;
+      // Populate the banner and details section
+      eventBanner.innerHTML = `
+        <div class="eventHeading">
+          <img id="eventImg" src="${event.image}" alt="${event.artist}" class="img-fluid">
+          <h2 id="artistName">${event.artist} Live</h2>
+          <p>${event.genre} concert at ${event.venue}, ${event.city}</p>
+        </div>
+      `;
 
-          const mapDiv = coordinates;
-
-
-          eventDetails.innerHTML = `
-            <div class="row">
-              <div class="col-md-8">
-                <h3>Event Details</h3>
-                <div class="d-flex my-3">
-                  <div class="me-5">
-                    <h5>Date and Time</h5>
-                    <p>${event.date}</p>
-                  </div>
-                  <div>
-                    <h5>Venue</h5>
-                    <p>${event.venue}<br>${event.city}</p>
-                  </div>
-                  <div id="map" style="width: 50%; margin-top:-100px;margin-left:40px" ></div>
-                </div>
-                <h4>About Event</h4>
-                <p>Join us for a memorable night featuring ${event.artist} performing live. Enjoy the best of ${event.genre} music in an amazing venue.</p>
+      eventDetails.innerHTML = `
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Event Details</h3>
+            <div class="d-flex my-3">
+              <div class="me-5">
+                <h5>Date and Time</h5>
+                <p>${event.date}</p>
               </div>
-              
-              <div class="col-md-4 text-center">
-                <div class="p-4 bg-light rounded">
-                  <h3>Ticket Price</h3>
-                  <p class="display-4">&#8377;${event.ticket_price}</p>
-                  <button class="btn btn-primary purchaseBtn" id="purchase">Purchase Ticket</button>
-                </div>
+              <div>
+                <h5>Venue</h5>
+                <p>${event.venue}<br>${event.city}</p>
               </div>
+              <div id="map" style="width: 50%; margin-top:-100px; margin-left:40px"></div>
             </div>
-          `;
+            <h4>About Event</h4>
+            <p>Join us for a memorable night featuring ${event.artist} performing live. Enjoy the best of ${event.genre} music in an amazing venue.</p>
+            </div>
+            <button class="btn btn-primary purchaseBtn" id="purchase">Purchase Ticket</button>
+        </div>
+      `;
 
-          if (coordinates) {
-            // Ensure the map container is visible before initialization
-            const mapDiv = document.getElementById('map');
-            mapDiv.style.display = 'block'; // Ensure it's visible
+      if (coordinates) {
+        const map = L.map('map').setView(coordinates, 15);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
 
-            // Initialize the Leaflet map
-            const map = L.map('map').setView(coordinates, 15);
+        L.marker(coordinates).addTo(map)
+          .bindPopup(`${event.venue}, ${event.city}`)
+          .openPopup();
+      } else {
+        console.warn('Coordinates are missing or invalid for this venue.');
+      }
 
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+      // Handle the purchase button click
+      const purchaseBtn = document.getElementById('purchase');
+      purchaseBtn.addEventListener('click', () => {
+        const eventData = {
+          title: `${event.artist} Live`,
+          description: `Join us for a memorable night featuring ${event.artist} performing live.`,
+          date: event.date,
+          venue: event.venue,
+          ticketPrice: event.ticketprice,
+          image: event.image,
+        };
 
-            L.marker(coordinates).addTo(map)
-              .bindPopup(`${event.venue}, ${event.city}`)
-              .openPopup();
-          } else {
-            console.warn('Coordinates are missing or invalid for this venue.');
-          }
+        localStorage.setItem('selectedEvent', JSON.stringify(eventData));
+        window.location.href = './purchaseticket.html';
+      });
+    })
+    .catch(error => console.error('Error fetching event data:', error));
+});
+console.log(localStorage.getItem('id'))
 
-
-          // Handle the purchase button click
-          const purchaseBtn = document.getElementById('purchase');
-          purchaseBtn.addEventListener('click', () => {
-            const eventData = {
-              title: `${event.artist} Live`,
-              description: `Join us for a memorable night featuring ${event.artist} performing live.`,
-              date: event.date,
-              venue: event.venue,
-              ticketPrice: event.ticket_price,
-              image: event.image,
-            };
-
-            // Save event details in localStorage
-            localStorage.setItem('selectedEvent', JSON.stringify(eventData));
-            // Redirect to the Purchase Ticket page
-            window.location.href = './purchaseticket.html';
-          });
-        })
-        .catch(error => console.error('Error fetching event data:', error));
-    });
   </script>
 </body>
 

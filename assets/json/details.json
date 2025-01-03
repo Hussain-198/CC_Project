@@ -1,75 +1,143 @@
 [
     {
+      "id":1,
       "artist": "Asal Kolaar",
       "date": "2024-12-31",
       "venue": "YMCA, Royapettah",
       "city": "Chennai",
-      "ticket_price": 199,
+      "ticketprice": {
+        "VIP": 100,
+        "General": 50,
+        "Basic": 30
+      },
       "genre": "Kollywood",
       "image":"../assets/images/asalkolaar.jpeg",
       "i": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.6964615828347!2d80.26244437031373!3d13.054982914985146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52663c98e85407%3A0x6b342af83ce1a820!2sYMCA%20Royapettah!5e0!3m2!1sen!2sin!4v1734689696605!5m2!1sen!2sin"
     },
     {
+      "id":2,
       "artist": "Ed Sheeran",
       "date": "2025-02-05",
       "venue": "YMCA, Nandhanam",
       "city": "Chennai",
-      "ticket_price": 10785,
+      "ticketprice":{
+        "VIP": 22000,
+        "General": 9000,
+        "Basic": 4500
+      },
       "genre": "Hollywood",
       "image":"../assets/images/edsheeran.jpeg"
      
     },
     {
-      "artist": "Sonu Nigam",
-      "date": "2024-11-30",
+      "id":3,
+      "artist": "Vijay Antony",
+      "date": "2025-01-18",
       "venue": "YMCA, Nandhanam",
       "city": "Chennai",
-      "ticket_price": 1499,
-      "genre": "Bollywood",
-      "image":"../assets/images/SonuNigam.jpeg"
-    },
-    {
-      "artist": "Vijay Antony",
-      "date": "2024-12-28",
-      "venue": "A M Jain College",
-      "city": "Chennai",
-      "ticket_price": 749,
+      "ticketprice": {
+        "VIP": 15999,
+        "General": 11999,
+        "Basic": 7999
+      },
       "genre": "Kollywood",
       "image":"../assets/images/vijayantony.jpeg"
     },
     {
+      "id":4,
+      "artist": "Cold Play",
+      "date": "2025-01-25",
+      "venue": "Narendra Modi Stadium",
+      "city": "Ahmedabad",
+      "ticketprice": {
+        "VIP": 10000,
+        "General": 5000,
+        "Basic": 2000
+      },
+      "genre": "Hollywood",
+      "image":"../assets/images/coldplay.jpeg"
+    },
+    {
+      "id":5,
       "artist": "Martin Garrix",
       "date": "2025-03-14",
       "venue": "D.Y.Patil Stadium, Navi Mumbai",
       "city": "Mumbai",
-      "ticket_price": 500,
+      "ticketprice": {
+        "VIP": 4000,
+        "General": 1500,
+        "Basic": 1000
+      },
       "genre": "Hollywood",
       "image":"../assets/images/martingarrix.jpeg"
     },
     {
+      "id":6,
+      "artist": "Sonu Nigam",
+      "date": "2025-01-11",
+      "venue": "Nehru Indoor Stadium",
+      "city": "Chennai",
+      "ticketprice": {
+        "VIP": 9999,
+        "General": 5499,
+        "Basic": 1499
+      },
+      "genre": "Bollywood",
+      "image":"../assets/images/sonunigam.jpeg"
+    },
+    {
+      "id":7,
+      "artist": "Ilaiyaraaja",
+      "date": "2025-01-17",
+      "venue": "Annamalai nagar",
+      "city": "Tirunelveli",
+      "ticketprice": {
+        "VIP": 999,
+        "General": 499,
+        "Basic": 299
+      },
+      "genre": "Kollywood",
+      "image":"../assets/images/ilaiyaraaja.jpeg"
+    },
+    {
+      "id":8,
       "artist": "AR Rahman",
       "date": "2025-01-17",
       "venue": "Jio World Garden",
       "city": "Mumbai",
-      "ticket_price": 3000,
-      "genre": "Pop",
+      "ticketprice": {
+        "VIP": 3000,
+        "General": 10000,
+        "Basic": 7999
+      },
+      "genre": "Bollywood",
       "image":"../assets/images/arrahman.jpeg"
     },
     {
-      "artist": "Armaan Malik",
-      "date": "2024-11-09",
-      "venue": "Radisson Blu Resort Visakhapatnam",
-      "city": "Vizg",
-      "ticket_price": 1099,
-      "genre": "Bollywood",
-      "image":"../assets/images/armaanmalik.jpeg"
+      "id":9,
+      "artist": "Ed Sheeran",
+      "date": "2025-02-15",
+      "venue": "Leisure Valley Park",
+      "city": "Gurgaon",
+      "ticketprice": {
+        "VIP": 30000,
+        "General": 11500,
+        "Basic": 6000
+      },
+      "genre": "Hollywood",
+      "image":"../assets/images/edsheeran.jpeg"
     },
     {
+      "id":10,
       "artist": "Paal Dabba",
       "date": "2025-02-02",
       "venue": "Wings Convention Centre St Georges",
       "city": "Chennai",
-      "ticket_price": 499,
+     "ticketprice": {
+      "VIP": 5899,
+        "General": 2359,
+        "Basic": 499
+     },
       "genre": "Kollywood",
       "image":"https://res.cloudinary.com/dwzmsvp7f/image/upload/f_auto,w_1280/c_crop%2Cg_custom%2Fv1729147234%2Fcm9p0yhepb9m9ykypngi.jpg"
     }
