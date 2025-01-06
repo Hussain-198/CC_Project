@@ -15,14 +15,17 @@ import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-/// Event listener for search form submission
-document.getElementById('searchForm').addEventListener('submit', function (event) {
-    event.preventDefault();
+const resultsContainer = document.getElementById('resultsContainer');
+const searchBox = document.getElementById('searchBox');
+const filterSelect = document.getElementById('filterSelect');
+const genreFilter = document.getElementById('genreFilter');
 
-    const query = document.getElementById('searchBox').value.toLowerCase();
-    const filter = document.getElementById('filterSelect').value;
-    const genreFilter = document.getElementById('genreFilter').value.toLowerCase(); // Genre filter
-    const resultsContainer = document.getElementById('resultsContainer');
+// Function to fetch and filter data based on search query and genre filter
+function fetchAndFilterData() {
+    // Get current input values
+    const query = searchBox.value.toLowerCase();
+    const filter = filterSelect.value;
+    const selectedGenre = genreFilter.value.toLowerCase();
 
     // Clear previous results
     resultsContainer.innerHTML = '';
@@ -36,82 +39,92 @@ document.getElementById('searchForm').addEventListener('submit', function (event
             return response.json();
         })
         .then(data => {
-            // Apply filters based on selected criteria, search query, genre, and date
+            // Apply filters based on search query, genre, and date
             const filteredResults = data.filter(item => {
                 const eventDate = new Date(item.date); // Parse the event date
                 const currentDate = new Date(); // Current date
-                
-                // Ensure only upcoming events are included
-                const isUpcoming = eventDate >= currentDate; 
 
+                // Ensure only upcoming events are included
+                const isUpcoming = eventDate >= currentDate;
+
+                // Check if it matches the search query
                 const matchesSearch =
                     (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
                     (filter === 'venue' && item.venue.toLowerCase().includes(query)) ||
                     (filter === 'genre' && item.genre.toLowerCase().includes(query));
 
-                const matchesGenre = genreFilter === 'all' || item.genre.toLowerCase() === genreFilter;
+                // Check if it matches the selected genre
+                const matchesGenre = selectedGenre === 'all' || item.genre.toLowerCase() === selectedGenre;
 
                 return matchesSearch && matchesGenre && isUpcoming;
             });
 
-            // Display results
-            if (filteredResults.length === 0) {
-                resultsContainer.innerHTML = '<p>No results found.</p>';
-            } else {
-                // Display each filtered result
-                filteredResults.forEach(item => {
-                    const resultItem = document.createElement('div');
-                    resultItem.classList.add('result-item', 'card', 'mb-3');
-                    resultItem.innerHTML = `
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="${item.image}" class="img-fluid rounded-start" alt="${item.artist}">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">${item.artist}</h5>
-                                    <p class="card-text"><strong>Date:</strong> ${item.date}</p>
-                                    <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
-                                    <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
-                                    <a href="#" class="btn btn-primary book-ticket" data-event-id="${item.id}">Book tickets</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    resultsContainer.appendChild(resultItem);
-                });
-
-                // Attach click event to each "Book tickets" button
-                attachBookTicketEvents(filteredResults);  // Pass filteredResults to the function
-            }
-            
+            // Display the filtered results
+            showResults(filteredResults);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
             resultsContainer.innerHTML = '<p>Error fetching results.</p>';
         });
+}
+
+// Event listener for search form submission
+document.getElementById('searchForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    fetchAndFilterData();
 });
 
-// Function to attach click event to each "Book tickets" button
-function attachBookTicketEvents(filteredResults) {
+// Event listener for genre filter change
+genreFilter.addEventListener('change', fetchAndFilterData);
+
+// Function to display the results
+function showResults(filteredResults) {
+    if (filteredResults.length === 0) {
+        resultsContainer.innerHTML = '<p>No results found.</p>';
+    } else {
+        filteredResults.forEach(item => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('result-item', 'card', 'mb-3');
+            resultItem.innerHTML = `
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="${item.image}" class="img-fluid rounded-start" alt="${item.artist}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.artist}</h5>
+                            <p class="card-text"><strong>Date:</strong> ${item.date}</p>
+                            <p class="card-text"><strong>Venue:</strong> ${item.venue}, ${item.city}</p>
+                            <p class="card-text"><strong>Genre:</strong> ${item.genre}</p>
+                            <a href="#" class="btn btn-primary book-ticket" data-event-id="${item.id}">Book tickets</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            resultsContainer.appendChild(resultItem);
+        });
+
+        // Attach click events to "Book tickets" buttons
+        attachBookTicketEvents();
+    }
+}
+
+// Function to attach click events to "Book tickets" buttons
+function attachBookTicketEvents() {
     const allBookButtons = document.querySelectorAll('.book-ticket');
     allBookButtons.forEach(button => {
         button.addEventListener('click', (event) => {
-            // Store the ID of the clicked event
-            const eventId = event.target.getAttribute('data-event-id');  // Retrieve event ID
-            console.log('Stored event ID:', eventId); // Log the event ID for debugging
+            const eventId = event.target.getAttribute('data-event-id');
+            console.log('Stored event ID:', eventId);
 
             // Store the event ID in localStorage
             localStorage.setItem('id', eventId);
 
             // Check the user's authentication state before redirecting
-            const auth = getAuth();
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    // If the user is logged in, redirect to event details page
                     window.location.href = '../html/eventdetails.html';
                 } else {
-                    // If the user is not logged in, redirect to login page
                     window.location.href = '../html/login.html';
                 }
             });
