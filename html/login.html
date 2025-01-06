@@ -18,7 +18,7 @@
             <label for="password">Password:</label>
             <div class="password-container">
                 <input type="password" id="password" name="password" placeholder="Password" required>
-                <span id="togglePassword" class="eye-icon">👁️</span>
+                <span id="togglePassword" class="eye-icon">Show</span>
             </div>
             <span id="passwordError" style="color: red;"></span>
 
@@ -122,10 +122,10 @@
         function togglePasswordVisibility(field, icon) {
             if (field.type === "password") {
                 field.type = "text";
-                icon.textContent = "🙈"; // Change to a different icon when visible
+                icon.textContent = "Hide"; // Change to a different icon when visible
             } else {
                 field.type = "password";
-                icon.textContent = "👁️"; // Change back to eye icon when hidden
+                icon.textContent = "Show"; // Change back to eye icon when hidden
             }
         }
 

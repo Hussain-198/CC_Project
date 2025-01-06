@@ -73,7 +73,19 @@ button {
 button:hover {
     background-color: var(--hoverColor);
 }
+#togglePassword{
+    color: #333;
+    font-size: 2vh;
+}
 
+#confirm-password{
+    color: #333;
+    font-size: 2vh;
+}
+#toggleConfirmPassword{
+    color: #333;
+    font-size: 2vh;
+}
 p {
     text-align: center;
 
@@ -98,6 +110,7 @@ a {
     border: none;
     padding: 10px;
     outline: none;
+    height: fit-content;
 }
 
 /* Style the eye icon */

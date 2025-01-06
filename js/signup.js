@@ -140,10 +140,10 @@ document.getElementById("toggleConfirmPassword").addEventListener("click", funct
 function togglePasswordVisibility(field, icon) {
     if (field.type === "password") {
         field.type = "text";
-        icon.textContent = "🙈"; // Change to a different icon when visible
+        icon.textContent = "Hide"; // Change to a different icon when visible
     } else {
         field.type = "password";
-        icon.textContent = "👁️"; // Change back to eye icon when hidden
+        icon.textContent = "Show"; // Change back to eye icon when hidden
     }
 }
 
