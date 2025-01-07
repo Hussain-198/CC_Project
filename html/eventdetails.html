@@ -12,7 +12,7 @@
   <style>
     #map {
       width: 25%;
-      z-index: -1;
+      /* z-index: -1; */
     }
 
     #map {
@@ -60,7 +60,7 @@
    document.addEventListener("DOMContentLoaded", function () {
   fetch('../assets/json/details.json')
     .then(response => response.json())
-    .then(events => {
+    .then( async (events) => {
       const eventBanner = document.getElementById('event-banner');
       const eventDetails = document.getElementById('event-details');
 
@@ -83,23 +83,9 @@
         return;
       }
 
-      // Venue coordinates mapping
-      const venueCoordinates = {
-        "YMCA, Royapettah": [13.0549, 80.2635],
-        "YMCA, Nandhanam": [13.0266, 80.2362],
-        "D.Y.Patil Stadium, Navi Mumbai": [19.0425, 73.0238],
-        "Jio World Garden": [19.0603, 72.8697],
-        "Radisson Blu Resort Visakhapatnam": [17.7827, 83.3756],
-        "Wings Convention Centre": [13.0767, 80.2319],
-        "A M Jain College": [12.9849, 80.1794],
-        "Leisure Valley Park": [28.47005, 77.06476],
-        "Narendra Modi Stadium": [23.0917, 72.5975],
-        "Nehru Indoor Stadium":[13.0857, 80.2717],
-        "Annamalai nagar": [8.6649, 77.7553],
-        "To be announced": null
-      };
+     
 
-      const coordinates = venueCoordinates[event.venue.trim()] || null;
+      const coordinates = await generateCoords(event.venue.trim());
 
       // Populate the banner and details section
       eventBanner.innerHTML = `
@@ -133,8 +119,8 @@
       `;
 
       if (coordinates) {
-        const map = L.map('map').setView(coordinates, 15);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        let map = L.map('map').setView(coordinates, 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
@@ -164,6 +150,43 @@
     .catch(error => console.error('Error fetching event data:', error));
 });
 console.log(localStorage.getItem('id'))
+
+
+async function generateCoords(address) {
+  const url = `https://google-map-places.p.rapidapi.com/maps/api/geocode/json?address=${encodeURIComponent(
+    address
+  )}&language=en&region=en`;
+  const options = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": "9de07cb8bbmshea97d4c3fe99842p17d18fjsn3202acd43b1f",
+      "x-rapidapi-host": "google-map-places.p.rapidapi.com",
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (data.results && data.results.length > 0) {
+      return data.results[0].geometry.location; // Return latitude and longitude
+    } else {
+      alert("Address not found!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching location:", error);
+    return null;
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
   </script>
 </body>
