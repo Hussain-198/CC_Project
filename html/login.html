@@ -96,7 +96,7 @@
                     localStorage.setItem("isLoggedin",true);
                     setTimeout(() => {
                         window.location.href = "/index.html"; // Redirect after a brief moment
-                    }, 1000); // 1 second delay for modal
+                    }, 1000000000000); // 1 second delay for modal
 
                 })                
                 .catch((error) => {
@@ -163,6 +163,8 @@
                 modal.style.display = 'none'; // Hide modal after animation
             }, 500); // Match this duration with the CSS transition duration
         }
+
+        console.log(localStorage.getItem(''))
     </script>
 </body>
 </html>

@@ -83,7 +83,7 @@ document.getElementById("signup-form").addEventListener("submit", function (even
     if (!valid) {
         return;
     }
-
+ 
     // Create user in Firebase
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
