@@ -20,6 +20,7 @@
       "date": "2025-02-05",
       "venue": "YMCA, Nandhanam",
       "city": "Chennai",
+      "time": "4:00 Pm",
       "ticketprice":{
         "VIP": 22000,
         "General": 9000,
@@ -35,6 +36,7 @@
       "date": "2025-01-18",
       "venue": "YMCA, Nandhanam",
       "city": "Chennai",
+      "time": "6:00 PM",
       "ticketprice": {
         "VIP": 15999,
         "General": 11999,
@@ -49,6 +51,7 @@
       "date": "2025-01-25",
       "venue": "Narendra Modi Stadium",
       "city": "Ahmedabad",
+      "time": "6:00 PM",
       "ticketprice": {
         "VIP": 10000,
         "General": 5000,
@@ -63,6 +66,7 @@
       "date": "2025-03-14",
       "venue": "D.Y.Patil Stadium, Navi Mumbai",
       "city": "Mumbai",
+      "time": "2:00 PM",
       "ticketprice": {
         "VIP": 4000,
         "General": 1500,
@@ -77,6 +81,7 @@
       "date": "2025-01-11",
       "venue": "Nehru Indoor Stadium",
       "city": "Chennai",
+      "time": "6:00 PM",
       "ticketprice": {
         "VIP": 9999,
         "General": 5499,
@@ -91,6 +96,7 @@
       "date": "2025-01-17",
       "venue": "Annamalai nagar",
       "city": "Tirunelveli",
+      "time": "6:00 PM",
       "ticketprice": {
         "VIP": 999,
         "General": 499,
@@ -105,6 +111,7 @@
       "date": "2025-01-17",
       "venue": "Jio World Garden",
       "city": "Mumbai",
+      "time": "7:00 PM",
       "ticketprice": {
         "VIP": 3000,
         "General": 10000,
@@ -119,6 +126,7 @@
       "date": "2025-02-15",
       "venue": "Leisure Valley Park",
       "city": "Gurgaon",
+      "time": "4:00 PM",
       "ticketprice": {
         "VIP": 30000,
         "General": 11500,
@@ -133,6 +141,7 @@
       "date": "2025-02-02",
       "venue": "Wings Convention Centre",
       "city": "Chennai",
+      "time": "6:00 PM",
      "ticketprice": {
       "VIP": 5899,
         "General": 2359,

@@ -59,6 +59,7 @@
   }
   .purchaseBtn{
     background-color: var(--buttonColor);
+    border: none;
   }
   .purchaseBtn:hover{
     background-color: var(--hoverColor) !important;

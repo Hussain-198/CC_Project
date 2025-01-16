@@ -40,20 +40,18 @@
                 <select id="ticketCategory" class="form-select mb-3"></select>
                 <p>Selected Category Price: <span id="categoryPrice">&#8377;0</span></p>
 
-                <div id="ticketsContainer" class="mb-4">
-                    <p id="ticketCountText">Number of Tickets: 0</p>
+                <!-- Ticket Controls -->
+                <div class="d-flex align-items-center mb-4">
+                    <button id="removeTicket" class="btn btn-danger me-2">-</button>
+                    <p id="ticketCountText" class="mb-0">Number of Tickets: 0</p>
+                    <button id="addTicket" class="btn btn-success ms-2">+</button>
                 </div>
-                <button id="addTicket" class="btn btn-success">Add Ticket</button>
-                <button id="removeTicket" class="btn btn-danger">Remove Ticket</button>
+
             </div>
 
             <div class="col-md-4">
                 <div class="p-4 bg-light rounded">
                     <h4>Summary</h4>
-                    <!-- <div class="d-flex justify-content-between">
-                        <span>Price per Ticket:</span>
-                        <span id="categoryPrice">₹0</span>
-                    </div> -->
                     <div class="d-flex justify-content-between">
                         <span>Price per Ticket:</span>
                         <span id="subtotal">₹0</span>
@@ -130,7 +128,7 @@
                     const categoryPrice = ticketPrices[selectedCategory];
                     categoryPriceElement.textContent = `₹${categoryPrice}`;
                     calculateTotals();
-                    localStorage.setItem("category",selectedCategory);
+                    localStorage.setItem("category", selectedCategory);
                 }
 
                 // Function to calculate totals
@@ -141,7 +139,7 @@
                     const discount = subtotal * 0.1; // 10% discount
                     const total = subtotal - discount;
 
-                    subtotalElement.textContent = `₹${subtotal}`;
+                    subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
                     discountElement.textContent = `-₹${discount.toFixed(2)}`;
                     totalElement.textContent = `₹${total.toFixed(2)}`;
                 }
@@ -191,11 +189,11 @@
                         subtotal,
                         discount,
                     };
-                    
-                    
+
+
 
                     localStorage.setItem("paymentDetails", JSON.stringify(paymentDetails));
-                    
+
                     // Redirect to confirmation or payment page
                     window.location.href = "confirmation.html";
                 });
