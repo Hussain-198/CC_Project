@@ -169,14 +169,15 @@ async function generateCoords(address) {
     if (data.results && data.results.length > 0) {
       return data.results[0].geometry.location; // Return latitude and longitude
     } else {
-      alert("Address not found!");
+      // alert("Address not found!");
       return null;
     }
   } catch (error) {
     console.error("Error fetching location:", error);
     return null;
   }
-}
+} 
+
 
 
 

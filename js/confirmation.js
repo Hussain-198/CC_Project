@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ticketSummaryContainer.appendChild(ticketSummaryElement);
 
     // Initialize EmailJS
-    emailjs.init("6Kg5M-hZ9O2Sxbau7");
+    emailjs.init("jC3jnKx1SmF2JyDUc");
 
     // Initialize Supabase client
     const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
             // Send email using EmailJS
-            const response = await emailjs.send("service_zf7m9se", "template_upb839h", emailData);
+            const response = await emailjs.send("service_h0rp2df", "template_7qqhi6d", emailData);
             console.log("Email sent successfully:", response);
 
             // Save ticket details to Supabase

@@ -105,7 +105,7 @@ document.getElementById("signup-form").addEventListener("submit", function (even
                         console.log('User stored in Supabase:', response.data);
                         showModal("Registration Successful!");
                         setTimeout(() => {
-                            window.location.href = "../index.html"; // Redirect after a brief moment
+                            window.location.href = "../html/login.html"; // Redirect after a brief moment
                         }, 1000); // 1 second delay for modal
                         localStorage.setItem(email, username);
                         localStorage.setItem("email", email);

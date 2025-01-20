@@ -1,19 +1,18 @@
 [
     {
       "id":1,
-      "artist": "Asal Kolaar",
-      "date": "2024-12-31",
-      "venue": "YMCA, Royapettah",
-      "city": "Chennai",
+      "artist": "Arijit Singh Live in Pune",
+      "date": "2025-03-16",
+      "venue": "Maharashtra Cricket Stadium",
+      "city": "Pune",
       "ticketprice": {
-        "VIP": 100,
-        "General": 50,
-        "Basic": 30
+        "VIP": 9999,
+        "General": 7999,
+        "Basic": 5999
       },
-      "genre": "Kollywood",
-      "image":"../assets/images/asalkolaar.jpeg",
-      "i": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.6964615828347!2d80.26244437031373!3d13.054982914985146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52663c98e85407%3A0x6b342af83ce1a820!2sYMCA%20Royapettah!5e0!3m2!1sen!2sin!4v1734689696605!5m2!1sen!2sin"
-    },
+      "genre": "Bollywood",
+      "image":"../assets/images/arijitsinghliveinpune.jpeg"
+      },
     {
       "id":2,
       "artist": "Ed Sheeran",
@@ -32,18 +31,18 @@
     },
     {
       "id":3,
-      "artist": "Vijay Antony",
-      "date": "2025-01-18",
-      "venue": "YMCA, Nandhanam",
-      "city": "Chennai",
+      "artist": "Arijit Singh Live",
+      "date": "2025-02-02",
+      "venue": "Leisure Valley Park Gurugram",
+      "city": "Gurugram",
       "time": "6:00 PM",
       "ticketprice": {
-        "VIP": 15999,
-        "General": 11999,
-        "Basic": 7999
+        "VIP": 20000,
+        "General": 8000,
+        "Basic": 4000
       },
-      "genre": "Kollywood",
-      "image":"../assets/images/vijayantony.jpeg"
+      "genre": "Bollywood",
+      "image":"../assets/images/arijitsinghlive.jpeg"
     },
     {
       "id":4,
@@ -77,48 +76,46 @@
     },
     {
       "id":6,
-      "artist": "Sonu Nigam",
-      "date": "2025-01-11",
-      "venue": "Nehru Indoor Stadium",
+      "artist": "Shreya Ghoshal",
+      "date": "2025-03-01",
+      "venue": "YMCA, Nandhanam",
       "city": "Chennai",
-      "time": "6:00 PM",
+      "time": "5:00 PM",
       "ticketprice": {
-        "VIP": 9999,
-        "General": 5499,
-        "Basic": 1499
+        "VIP": 4999,
+        "General": 1499,
+        "Basic": 999
       },
       "genre": "Bollywood",
-      "image":"../assets/images/sonunigam.jpeg"
+      "image":"../assets/images/shreyaghoshal.jpeg"
     },
     {
       "id":7,
-      "artist": "Ilaiyaraaja",
-      "date": "2025-01-17",
-      "venue": "Annamalai nagar",
-      "city": "Tirunelveli",
+      "artist": "Yo Yo Honey Singh",
+      "date": "2025-03-22",
+      "venue": "Venue to be announced",
+      "city": "Bengaluru",
       "time": "6:00 PM",
       "ticketprice": {
-        "VIP": 999,
-        "General": 499,
-        "Basic": 299
+        "VIP": 6999,
+        "General": 4999,
+        "Basic": 3500
       },
-      "genre": "Kollywood",
-      "image":"../assets/images/ilaiyaraaja.jpeg"
+      "genre": "Bollywood",
+      "image":"../assets/images/yoyohoneysingh.jpeg"
     },
     {
       "id":8,
-      "artist": "AR Rahman",
-      "date": "2025-01-17",
-      "venue": "Jio World Garden",
-      "city": "Mumbai",
-      "time": "7:00 PM",
+      "artist": "RAHMANIA CONNECT",
+      "date": "2025-02-08",
+      "venue": "Bangalore Creative Circus",
+      "city": "Bengaluru",
+      "time": "5:00 PM",
       "ticketprice": {
-        "VIP": 3000,
-        "General": 10000,
-        "Basic": 7999
+        "VIP": 249
       },
       "genre": "Bollywood",
-      "image":"../assets/images/arrahman.jpeg"
+      "image":"../assets/images/rahmaniaconnect.jpeg"
     },
     {
       "id":9,
@@ -149,5 +146,65 @@
      },
       "genre": "Kollywood",
       "image":"https://res.cloudinary.com/dwzmsvp7f/image/upload/f_auto,w_1280/c_crop%2Cg_custom%2Fv1729147234%2Fcm9p0yhepb9m9ykypngi.jpg"
+    },
+    {
+      "id":11,
+      "artist": "Sid Sriram Live",
+      "date": "2025-02-15",
+      "venue": "Boulder Hills, Hyderabad",
+      "city": "Telangana",
+      "time": "5:00 PM",
+      "ticketprice": {
+        "VIP": 2799,
+        "General": 1999,
+        "Basic": 999
+      },
+      "genre": "Kollywood",
+      "image":"../assets/images/sidsriramlive.jpeg"
+    },
+    {
+      "id":12,
+      "artist": "Rockstar DSP LIVE",
+      "date": "2025-02-22",
+      "venue": "A.U Engineering College Ground",
+      "city": "Visakhapatnam",
+      "time": "6:30 PM",
+      "ticketprice": {
+        "VIP": 1499,
+        "General": 999,
+        "Basic": 499
+      },
+      "genre": "Kollywood",
+      "image":"../assets/images/rockstardsplive.jpeg"
+    },
+    {
+      "id":13,
+      "artist": "Millionaire India Tour ",
+      "date": "2025-04-05",
+      "venue": "Venue to be announced",
+      "city": "Kolkata",
+      "time": "6:00 PM",
+      "ticketprice": {
+        "VIP": 8500,
+        "General": 6000,
+        "Basic": 3999
+      },
+      "genre": "Bollywood",
+      "image":"../assets/images/millionaireindiatour.jpeg"
+    },
+    {
+      "id":14,
+      "artist": "Yo Yo Honey Singh Live",
+      "date": "2025-02-22",
+      "venue": "Venue to be announced",
+      "city": "Mumbai",
+      "time": "6:00 PM",
+      "ticketprice": {
+        "VIP": 8500,
+        "General": 6000,
+        "Basic": 3999
+      },
+      "genre": "Bollywood",
+      "image":"../assets/images/yoyohoneysinghlive.jpeg"
     }
 ]
