@@ -73,7 +73,7 @@ function createConcertCard(concert, index) {
     div.className = "concert-card";
     div.innerHTML = `
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top img-fluid" src="../assets/images/${concert.artist.split(" ").join("")}.jpeg" alt="${concert.artist} photo not found">
+            <img class="card-img-top img-fluid" src="../assets/images/img_${concert.artist.split(" ").join("")}.jpeg" alt="${concert.artist} photo not found">
             <div class="card-body">
                 <div id="titleText">
                     <div>
@@ -82,10 +82,10 @@ function createConcertCard(concert, index) {
                 </div>
                 <h6 id="concertName${index}">${concert.venue}</h6>
                 <p class="card-text date-text">
-                    <img id="calender-icon" src="../assets/images/1579797_calendar_calender_date_icon.png" alt="Calendar icon"> ${concert.date}
+                    <img id="calender-icon" src="../assets/images/ico_calender_icon.png" alt="Calendar icon"> ${concert.date}
                 </p>
                 <p class="card-text">
-                    <img id="location-icon" src="../assets/images/352521_location_on_icon.png" alt=""> ${concert.city}
+                    <img id="location-icon" src="../assets/images/ico_location_icon.png" alt=""> ${concert.city}
                 </p>
                 <a class="btn btn-primary">Book tickets</a>
             </div>

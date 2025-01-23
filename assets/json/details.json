@@ -11,7 +11,7 @@
         "Basic": 5999
       },
       "genre": "Bollywood",
-      "image":"../assets/images/arijitsinghliveinpune.jpeg"
+      "image":"../assets/images/img_arijitsinghliveinpune.jpeg"
       },
     {
       "id":2,
@@ -26,7 +26,7 @@
         "Basic": 4500
       },
       "genre": "Hollywood",
-      "image":"../assets/images/edsheeran.jpeg"
+      "image":"../assets/images/img_edsheeran.jpeg"
      
     },
     {
@@ -42,7 +42,7 @@
         "Basic": 4000
       },
       "genre": "Bollywood",
-      "image":"../assets/images/arijitsinghlive.jpeg"
+      "image":"../assets/images/img_arijitsinghlive.jpeg"
     },
     {
       "id":4,
@@ -57,7 +57,7 @@
         "Basic": 2000
       },
       "genre": "Hollywood",
-      "image":"../assets/images/coldplay.jpeg"
+      "image":"../assets/images/img_coldplay.jpeg"
     },
     {
       "id":5,
@@ -72,7 +72,7 @@
         "Basic": 1000
       },
       "genre": "Hollywood",
-      "image":"../assets/images/martingarrix.jpeg"
+      "image":"../assets/images/img_martingarrix.jpeg"
     },
     {
       "id":6,
@@ -87,7 +87,7 @@
         "Basic": 999
       },
       "genre": "Bollywood",
-      "image":"../assets/images/shreyaghoshal.jpeg"
+      "image":"../assets/images/img_shreyaghoshal.jpeg"
     },
     {
       "id":7,
@@ -102,7 +102,7 @@
         "Basic": 3500
       },
       "genre": "Bollywood",
-      "image":"../assets/images/yoyohoneysingh.jpeg"
+      "image":"../assets/images/img_yoyohoneysingh.jpeg"
     },
     {
       "id":8,
@@ -115,7 +115,7 @@
         "VIP": 249
       },
       "genre": "Kollywood",
-      "image":"../assets/images/rahmaniaconnect.jpeg"
+      "image":"../assets/images/img_rahmaniaconnect.jpeg"
     },
     {
       "id":9,
@@ -130,7 +130,7 @@
         "Basic": 6000
       },
       "genre": "Hollywood",
-      "image":"../assets/images/edsheeran.jpeg"
+      "image":"../assets/images/img_edsheeran.jpeg"
     },
     {
       "id":10,
@@ -145,7 +145,7 @@
         "Basic": 499
      },
       "genre": "Kollywood",
-      "image":"https://res.cloudinary.com/dwzmsvp7f/image/upload/f_auto,w_1280/c_crop%2Cg_custom%2Fv1729147234%2Fcm9p0yhepb9m9ykypngi.jpg"
+      "image":"../assets/images/img_paaldabba.jpeg"
     },
     {
       "id":11,
@@ -160,7 +160,7 @@
         "Basic": 999
       },
       "genre": "Kollywood",
-      "image":"../assets/images/sidsriramlive.jpeg"
+      "image":"../assets/images/img_sidsriramlive.jpeg"
     },
     {
       "id":12,
@@ -175,7 +175,7 @@
         "Basic": 499
       },
       "genre": "Kollywood",
-      "image":"../assets/images/rockstardsplive.jpeg"
+      "image":"../assets/images/img_rockstardsplive.jpeg"
     },
     {
       "id":13,
@@ -190,7 +190,7 @@
         "Basic": 3999
       },
       "genre": "Bollywood",
-      "image":"../assets/images/millionaireindiatour.jpeg"
+      "image":"../assets/images/img_millionaireindiatour.jpeg"
     },
     {
       "id":14,
@@ -205,6 +205,6 @@
         "Basic": 3999
       },
       "genre": "Bollywood",
-      "image":"../assets/images/yoyohoneysinghlive.jpeg"
+      "image":"../assets/images/img_yoyohoneysinghlive.jpeg"
     }
 ]

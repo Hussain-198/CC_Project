@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <p>Name: ${ticket.username}</p>
                     <p>Email: ${ticket.user_email}</p>
                     <p>Amount: ₹${ticket.total_amount}</p>
+                    <p>Selected Category: ${ticket.selected_category}</p>
                     <p>Tickets Count: ${ticket.ticket_count}</p>
                 `;
 
