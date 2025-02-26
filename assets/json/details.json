@@ -31,33 +31,33 @@
     },
     {
       "id":3,
-      "artist": "Arijit Singh Live",
-      "date": "2025-02-02",
-      "venue": "Leisure Valley Park Gurugram",
-      "city": "Gurugram",
-      "time": "6:00 PM",
+      "artist": "Harris Live",
+      "date": "2025-03-15",
+      "venue": "Hindusthan Engineering College",
+      "city": "Coimbatore",
+      "time": "6:30 PM",
       "ticketprice": {
-        "VIP": 20000,
-        "General": 8000,
-        "Basic": 4000
+        "VIP": 2999,
+        "General": 1999,
+        "Basic": 1499
       },
-      "genre": "Bollywood",
-      "image":"../assets/images/img_arijitsinghlive.jpeg"
+      "genre": "Kollywood",
+      "image":"../assets/images/img_harrislive.jpeg"
     },
     {
       "id":4,
-      "artist": "Cold Play",
-      "date": "2025-01-25",
-      "venue": "Narendra Modi Stadium",
-      "city": "Ahmedabad",
+      "artist": "Santhosh Narayan Live",
+      "date": "2025-03-08",
+      "venue": "Codissia Ground",
+      "city": "Coimbatore",
       "time": "6:00 PM",
       "ticketprice": {
-        "VIP": 10000,
-        "General": 5000,
-        "Basic": 2000
+        "VIP": 2000,
+        "General": 1500,
+        "Basic": 999
       },
-      "genre": "Hollywood",
-      "image":"../assets/images/img_coldplay.jpeg"
+      "genre": "Kollywood",
+      "image":"../assets/images/img_santhoshnarayanlive.jpeg"
     },
     {
       "id":5,
@@ -106,16 +106,17 @@
     },
     {
       "id":8,
-      "artist": "RAHMANIA CONNECT",
-      "date": "2025-02-08",
-      "venue": "Bangalore Creative Circus",
-      "city": "Bengaluru",
-      "time": "5:00 PM",
+      "artist": "Emiway Bantai Live",
+      "date": "2025-05-10",
+      "venue": "Venue to be announced",
+      "city": "Mumbai",
+      "time": "7:00 PM",
       "ticketprice": {
-        "VIP": 249
+        "VIP": 1399,
+        "General": 799  
       },
-      "genre": "Kollywood",
-      "image":"../assets/images/img_rahmaniaconnect.jpeg"
+      "genre": "Bollywood",
+      "image":"../assets/images/img_emiwaybantailive.jpeg"
     },
     {
       "id":9,
