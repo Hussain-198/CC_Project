@@ -383,9 +383,10 @@ h1 {
   right: 0; /* Slide the menu in */
 }
 
+
 .popup-menu a, .popup-menu button {
   text-decoration: none;
-  color:black;
+  color:white;
   font-size: 18px;
   border: none;
   background: none;
