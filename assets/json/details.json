@@ -1,17 +1,17 @@
 [
     {
       "id":1,
-      "artist": "Arijit Singh Live in Pune",
-      "date": "2025-03-16",
-      "venue": "Maharashtra Cricket Stadium",
-      "city": "Pune",
+      "artist": "Harsha Vardhan and Asal Kolaar Live",
+      "date": "2025-03-30",
+      "venue": "Hindusthan College",
+      "city": "Coimbatore",
       "ticketprice": {
-        "VIP": 9999,
-        "General": 7999,
-        "Basic": 5999
+        "VIP": 1499,
+        "General": 699,
+        "Basic": 499
       },
-      "genre": "Bollywood",
-      "image":"../assets/images/img_arijitsinghliveinpune.jpeg"
+      "genre": "Kollywood",
+      "image":"../assets/images/img_harshavardhanandasalkolaarlive.jpeg"
       },
     {
       "id":2,
