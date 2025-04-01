@@ -1,78 +1,77 @@
 [
     {
       "id":1,
-      "artist": "Harsha Vardhan and Asal Kolaar Live",
-      "date": "2025-03-30",
-      "venue": "Hindusthan College",
-      "city": "Coimbatore",
+      "artist": "D. Imman Live",
+      "date": "2025-06-14",
+      "venue": "YMCA, Nandhanam",
+      "city": "Chennai",
+      "time":"6:00 PM",
       "ticketprice": {
         "VIP": 1499,
-        "General": 699,
+        "General": 999,
         "Basic": 499
       },
       "genre": "Kollywood",
-      "image":"../assets/images/img_harshavardhanandasalkolaarlive.jpeg"
+      "image":"../assets/images/img_d.immanlive.jpeg"
       },
     {
       "id":2,
-      "artist": "Ed Sheeran",
-      "date": "2025-02-05",
-      "venue": "YMCA, Nandhanam",
-      "city": "Chennai",
-      "time": "4:00 Pm",
+      "artist": "Salim Sulaiman Live",
+      "date": "2025-05-24",
+      "venue": "Phoenix Marketcity",
+      "city": "Bangalore",
+      "time": "7:00 Pm",
       "ticketprice":{
-        "VIP": 22000,
-        "General": 9000,
-        "Basic": 4500
+        "VIP": 2499,
+        "General": 1499,
+        "Basic": 999
       },
-      "genre": "Hollywood",
-      "image":"../assets/images/img_edsheeran.jpeg"
+      "genre": "Bollywood",
+      "image":"../assets/images/img_salimsulaimanlive.jpeg"
      
     },
     {
       "id":3,
-      "artist": "Harris Live",
-      "date": "2025-03-15",
-      "venue": "Hindusthan Engineering College",
-      "city": "Coimbatore",
-      "time": "6:30 PM",
+      "artist": "XO Fan Event",
+      "date": "2025-04-27",
+      "venue": "Just BLR",
+      "city": "Bangalore",
+      "time": "5:00 PM",
       "ticketprice": {
-        "VIP": 2999,
-        "General": 1999,
-        "Basic": 1499
+        "VIP": 499
       },
-      "genre": "Kollywood",
-      "image":"../assets/images/img_harrislive.jpeg"
+      "genre": "Hollywood",
+      "image":"../assets/images/img_xofanevent.jpeg"
     },
     {
       "id":4,
-      "artist": "Santhosh Narayan Live",
-      "date": "2025-03-08",
-      "venue": "Codissia Ground",
-      "city": "Coimbatore",
-      "time": "6:00 PM",
+      "artist": "Adnan Sami Live",
+      "date": "2025-06-07",
+      "venue": "Shanmukhananda Hall",
+      "city": "Mumbai",
+      "time": "7:00 PM",
       "ticketprice": {
-        "VIP": 2000,
-        "General": 1500,
-        "Basic": 999
+        "VIP": 1499,
+        "General": 999,
+        "Basic": 699
       },
-      "genre": "Kollywood",
-      "image":"../assets/images/img_santhoshnarayanlive.jpeg"
+      "genre": "Bollywood",
+      "image":"../assets/images/img_adnansamilive.jpeg"
     },
     {
       "id":5,
-      "artist": "Martin Garrix",
-      "date": "2025-03-14",
-      "venue": "D.Y.Patil Stadium, Navi Mumbai",
-      "city": "Mumbai",
-      "time": "2:00 PM",
+      "artist": "Javed Ali Live",
+      "date": "2025-04-12",
+      "venue": "Pacific Outlet Mall",
+      "city": "Delhi",
+      "time": "8:00 PM",
       "ticketprice": {
-        "VIP": 4000,
-        "General": 1500,
-        "Basic": 1000
+        "VIP": 2499,
+        "General": 1499,
+        "Basic": 999
       },
-      "genre": "Hollywood",
-      "image":"../assets/images/img_martingarrix.jpeg"
+      "genre": "Bollywood",
+      "image":"../assets/images/img_javedalilive.jpeg"
     },
     {
       "id":6,
