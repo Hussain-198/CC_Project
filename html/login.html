@@ -43,11 +43,11 @@
     </div>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-        // Your web app's Firebase configuration
+        
         const firebaseConfig = {
             apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
             authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
@@ -71,22 +71,22 @@
             emailError.textContent = "";
             passwordError.textContent = "";
 
-            let valid = true;
+            let valid = true; // Keeping flag
 
-            // Email validation
+           
             if (!/\S+@\S+\.\S+/.test(email)) {
                 emailError.textContent = "Please enter a valid email address.";
                 valid = false;
             }
 
-            // Password validation
+            
             if (password === "") {
                 passwordError.textContent = "Please enter the password";
-                valid = false; // Ensure valid is false
+                valid = false; 
             }
 
             if (!valid) {
-                return; // Stop form submission if validation fails
+                return; 
             }
 
             signInWithEmailAndPassword(auth, email, password)
@@ -95,16 +95,16 @@
                     localStorage.setItem("email",email);
                     localStorage.setItem("isLoggedin",true);
                     setTimeout(() => {
-                        window.location.href = "/index.html"; // Redirect after a brief moment
-                    }, 1000000000000); // 1 second delay for modal
+                        window.location.href = "/index.html"; 
+                    }, 1000000000000);
 
                 })                
                 .catch((error) => {
                     const errorMessage = error.message;
                     if (errorMessage.includes("email")) {
-                        emailError.textContent = errorMessage; // Show error in email span
+                        emailError.textContent = errorMessage; 
                     } else {
-                        passwordError.textContent = errorMessage; // Show error in password span
+                        passwordError.textContent = errorMessage; 
                     }
                 });
         });
@@ -123,10 +123,10 @@
         function togglePasswordVisibility(field, icon) {
             if (field.type === "password") {
                 field.type = "text";
-                icon.textContent = "Hide"; // Change to a different icon when visible
+                icon.textContent = "Hide"; 
             } else {
                 field.type = "password";
-                icon.textContent = "Show"; // Change back to eye icon when hidden
+                icon.textContent = "Show"; 
             }
         }
 
@@ -137,13 +137,13 @@
         const span = document.getElementsByClassName("close")[0];
 
         function showModal(message) {
-            modal.style.display = 'block'; // Make modal visible
+            modal.style.display = 'block'; 
             modalMessage.textContent = message;
 
             // Set a timeout to allow CSS to apply before moving the modal
             setTimeout(() => {
-                modal.querySelector('.modal-content').style.transform = 'translateX(0)'; // Move to center
-            }, 10); // Small delay to trigger the CSS transition
+                modal.querySelector('.modal-content').style.transform = 'translateX(0)'; 
+            }, 10); // Small delay for CSS transition
         }
 
         span.onclick = function() {
@@ -158,9 +158,9 @@
 
         function hideModal() {
             const modalContent = modal.querySelector('.modal-content');
-            modalContent.style.transform = 'translateX(-100%)'; // Move back to the left
+            modalContent.style.transform = 'translateX(-100%)'; 
             setTimeout(() => {
-                modal.style.display = 'none'; // Hide modal after animation
+                modal.style.display = 'none'; 
             }, 500); // Match this duration with the CSS transition duration
         }
 

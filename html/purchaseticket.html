@@ -114,7 +114,7 @@
                 const totalElement = document.getElementById("total");
 
                 // Populate dropdown with ticket categories
-                ticketCategory.innerHTML = ""; // Clear any existing options
+                ticketCategory.innerHTML = ""; 
                 Object.keys(ticketPrices).forEach(category => {
                     const option = document.createElement("option");
                     option.value = category;
@@ -194,7 +194,7 @@
 
                     localStorage.setItem("paymentDetails", JSON.stringify(paymentDetails));
 
-                    // Redirect to confirmation or payment page
+                    
                     window.location.href = "confirmation.html";
                 });
 
