@@ -9,21 +9,21 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!paymentDetails || !eventDetails) {
         console.error("No payment or event details found!");
         alert("Payment or event details are missing. Please try again.");
-        window.location.href = "../index.html"; // Redirect to home page
+        window.location.href = "../index.html";
         return;
     }
 
-    // Load Event Details
+    // Event Details
     document.getElementById("eventTitle").textContent = eventDetails.title;
     document.getElementById("eventDescription").textContent = eventDetails.description;
     const eventImage = document.getElementById("eventImage");
     eventImage.src = eventDetails.image;
     eventImage.style.display = "block";
 
-    // Load Payment Summary
+    // Payment Details
     document.getElementById("totalAmount").textContent = `₹${paymentDetails.totalAmount}`;
 
-    // Display Ticket Summary
+    // Ticket Details
     const ticketSummaryContainer = document.getElementById("ticketDetails");
     const ticketCount = paymentDetails.ticketCount || 0;
 
@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initialize EmailJS
     emailjs.init("jC3jnKx1SmF2JyDUc");
 
-    // Initialize Supabase client
+
     const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase URL;  // Replace with your Supabase API key
  
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Confirm Payment Button
+    // Payment Button
     document.getElementById("confirmPayment").addEventListener("click", async function () {
         const recipientEmail = localStorage.getItem("email");
         const username = localStorage.getItem("username") || "User";
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Prepare email content
+        // Email content
         const emailData = {
             to_email: recipientEmail,
             to_name: username,
@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
-            // Send email using EmailJS
+            // Sending mail using EmailJS
             const response = await emailjs.send("service_h0rp2df", "template_7qqhi6d", emailData);
             console.log("Email sent successfully:", response);
 
             // Save ticket details to Supabase
             const { data, error } = await supabase
-                .from('tickets') // Insert into the 'tickets' table
+                .from('tickets') // Table name
                 .insert([
                     {
                         user_email: recipientEmail,
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         event_description: eventDetails.description,
                         event_date: eventDetails.date || null,
                         event_venue: eventDetails.venue || null,
-                        selected_category: selectedCategory, // Store selected category
+                        selected_category: selectedCategory,
                         total_amount: paymentDetails.totalAmount,
                         ticket_count: ticketCount,
                     }

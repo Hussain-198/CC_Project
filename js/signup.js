@@ -1,10 +1,9 @@
 // Importing necessary libraries
-// Import Firebase and Supabase SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js';
 
-// Firebase config
+
 const firebaseConfig = {
     apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
     authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
@@ -14,11 +13,11 @@ const firebaseConfig = {
     appId: "1:144531331956:web:eac7601b172cf9fcadea21"
 };
 
-// Initialize Supabase (with your URL and API key)
-const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';  // Replace with your Supabase URL
+
+const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co'; 
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase API key
 
-// Initialize Firebase & Supabase
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -29,7 +28,7 @@ const modalMessage = document.getElementById("modalMessage");
 const span = document.getElementsByClassName("close")[0];
 
 document.getElementById("signup-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
 
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value;
@@ -87,12 +86,12 @@ document.getElementById("signup-form").addEventListener("submit", function (even
     // Create user in Firebase
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // After user is created, store details in Supabase
+            
             const user = userCredential.user;
 
             console.log("Firebase User Created: ", user);
 
-            // Store user in Supabase `users` table
+           
             supabase
                 .from('users')
                 .insert([
@@ -105,8 +104,8 @@ document.getElementById("signup-form").addEventListener("submit", function (even
                         console.log('User stored in Supabase:', response.data);
                         showModal("Registration Successful!");
                         setTimeout(() => {
-                            window.location.href = "../html/login.html"; // Redirect after a brief moment
-                        }, 1000); // 1 second delay for modal
+                            window.location.href = "../html/login.html";
+                        }, 1000);
                         localStorage.setItem(email, username);
                         localStorage.setItem("email", email);
                     }
@@ -119,14 +118,14 @@ document.getElementById("signup-form").addEventListener("submit", function (even
         .catch((error) => {
             const errorMessage = error.message;
             if (errorMessage.includes("email")) {
-                emailError.textContent = errorMessage; // Show error in email span
+                emailError.textContent = errorMessage; 
             } else {
-                passwordError.textContent = errorMessage; // Show error in password span
+                passwordError.textContent = errorMessage; 
             }
         });
 });
 
-// Toggle password visibility
+//Password visibility
 document.getElementById("togglePassword").addEventListener("click", function () {
     const passwordField = document.getElementById("password");
     togglePasswordVisibility(passwordField, this);
@@ -140,20 +139,20 @@ document.getElementById("toggleConfirmPassword").addEventListener("click", funct
 function togglePasswordVisibility(field, icon) {
     if (field.type === "password") {
         field.type = "text";
-        icon.textContent = "Hide"; // Change to a different icon when visible
+        icon.textContent = "Hide";
     } else {
         field.type = "password";
-        icon.textContent = "Show"; // Change back to eye icon when hidden
+        icon.textContent = "Show";
     }
 }
 
 function showModal(message) {
-    modal.style.display = 'block'; // Make modal visible
+    modal.style.display = 'block';
     modalMessage.textContent = message;
 
     setTimeout(() => {
         modal.querySelector('.modal-content').style.transform = 'translateX(0)';
-    }, 10); // Small delay to trigger the CSS transition
+    }, 10);
 }
 
 span.onclick = function () {

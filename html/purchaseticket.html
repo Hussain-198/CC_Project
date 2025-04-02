@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <!-- Header -->
+    
     <header class="text-center p-3">
         <h1>
             <div id="webName">
@@ -24,7 +24,7 @@
         </nav>
     </header>
 
-    <!-- Purchase Ticket Section -->
+    
     <section class="container my-5">
         <h2 class="text-center mb-4" id="eventTitle">Loading Event...</h2>
         <div class="img_container text-center">
@@ -36,11 +36,11 @@
             <div class="col-md-8">
                 <h3>Ticket Information</h3>
 
-                <!-- Ticket Categories -->
+               
                 <select id="ticketCategory" class="form-select mb-3"></select>
                 <p>Selected Category Price: <span id="categoryPrice">&#8377;0</span></p>
 
-                <!-- Ticket Controls -->
+                
                 <div class="d-flex align-items-center mb-4">
                     <button id="removeTicket" class="btn btn-danger me-2">-</button>
                     <p id="ticketCountText" class="mb-0">Number of Tickets: 0</p>
@@ -70,13 +70,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    
     <footer class="bg-dark text-white text-center py-4">
         <div id="footerLine"></div>
         <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
     </footer>
 
-    <!-- JavaScript -->
+    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const eventData = JSON.parse(localStorage.getItem("selectedEvent"));

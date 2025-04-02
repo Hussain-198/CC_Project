@@ -1,9 +1,9 @@
-// Import the functions you need from the SDKs you need
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js';
 
-// Your web app's Firebase configuration
+
 const firebaseConfig = {
     apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
     authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
@@ -13,7 +13,7 @@ const firebaseConfig = {
     appId: "1:144531331956:web:eac7601b172cf9fcadea21"
 };
 
-const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';  // Replace with your Supabase URL
+const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co'; 
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase API key
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -134,7 +134,7 @@ onAuthStateChanged(auth, async (user) => {
         try {
             // Query Supabase for the username
             const { data, error } = await supabase
-                .from('users') // Replace 'users' with the actual table name in your Supabase database
+                .from('users') 
                 .select('username')
                 .eq('email', currentUserEmail)
                 .single(); // Use `.single()` if you expect only one row to match
@@ -147,7 +147,7 @@ onAuthStateChanged(auth, async (user) => {
                 usernameDisplay.style.display = "block";
                 usernameDisplay.textContent = `Welcome, ${username}!`;
 
-                // Store the username in localStorage for later use if needed
+                // Storing username for later use
                 localStorage.setItem("username", username);
             }
         } catch (error) {
