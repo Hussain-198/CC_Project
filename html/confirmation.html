@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <!-- Header -->
     <header class="text-center p-3 header" >
         <h1>
             <div id="webName">
@@ -27,7 +26,6 @@
         </nav>
     </header>
 
-    <!-- Payment Details Section -->
     <section class="container my-5">
         <h2 class="text-center mb-4" id="eventTitle">Loading Event...</h2>
         <div class="img_container text-center">
@@ -49,18 +47,15 @@
         <button id="confirmPayment" class="btn btn-primary w-100 mt-4">Confirm Payment</button>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-4">
         <div id="footerLine"></div>
         <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
     </footer>
 
-    <!-- JavaScript -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-   <!-- Load Supabase first -->
+   
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.js"></script>
 
-<!-- Then load your custom script -->
 <script type="module" src="../js/confirmation.js" defer></script>
 
 </body>

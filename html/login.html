@@ -45,6 +45,7 @@
     </div>
 
     <script type="module">
+<<<<<<< HEAD
         document.getElementById("login-form").addEventListener("submit", function (event) {
     event.preventDefault();
     
@@ -56,6 +57,21 @@
     // Clear previous errors
     emailError.textContent = "";
     passwordError.textContent = "";
+=======
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
+            authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
+            projectId: "sample-firebase-ai-app-b83c0",
+            storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
+            messagingSenderId: "144531331956",
+            appId: "1:144531331956:web:eac7601b172cf9fcadea21"
+        };
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 
     let valid = true;
 
@@ -70,6 +86,7 @@
         valid = false;
     }
 
+<<<<<<< HEAD
     if (!valid) return; // Stop if validation fails
 
     // Prepare request payload
@@ -91,6 +108,65 @@
             return response.text(); // or response.json() if backend returns JSON
         } else {
             return response.text().then(err => { throw new Error(err); });
+=======
+            let valid = true; // Keeping flag
+
+           
+            if (!/\S+@\S+\.\S+/.test(email)) {
+                emailError.textContent = "Please enter a valid email address.";
+                valid = false;
+            }
+
+            
+            if (password === "") {
+                passwordError.textContent = "Please enter the password";
+                valid = false; 
+            }
+
+            if (!valid) {
+                return; 
+            }
+
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                    showModal("Login Successful!");
+                    localStorage.setItem("email",email);
+                    localStorage.setItem("isLoggedin",true);
+                    setTimeout(() => {
+                        window.location.href = "/index.html"; 
+                    }, 1000000000000);
+
+                })                
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    if (errorMessage.includes("email")) {
+                        emailError.textContent = errorMessage; 
+                    } else {
+                        passwordError.textContent = errorMessage; 
+                    }
+                });
+        });
+
+         // Toggle password visibility
+         document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordField = document.getElementById("password");
+            togglePasswordVisibility(passwordField, this);
+        });
+
+        // document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+        //     const confirmPasswordField = document.getElementById("confirm-password");
+        //     togglePasswordVisibility(confirmPasswordField, this);
+        // });
+
+        function togglePasswordVisibility(field, icon) {
+            if (field.type === "password") {
+                field.type = "text";
+                icon.textContent = "Hide"; 
+            } else {
+                field.type = "password";
+                icon.textContent = "Show"; 
+            }
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
         }
     })
     .then(data => {
@@ -124,6 +200,7 @@ function togglePasswordVisibility(field, icon) {
     }
 }
 
+<<<<<<< HEAD
 // Modal functionality
 const modal = document.getElementById("myModal");
 const modalMessage = document.getElementById("modalMessage");
@@ -136,6 +213,17 @@ function showModal(message) {
         modal.querySelector('.modal-content').style.transform = 'translateX(0)';
     }, 10);
 }
+=======
+        function showModal(message) {
+            modal.style.display = 'block'; 
+            modalMessage.textContent = message;
+
+            // Set a timeout to allow CSS to apply before moving the modal
+            setTimeout(() => {
+                modal.querySelector('.modal-content').style.transform = 'translateX(0)'; 
+            }, 10); // Small delay for CSS transition
+        }
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 
 span.onclick = function () { hideModal(); }
 window.onclick = function (event) { if (event.target === modal) hideModal(); }
@@ -146,6 +234,18 @@ function hideModal() {
     setTimeout(() => { modal.style.display = 'none'; }, 500);
 }
 
+<<<<<<< HEAD
+=======
+        function hideModal() {
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.style.transform = 'translateX(-100%)'; 
+            setTimeout(() => {
+                modal.style.display = 'none'; 
+            }, 500); // Match this duration with the CSS transition duration
+        }
+
+        console.log(localStorage.getItem(''))
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
     </script>
 </body>
 

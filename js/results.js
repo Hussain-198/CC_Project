@@ -1,4 +1,4 @@
-// Firebase config and initialization
+
 const firebaseConfig = {
     apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
     authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
@@ -8,7 +8,7 @@ const firebaseConfig = {
     appId: "1:144531331956:web:eac7601b172cf9fcadea21"
 };
 
-// Initialize Firebase
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 
@@ -22,10 +22,15 @@ const genreFilter = document.getElementById('genreFilter');
 
 // Function to fetch and filter data
 function fetchAndFilterData() {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
     const query = searchBox.value.toLowerCase();
     const filter = document.getElementById('filterSelect').value; 
     const selectedGenre = genreFilter.value.toLowerCase();
 
+<<<<<<< HEAD
     console.log("Selected filter:", filter); 
     console.log("Search query:", query);
 
@@ -51,15 +56,43 @@ function fetchAndFilterData() {
     resultsContainer.innerHTML = '';
 
     fetch(url)
+=======
+   
+    resultsContainer.innerHTML = '';
+
+   
+    fetch('../assets/json/details.json')
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         })
         .then(data => {
+<<<<<<< HEAD
             const filteredResults = data.filter(item => {
                 const eventDate = new Date(item.date);
                 const currentDate = new Date();
                 return eventDate >= currentDate;
+=======
+            // Apply filters based on genre
+            const filteredResults = data.filter(item => {
+                const eventDate = new Date(item.date); // Parse the event date
+                const currentDate = new Date(); // Current date
+
+                // Ensure only upcoming events are included
+                const isUpcoming = eventDate >= currentDate;
+
+                // Check if it matches the search
+                const matchesSearch =
+                    (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
+                    (filter === 'venue' && item.venue.toLowerCase().includes(query)) ||
+                    (filter === 'genre' && item.genre.toLowerCase().includes(query));
+
+                // Check if it matches the selected genre
+                const matchesGenre = selectedGenre === 'all' || item.genre.toLowerCase() === selectedGenre;
+
+                return matchesSearch && matchesGenre && isUpcoming;
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
             });
 
             showResults(filteredResults);
@@ -71,10 +104,13 @@ function fetchAndFilterData() {
 }
 
 
+<<<<<<< HEAD
 
 
 
 // Event listener for search form submission
+=======
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault();
     fetchAndFilterData();
@@ -110,7 +146,7 @@ function showResults(filteredResults) {
             resultsContainer.appendChild(resultItem);
         });
 
-        // Attach click events to "Book tickets" buttons
+   
         attachBookTicketEvents();
     }
 }
@@ -123,7 +159,11 @@ function attachBookTicketEvents() {
             const eventId = event.target.getAttribute('data-event-id');
             console.log('Stored event ID:', eventId);
 
+<<<<<<< HEAD
             // Storing event ID in localStorage
+=======
+            
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
             localStorage.setItem('id', eventId);
 
             // User's authentication

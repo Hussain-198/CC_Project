@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Import the functions you need from the SDKs you need
 // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 // import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -16,6 +17,26 @@
 // const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';  // Replace with your Supabase URL
 // const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase API key
 // // const supabase = createClient(supabaseUrl, supabaseKey);
+=======
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js';
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
+    authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
+    projectId: "sample-firebase-ai-app-b83c0",
+    storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
+    messagingSenderId: "144531331956",
+    appId: "1:144531331956:web:eac7601b172cf9fcadea21"
+};
+
+const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co'; 
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase API key
+const supabase = createClient(supabaseUrl, supabaseKey);
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 
 // // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
@@ -133,17 +154,30 @@ document.addEventListener("click", (event) => {
 
     if (isLoggedIn && currentUserEmail) {
         try {
+<<<<<<< HEAD
             const response = await fetch(`http://localhost:8080/api/auth/user?email=${encodeURIComponent(currentUserEmail)}`);
             if (!response.ok) {
                 throw new Error("User not found or error fetching user");
             }
             const userData = await response.json();
             const username = userData.username;
+=======
+            // Query Supabase for the username
+            const { data, error } = await supabase
+                .from('users') 
+                .select('username')
+                .eq('email', currentUserEmail)
+                .single(); // Use `.single()` if you expect only one row to match
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 
             usernameDisplay.style.display = "block";
             usernameDisplay.textContent = `Welcome, ${username}!`;
 
+<<<<<<< HEAD
             if (!localStorage.getItem("username")) {
+=======
+                // Storing username for later use
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
                 localStorage.setItem("username", username);
             }
         } catch (error) {

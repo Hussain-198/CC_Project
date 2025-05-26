@@ -25,7 +25,10 @@
 </head>
 
 <body>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
   <header class="text-center p-3">
     <h1>
       <div id="webName"><span>Concert</span><span id="second_word">Craze</span></div>
@@ -36,20 +39,27 @@
     </nav>
   </header>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
   <!-- <div style="display: flex; "> -->
   <section class="event-banner text-center text-white py-5" id="event-banner">
     <!-- <div id="map"></div> -->
   </section>
 
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
   <section class="container my-5" id="event-details">
 
-    <!-- </div> -->
+    
 
   </section>
 
-  <!-- Footer -->
+  
   <footer class="bg-dark text-white text-center py-4">
     <div id="footerLine"></div>
     <p class="text-center mt-3">&copy; 2024 ConcertCraze</p>
@@ -64,7 +74,7 @@
       const eventBanner = document.getElementById('event-banner');
       const eventDetails = document.getElementById('event-details');
 
-      // Get the artist name from localStorage
+      
       const artistNameFromLocalStorage =parseFloat (localStorage.getItem("id"));
     
       console.log(artistNameFromLocalStorage);
@@ -89,11 +99,16 @@
 
       const coordinates = await generateCoords(event.venue.trim());
 
-      // Populate the banner and details section
+      // Banner and details section
       eventBanner.innerHTML = `
         <div class="eventHeading">
+<<<<<<< HEAD
           <img class="card-img-top img-fluid" id="eventImg" src="${event.imageUrl}" alt="${event.artist} photo not found">
           <h2 id="artistName">${event.artist} Live</h2>
+=======
+          <img id="eventImg" src="${event.image}" alt="${event.artist}" class="img-fluid">
+          <h2 id="artistName">${event.artist}</h2>
+>>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
           <p>${event.genre} concert at ${event.venue}, ${event.city}</p>
         </div>
       `;
