@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../css/login.css">
     <link rel="icon" href="../assets/images/ico_logo_bg.png">
 </head>
+
 <body>
     <div class="login-container">
         <h1>Welcome Back.</h1>
@@ -34,8 +36,8 @@
         Your browser does not support the video tag.
     </video> -->
 
-     <!-- The Modal -->
-     <div id="myModal" class="modal">
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p id="modalMessage"></p>
@@ -43,128 +45,108 @@
     </div>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
-            authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
-            projectId: "sample-firebase-ai-app-b83c0",
-            storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
-            messagingSenderId: "144531331956",
-            appId: "1:144531331956:web:eac7601b172cf9fcadea21"
-        };
+    // Clear previous errors
+    emailError.textContent = "";
+    passwordError.textContent = "";
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+    let valid = true;
 
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            const emailError = document.getElementById("emailError");
-            const passwordError = document.getElementById("passwordError");
+    // Basic email validation
+    if (!/\S+@\S+\.\S+/.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        valid = false;
+    }
 
-            emailError.textContent = "";
-            passwordError.textContent = "";
+    if (password === "") {
+        passwordError.textContent = "Please enter the password.";
+        valid = false;
+    }
 
-            let valid = true;
+    if (!valid) return; // Stop if validation fails
 
-            // Email validation
-            if (!/\S+@\S+\.\S+/.test(email)) {
-                emailError.textContent = "Please enter a valid email address.";
-                valid = false;
-            }
+    // Prepare request payload
+    const loginRequest = {
+        email: email,
+        password: password
+    };
 
-            // Password validation
-            if (password === "") {
-                passwordError.textContent = "Please enter the password";
-                valid = false; // Ensure valid is false
-            }
-
-            if (!valid) {
-                return; // Stop form submission if validation fails
-            }
-
-            signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                    showModal("Login Successful!");
-                    localStorage.setItem("email",email);
-                    localStorage.setItem("isLoggedin",true);
-                    setTimeout(() => {
-                        window.location.href = "/index.html"; // Redirect after a brief moment
-                    }, 1000000000000); // 1 second delay for modal
-
-                })                
-                .catch((error) => {
-                    const errorMessage = error.message;
-                    if (errorMessage.includes("email")) {
-                        emailError.textContent = errorMessage; // Show error in email span
-                    } else {
-                        passwordError.textContent = errorMessage; // Show error in password span
-                    }
-                });
-        });
-
-         // Toggle password visibility
-         document.getElementById("togglePassword").addEventListener("click", function () {
-            const passwordField = document.getElementById("password");
-            togglePasswordVisibility(passwordField, this);
-        });
-
-        // document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
-        //     const confirmPasswordField = document.getElementById("confirm-password");
-        //     togglePasswordVisibility(confirmPasswordField, this);
-        // });
-
-        function togglePasswordVisibility(field, icon) {
-            if (field.type === "password") {
-                field.type = "text";
-                icon.textContent = "Hide"; // Change to a different icon when visible
-            } else {
-                field.type = "password";
-                icon.textContent = "Show"; // Change back to eye icon when hidden
-            }
+    // Send POST request to Spring Boot backend
+    fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginRequest)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.text(); // or response.json() if backend returns JSON
+        } else {
+            return response.text().then(err => { throw new Error(err); });
         }
+    })
+    .then(data => {
+        // ✅ Login successful
+        showModal(data);  // Shows "Login successful for user: username"
+        localStorage.setItem("email", email);
+        localStorage.setItem("isLoggedin", true);
+        setTimeout(() => {
+            window.location.href = "/index.html";
+        }, 1000); // Redirect after 1 second
+    })
+    .catch(error => {
+        // ❌ Login failed
+        passwordError.textContent = error.message; // Show error below password field
+    });
+});
 
+// Toggle password visibility
+document.getElementById("togglePassword").addEventListener("click", function () {
+    const passwordField = document.getElementById("password");
+    togglePasswordVisibility(passwordField, this);
+});
 
-        // Modal functionality
-        const modal = document.getElementById("myModal");
-        const modalMessage = document.getElementById("modalMessage");
-        const span = document.getElementsByClassName("close")[0];
+function togglePasswordVisibility(field, icon) {
+    if (field.type === "password") {
+        field.type = "text";
+        icon.textContent = "Hide";
+    } else {
+        field.type = "password";
+        icon.textContent = "Show";
+    }
+}
 
-        function showModal(message) {
-            modal.style.display = 'block'; // Make modal visible
-            modalMessage.textContent = message;
+// Modal functionality
+const modal = document.getElementById("myModal");
+const modalMessage = document.getElementById("modalMessage");
+const span = document.getElementsByClassName("close")[0];
 
-            // Set a timeout to allow CSS to apply before moving the modal
-            setTimeout(() => {
-                modal.querySelector('.modal-content').style.transform = 'translateX(0)'; // Move to center
-            }, 10); // Small delay to trigger the CSS transition
-        }
+function showModal(message) {
+    modal.style.display = 'block';
+    modalMessage.textContent = message;
+    setTimeout(() => {
+        modal.querySelector('.modal-content').style.transform = 'translateX(0)';
+    }, 10);
+}
 
-        span.onclick = function() {
-            hideModal();
-        }
+span.onclick = function () { hideModal(); }
+window.onclick = function (event) { if (event.target === modal) hideModal(); }
 
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                hideModal();
-            }
-        }
+function hideModal() {
+    const modalContent = modal.querySelector('.modal-content');
+    modalContent.style.transform = 'translateX(-100%)';
+    setTimeout(() => { modal.style.display = 'none'; }, 500);
+}
 
-        function hideModal() {
-            const modalContent = modal.querySelector('.modal-content');
-            modalContent.style.transform = 'translateX(-100%)'; // Move back to the left
-            setTimeout(() => {
-                modal.style.display = 'none'; // Hide modal after animation
-            }, 500); // Match this duration with the CSS transition duration
-        }
-
-        console.log(localStorage.getItem(''))
     </script>
 </body>
+
 </html>

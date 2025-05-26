@@ -20,46 +20,48 @@ const searchBox = document.getElementById('searchBox');
 const filterSelect = document.getElementById('filterSelect');
 const genreFilter = document.getElementById('genreFilter');
 
-// Function to fetch and filter data based on search query and genre filter
+// Function to fetch and filter data
 function fetchAndFilterData() {
-    // Get current input values
     const query = searchBox.value.toLowerCase();
-    const filter = filterSelect.value;
+    const filter = document.getElementById('filterSelect').value; 
     const selectedGenre = genreFilter.value.toLowerCase();
 
-    // Clear previous results
+    console.log("Selected filter:", filter); 
+    console.log("Search query:", query);
+
+    const params = new URLSearchParams();
+
+    if (query) {
+        if (filter === 'artist') {
+            params.append('artist', query);
+        } else if (filter === 'venue') {
+            params.append('city', query);
+        } else if (filter === 'genre') {
+            params.append('genre', query);
+        }
+    }
+
+    if (selectedGenre !== 'all') {
+        params.append('genre', selectedGenre);
+    }
+
+    const url = `http://localhost:8080/api/concerts/search?${params.toString()}`;
+    console.log("Fetching:", url);
+
     resultsContainer.innerHTML = '';
 
-    // Fetch data from JSON
-    fetch('../assets/json/details.json')
+    fetch(url)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             return response.json();
         })
         .then(data => {
-            // Apply filters based on search query, genre, and date
             const filteredResults = data.filter(item => {
-                const eventDate = new Date(item.date); // Parse the event date
-                const currentDate = new Date(); // Current date
-
-                // Ensure only upcoming events are included
-                const isUpcoming = eventDate >= currentDate;
-
-                // Check if it matches the search query
-                const matchesSearch =
-                    (filter === 'artist' && item.artist.toLowerCase().includes(query)) ||
-                    (filter === 'venue' && item.venue.toLowerCase().includes(query)) ||
-                    (filter === 'genre' && item.genre.toLowerCase().includes(query));
-
-                // Check if it matches the selected genre
-                const matchesGenre = selectedGenre === 'all' || item.genre.toLowerCase() === selectedGenre;
-
-                return matchesSearch && matchesGenre && isUpcoming;
+                const eventDate = new Date(item.date);
+                const currentDate = new Date();
+                return eventDate >= currentDate;
             });
 
-            // Display the filtered results
             showResults(filteredResults);
         })
         .catch(error => {
@@ -68,16 +70,20 @@ function fetchAndFilterData() {
         });
 }
 
+
+
+
+
 // Event listener for search form submission
 document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault();
     fetchAndFilterData();
 });
 
-// Event listener for genre filter change
+// genre filter
 genreFilter.addEventListener('change', fetchAndFilterData);
 
-// Function to display the results
+// results display
 function showResults(filteredResults) {
     if (filteredResults.length === 0) {
         resultsContainer.innerHTML = '<p>No results found.</p>';
@@ -88,7 +94,7 @@ function showResults(filteredResults) {
             resultItem.innerHTML = `
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="${item.image}" class="img-fluid rounded-start" alt="${item.artist}">
+                        <img src="${item.imageUrl}" class="img-fluid rounded-start" alt="${item.artist}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -117,10 +123,10 @@ function attachBookTicketEvents() {
             const eventId = event.target.getAttribute('data-event-id');
             console.log('Stored event ID:', eventId);
 
-            // Store the event ID in localStorage
+            // Storing event ID in localStorage
             localStorage.setItem('id', eventId);
 
-            // Check the user's authentication state before redirecting
+            // User's authentication
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     window.location.href = '../html/eventdetails.html';

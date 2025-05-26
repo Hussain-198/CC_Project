@@ -13,37 +13,37 @@
 
 <body>
   <div class="search-container">
-    <form id="searchForm" action="javascript:void(0);">
-      <select id="filterSelect" name="filter">
-        <option value="artist">Artist</option>
-        <option value="venue">Venue</option>
-        <option value="genre">Genre</option>
-      </select>
-      <!-- Additional Genre Filter -->
-      <div class="genre-filter">
-        <label for="genreFilter" id="filterText">Filter:</label>
-        <select id="genreFilter">
-          <option value="all">All</option>
-          <option value="Bollywood">Bollywood</option>
-          <option value="Hollywood">Hollywood</option>
-          <option value="Kollywood">Kollywood</option>
-          <!-- <option value="Classical">Classical</option> -->
+    <form id="searchForm">
+      <div id="filter">
+        <label for="genreFilter" id="filterText">Type:</label>
+        <select id="filterSelect" name="filter" style="border:1px solid">
+          <option value="artist">Artist</option>
+          <option value="venue">Venue</option>
+          <option value="genre">Genre</option>
         </select>
+
+        <div class="genre-filter">
+          <label for="genreFilter" id="filterText">Filter:</label>
+          <select id="genreFilter">
+            <option value="all">All</option>
+            <option value="Bollywood">Bollywood</option>
+            <option value="Hollywood">Hollywood</option>
+            <option value="Kollywood">Kollywood</option>
+          </select>
+        </div>
       </div>
-  </div>
-  <div id="searchBar">
-    <input type="text" id="searchBox" name="query" placeholder="Search by artist, venue, or genre" required />
-    <button type="submit" id="searchBtn">Search</button>
-  </div>
-  </form>
 
-
+      <div id="searchBar">
+        <input type="text" id="searchBox" name="query" placeholder="Search by artist, venue, or genre" required />
+        <button type="submit" id="searchBtn">Search</button>
+      </div>
+    </form>
+  </div>
 
   <div class="concertCards" id="resultsContainer"></div>
   <a href="/index.html">Back to Home</a>
 
-  <script src="../js/results.js" type="module" ></script>
-
+  <script src="../js/results.js" type="module"></script>
 </body>
 
 </html>

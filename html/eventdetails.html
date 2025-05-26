@@ -25,7 +25,7 @@
 </head>
 
 <body>
-  <!-- Header -->
+
   <header class="text-center p-3">
     <h1>
       <div id="webName"><span>Concert</span><span id="second_word">Craze</span></div>
@@ -36,13 +36,13 @@
     </nav>
   </header>
 
-  <!-- Event Banner -->
+
   <!-- <div style="display: flex; "> -->
   <section class="event-banner text-center text-white py-5" id="event-banner">
     <!-- <div id="map"></div> -->
   </section>
 
-  <!-- Event Details -->
+
   <section class="container my-5" id="event-details">
 
     <!-- </div> -->
@@ -58,7 +58,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
    document.addEventListener("DOMContentLoaded", function () {
-  fetch('../assets/json/details.json')
+  fetch('http://localhost:8080/api/concerts')
     .then(response => response.json())
     .then( async (events) => {
       const eventBanner = document.getElementById('event-banner');
@@ -67,7 +67,7 @@
       // Get the artist name from localStorage
       const artistNameFromLocalStorage =parseFloat (localStorage.getItem("id"));
     
-      // console.log(artistNameFromLocalStorage);
+      console.log(artistNameFromLocalStorage);
       
 
       if (!artistNameFromLocalStorage) {
@@ -77,6 +77,8 @@
 
       // Find the event based on the artist name
       const event = events.find(concert => concert.id === artistNameFromLocalStorage);
+      // console.log(event);
+      
 
       if (!event) {
         console.error("Event not found for artist:", artistNameFromLocalStorage);
@@ -90,7 +92,7 @@
       // Populate the banner and details section
       eventBanner.innerHTML = `
         <div class="eventHeading">
-          <img id="eventImg" src="${event.image}" alt="${event.artist}" class="img-fluid">
+          <img class="card-img-top img-fluid" id="eventImg" src="${event.imageUrl}" alt="${event.artist} photo not found">
           <h2 id="artistName">${event.artist} Live</h2>
           <p>${event.genre} concert at ${event.venue}, ${event.city}</p>
         </div>
@@ -140,7 +142,7 @@
           date: event.date,
           venue: event.venue,
           ticketPrice: event.ticketprice,
-          image: event.image,
+          image: event.imageUrl,
         };
 
         localStorage.setItem('selectedEvent', JSON.stringify(eventData));

@@ -1,28 +1,28 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js';
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+// import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+// import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js';
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
-    authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
-    projectId: "sample-firebase-ai-app-b83c0",
-    storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
-    messagingSenderId: "144531331956",
-    appId: "1:144531331956:web:eac7601b172cf9fcadea21"
-};
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBTrJ8hWx5NuUTGnJx5hD3Ps5-7m92KWUs",
+//     authDomain: "sample-firebase-ai-app-b83c0.firebaseapp.com",
+//     projectId: "sample-firebase-ai-app-b83c0",
+//     storageBucket: "sample-firebase-ai-app-b83c0.appspot.com",
+//     messagingSenderId: "144531331956",
+//     appId: "1:144531331956:web:eac7601b172cf9fcadea21"
+// };
 
-const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';  // Replace with your Supabase URL
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase API key
-const supabase = createClient(supabaseUrl, supabaseKey);
+// const supabaseUrl = 'https://tucnfihoexxepyafqfsw.supabase.co';  // Replace with your Supabase URL
+// const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1Y25maWhvZXh4ZXB5YWZxZnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzMyMzM3MTMsImV4cCI6MjA0ODgwOTcxM30.f1X1ss__ak0Gsp3yfd81WVoGd_T18efO-VWwp4A5Zas';  // Replace with your Supabase API key
+// // const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth();
 
 // Fetch and display concerts
-fetch("../assets/json/details.json")
+fetch("http://localhost:8080/api/concerts")
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
@@ -42,7 +42,7 @@ fetch("../assets/json/details.json")
             // getAs();
         };
 
-        // Display the first 4 concerts on page load
+        // Display the first 4 concerts
         displayConcerts(0, 4);
 
         const viewBtn = document.getElementById("viewBtn");
@@ -72,8 +72,8 @@ function createConcertCard(concert, index) {
     const div = document.createElement("div");
     div.className = "concert-card";
     div.innerHTML = `
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top img-fluid" src="../assets/images/img_${concert.artist.split(" ").join("")}.jpeg" alt="${concert.artist} photo not found">
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top img-fluid" src="${concert.imageUrl}" alt="${concert.artist} photo not found">
             <div class="card-body">
                 <div id="titleText">
                     <div>
@@ -120,38 +120,35 @@ document.addEventListener("click", (event) => {
     }
 });
 
-onAuthStateChanged(auth, async (user) => {
+(async function handleUserState() {
     const loginLink = document.getElementById("loginLink");
     const myTicketsNav = document.getElementById("popupMyTickets");
     const usernameDisplay = document.getElementById("usernameDisplay");
     const popupLogoutButton = document.getElementById("popupLogoutButton");
 
-    const isLoggedIn = user !== null;
+    const isLoggedIn = localStorage.getItem("isLoggedin") === "true";
+    const currentUserEmail = localStorage.getItem("email");
+    // console.log(currentUserEmail);
+    
 
-    if (isLoggedIn) {
-        const currentUserEmail = user.email;
-
+    if (isLoggedIn && currentUserEmail) {
         try {
-            // Query Supabase for the username
-            const { data, error } = await supabase
-                .from('users') // Replace 'users' with the actual table name in your Supabase database
-                .select('username')
-                .eq('email', currentUserEmail)
-                .single(); // Use `.single()` if you expect only one row to match
+            const response = await fetch(`http://localhost:8080/api/auth/user?email=${encodeURIComponent(currentUserEmail)}`);
+            if (!response.ok) {
+                throw new Error("User not found or error fetching user");
+            }
+            const userData = await response.json();
+            const username = userData.username;
 
-            if (error) {
-                console.error("Error fetching username from Supabase:", error.message);
-                usernameDisplay.textContent = "Welcome!";
-            } else if (data) {
-                const username = data.username;
-                usernameDisplay.style.display = "block";
-                usernameDisplay.textContent = `Welcome, ${username}!`;
+            usernameDisplay.style.display = "block";
+            usernameDisplay.textContent = `Welcome, ${username}!`;
 
-                // Store the username in localStorage for later use if needed
+            if (!localStorage.getItem("username")) {
                 localStorage.setItem("username", username);
             }
         } catch (error) {
-            console.error("Unexpected error:", error);
+            console.error("Error fetching username:", error);
+            usernameDisplay.textContent = "Welcome!";
         }
 
         loginLink.style.display = "none";
@@ -159,14 +156,10 @@ onAuthStateChanged(auth, async (user) => {
 
         popupLogoutButton.style.display = "block";
         popupLogoutButton.addEventListener("click", () => {
-            signOut(auth).then(() => {
-                localStorage.removeItem("isLoggedin");
-                localStorage.removeItem("email");
-                localStorage.removeItem("username");
-                window.location.href = "../index.html";
-            }).catch((error) => {
-                console.error("Error signing out: ", error);
-            });
+            localStorage.removeItem("isLoggedin");
+            localStorage.removeItem("email");
+            localStorage.removeItem("username");
+            window.location.href = "../index.html";
         });
     } else {
         myTicketsNav.style.display = "none";
@@ -178,7 +171,8 @@ onAuthStateChanged(auth, async (user) => {
             window.location.href = "../html/login.html";
         });
     }
-});
+})();
+
 
 
 // function getAs() {
