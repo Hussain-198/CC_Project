@@ -25,10 +25,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-
-=======
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
   <header class="text-center p-3">
     <h1>
       <div id="webName"><span>Concert</span><span id="second_word">Craze</span></div>
@@ -39,20 +35,12 @@
     </nav>
   </header>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
   <!-- <div style="display: flex; "> -->
   <section class="event-banner text-center text-white py-5" id="event-banner">
     <!-- <div id="map"></div> -->
   </section>
 
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
   <section class="container my-5" id="event-details">
 
     
@@ -68,7 +56,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
    document.addEventListener("DOMContentLoaded", function () {
-  fetch('http://localhost:8080/api/concerts')
+  fetch('../assets/json/details.json')
     .then(response => response.json())
     .then( async (events) => {
       const eventBanner = document.getElementById('event-banner');
@@ -77,7 +65,7 @@
       
       const artistNameFromLocalStorage =parseFloat (localStorage.getItem("id"));
     
-      console.log(artistNameFromLocalStorage);
+      // console.log(artistNameFromLocalStorage);
       
 
       if (!artistNameFromLocalStorage) {
@@ -87,8 +75,6 @@
 
       // Find the event based on the artist name
       const event = events.find(concert => concert.id === artistNameFromLocalStorage);
-      // console.log(event);
-      
 
       if (!event) {
         console.error("Event not found for artist:", artistNameFromLocalStorage);
@@ -102,13 +88,8 @@
       // Banner and details section
       eventBanner.innerHTML = `
         <div class="eventHeading">
-<<<<<<< HEAD
-          <img class="card-img-top img-fluid" id="eventImg" src="${event.imageUrl}" alt="${event.artist} photo not found">
-          <h2 id="artistName">${event.artist} Live</h2>
-=======
           <img id="eventImg" src="${event.image}" alt="${event.artist}" class="img-fluid">
           <h2 id="artistName">${event.artist}</h2>
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
           <p>${event.genre} concert at ${event.venue}, ${event.city}</p>
         </div>
       `;
@@ -157,7 +138,7 @@
           date: event.date,
           venue: event.venue,
           ticketPrice: event.ticketprice,
-          image: event.imageUrl,
+          image: event.image,
         };
 
         localStorage.setItem('selectedEvent', JSON.stringify(eventData));

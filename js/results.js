@@ -20,60 +20,25 @@ const searchBox = document.getElementById('searchBox');
 const filterSelect = document.getElementById('filterSelect');
 const genreFilter = document.getElementById('genreFilter');
 
-// Function to fetch and filter data
+// Function to fetch and filter data based on search query and genre filter
 function fetchAndFilterData() {
-<<<<<<< HEAD
-=======
     
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
     const query = searchBox.value.toLowerCase();
-    const filter = document.getElementById('filterSelect').value; 
+    const filter = filterSelect.value;
     const selectedGenre = genreFilter.value.toLowerCase();
 
-<<<<<<< HEAD
-    console.log("Selected filter:", filter); 
-    console.log("Search query:", query);
-
-    const params = new URLSearchParams();
-
-    if (query) {
-        if (filter === 'artist') {
-            params.append('artist', query);
-        } else if (filter === 'venue') {
-            params.append('city', query);
-        } else if (filter === 'genre') {
-            params.append('genre', query);
-        }
-    }
-
-    if (selectedGenre !== 'all') {
-        params.append('genre', selectedGenre);
-    }
-
-    const url = `http://localhost:8080/api/concerts/search?${params.toString()}`;
-    console.log("Fetching:", url);
-
-    resultsContainer.innerHTML = '';
-
-    fetch(url)
-=======
    
     resultsContainer.innerHTML = '';
 
    
     fetch('../assets/json/details.json')
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
         .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             return response.json();
         })
         .then(data => {
-<<<<<<< HEAD
-            const filteredResults = data.filter(item => {
-                const eventDate = new Date(item.date);
-                const currentDate = new Date();
-                return eventDate >= currentDate;
-=======
             // Apply filters based on genre
             const filteredResults = data.filter(item => {
                 const eventDate = new Date(item.date); // Parse the event date
@@ -92,9 +57,9 @@ function fetchAndFilterData() {
                 const matchesGenre = selectedGenre === 'all' || item.genre.toLowerCase() === selectedGenre;
 
                 return matchesSearch && matchesGenre && isUpcoming;
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
             });
 
+            // Display the filtered results
             showResults(filteredResults);
         })
         .catch(error => {
@@ -104,22 +69,15 @@ function fetchAndFilterData() {
 }
 
 
-<<<<<<< HEAD
-
-
-
-// Event listener for search form submission
-=======
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 document.getElementById('searchForm').addEventListener('submit', function (event) {
     event.preventDefault();
     fetchAndFilterData();
 });
 
-// genre filter
+// Event listener for genre filter change
 genreFilter.addEventListener('change', fetchAndFilterData);
 
-// results display
+// Function to display the results
 function showResults(filteredResults) {
     if (filteredResults.length === 0) {
         resultsContainer.innerHTML = '<p>No results found.</p>';
@@ -130,7 +88,7 @@ function showResults(filteredResults) {
             resultItem.innerHTML = `
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="${item.imageUrl}" class="img-fluid rounded-start" alt="${item.artist}">
+                        <img src="${item.image}" class="img-fluid rounded-start" alt="${item.artist}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -159,14 +117,10 @@ function attachBookTicketEvents() {
             const eventId = event.target.getAttribute('data-event-id');
             console.log('Stored event ID:', eventId);
 
-<<<<<<< HEAD
-            // Storing event ID in localStorage
-=======
             
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
             localStorage.setItem('id', eventId);
 
-            // User's authentication
+            // Check the user's authentication state before redirecting
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     window.location.href = '../html/eventdetails.html';

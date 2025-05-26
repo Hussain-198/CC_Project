@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 // Importing necessary libraries
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
@@ -26,17 +23,12 @@ const auth = getAuth(app);
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Modal functionality
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 const modal = document.getElementById("myModal");
 const modalMessage = document.getElementById("modalMessage");
 const span = document.getElementsByClassName("close")[0];
 
 document.getElementById("signup-form").addEventListener("submit", function (event) {
-<<<<<<< HEAD
-    event.preventDefault();
-=======
     event.preventDefault(); 
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value;
@@ -48,19 +40,19 @@ document.getElementById("signup-form").addEventListener("submit", function (even
     const confirmPasswordError = document.getElementById("confirmPasswordError");
     const usernameError = document.getElementById("usernameError");
 
-
-
+    // Clear previous error messages
     emailError.textContent = "";
     passwordError.textContent = "";
     confirmPasswordError.textContent = "";
     usernameError.textContent = "";
 
+    // Validate input fields
     let valid = true;
 
     if (username === "") {
         usernameError.textContent = "Username is required!";
         valid = false;
-    } else if (/\s/.test(username)) {
+    } else if (/\s/.test(username)) { // Check for spaces in the username
         usernameError.textContent = "Username cannot contain spaces!";
         valid = false;
     }
@@ -77,7 +69,7 @@ document.getElementById("signup-form").addEventListener("submit", function (even
         passwordError.textContent = "Password must not exceed 30 characters.";
         valid = false;
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#?$%^&*])[A-Za-z\d!@#$?%^&*\s]{8,}$/.test(password)) {
-        passwordError.textContent = "Password must be at least 8 characters long, include uppercase, lowercase, number and special character.";
+        passwordError.textContent = "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, a special character, and can include spaces.";
         valid = false;
     }
 
@@ -86,9 +78,6 @@ document.getElementById("signup-form").addEventListener("submit", function (even
         valid = false;
     }
 
-<<<<<<< HEAD
-    if (!valid) return;
-=======
     // If not valid, return early
     if (!valid) {
         return;
@@ -124,54 +113,27 @@ document.getElementById("signup-form").addEventListener("submit", function (even
                 .catch(error => {
                     console.error('Error inserting data into Supabase:', error);
                 });
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
 
-    fetch("http://localhost:8080/api/auth/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, email, password })
-    })
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(msg => { throw new Error(msg); });
-            }
-            return response.text();
         })
-<<<<<<< HEAD
-        .then(message => {
-            console.log("User signed up:", message);
-            showModal("Registration Successful!");
-            localStorage.setItem("email", email);
-            localStorage.setItem(email, username);
-            setTimeout(() => {
-                window.location.href = "../index.html";
-            }, 1000);
-        })
-        .catch(error => {
-            if (error.message.toLowerCase().includes("email")) {
-                emailError.textContent = error.message;
-            } else {
-                passwordError.textContent = error.message;
-=======
         .catch((error) => {
             const errorMessage = error.message;
             if (errorMessage.includes("email")) {
                 emailError.textContent = errorMessage; 
             } else {
                 passwordError.textContent = errorMessage; 
->>>>>>> 9ff99cf81519c2633b11a8f72ae77a4aee39d3db
             }
         });
 });
 
 //Password visibility
 document.getElementById("togglePassword").addEventListener("click", function () {
-    togglePasswordVisibility(document.getElementById("password"), this);
+    const passwordField = document.getElementById("password");
+    togglePasswordVisibility(passwordField, this);
 });
+
 document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
-    togglePasswordVisibility(document.getElementById("confirm-password"), this);
+    const confirmPasswordField = document.getElementById("confirm-password");
+    togglePasswordVisibility(confirmPasswordField, this);
 });
 
 function togglePasswordVisibility(field, icon) {
@@ -187,6 +149,7 @@ function togglePasswordVisibility(field, icon) {
 function showModal(message) {
     modal.style.display = 'block';
     modalMessage.textContent = message;
+
     setTimeout(() => {
         modal.querySelector('.modal-content').style.transform = 'translateX(0)';
     }, 10);
@@ -194,12 +157,14 @@ function showModal(message) {
 
 span.onclick = function () {
     hideModal();
-};
+}
+
 window.onclick = function (event) {
     if (event.target === modal) {
         hideModal();
     }
-};
+}
+
 function hideModal() {
     const modalContent = modal.querySelector('.modal-content');
     modalContent.style.transform = 'translateX(-100%)';

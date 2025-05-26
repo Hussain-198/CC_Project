@@ -80,8 +80,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const eventData = JSON.parse(localStorage.getItem("selectedEvent"));
-            console.log(eventData);
-            
 
             if (eventData) {
                 document.getElementById("eventTitle").textContent = eventData.title;

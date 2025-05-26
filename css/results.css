@@ -10,7 +10,6 @@
 }
 #searchForm {
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 50px;
   margin: 50px;
@@ -81,25 +80,19 @@ a {
   text-decoration: none;
 }
 
-.search-container {
+.search-container{
   display: flex;
   justify-content: space-around;
-  width: 100%;
 }
 
-#searchBar {
+#searchBar{
   display: flex;
-  margin-top: 20px;
-  width: 150%;
+  margin: 20px;
 }
 
-#filterText {
+#filterText{
   font-family: var(--fontFamily);
 }
-#filterSelect {
-  display: block;
-}
-
-#filter {
-  display: flex;
+#filterSelect{
+  display: none;
 }
